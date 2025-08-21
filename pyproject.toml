@@ -59,8 +59,7 @@ urls.Changelog = "https://github.com/alanmehio/multimedia-translator/blob/master
 ### Dependency Constraints, aka Requirements ###
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
-#  "numpy (>=2.3.2); python_version >= '3.11' and python_version <= '3.14'", # see https://github.com/matplotlib/matplotlib/blob/v3.10.1/pyproject.toml
-#  "pyserial>=3.5" 
+ "googletrans==4.0.2"
 ]
 
 ## optional dependency for test or other purpose 
