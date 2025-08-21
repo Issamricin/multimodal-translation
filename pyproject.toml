@@ -1,0 +1,184 @@
+# BUILD
+# Poetry https://python-poetry.org/docs/pyproject/
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "multimedia_translator" # package name same as project name 
+version = "1.0.0"
+description = "AI based translation from one language to many "
+authors = [
+   {name="Iso"}, 
+   {name="Alan"}
+]
+maintainers = [{name="Iso"}, {name="Alan"}] # must be an object
+license = "AGPL-3.0-only"
+readme = {file = "README.rst", content-type = "text/x-rst"}
+
+homepage = "https://github.com/alanmehio/multimedia-translator"
+repository = "https://github.com/alanmehio/multimedia-translator"
+documentation = "https://multimedia-translator.readthedocs.io/"
+
+keywords = [
+    "Multimedia Translator", "AI Translation", "Central"
+]
+
+requires-python = ">=3.8"
+
+# Troves classifer see https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience ::Education",
+    "Intended Audience :: Other Audience",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Natural Language :: English",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic ::  Multimedia"
+]
+
+
+# PyPi url links, that appear in 'Project Links' section
+urls."Bug Tracker" = "https://github.com/alanmehio/multimedia-translator/issues"
+urls."CI: Github Actions" = "https://github.com/alanmehio/multimedia-translator/actions"
+urls.Documentation = "https://multimedia-translator.readthedocs.io/"
+urls."Source Code" = "https://github.com/alanmehio/multimedia-translator"
+urls.Changelog = "https://github.com/alanmehio/multimedia-translator/blob/master/CHANGELOG.rst"
+
+
+
+### Dependency Constraints, aka Requirements ###
+# see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
+dependencies = [
+#  "numpy (>=2.3.2); python_version >= '3.11' and python_version <= '3.14'", # see https://github.com/matplotlib/matplotlib/blob/v3.10.1/pyproject.toml
+#  "pyserial>=3.5" 
+]
+
+## optional dependency for test or other purpose 
+## Install in edit mode with the test dependencies 
+## $ pip install -e . rfcentral[test]
+[project.optional-dependencies]
+test = [
+  "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",
+  "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
+  "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'"
+]
+docs =[
+   "Sphinx (<=8.2.3);  python_version >='3.11' and python_version <='3.14'",
+   "sphinx-autodoc-typehints (<=3.2.0); python_version >='3.11' and python_version <='3.14'",
+   "sphinx-rtd-theme (<=3.0.2);  python_version >='3.8' and python_version <='3.14'",
+   "sphinxcontrib-spelling (<=8.0.1);  python_version >='3.10' and python_version <='3.14'",
+   "sphinx-autobuild (==2024.10.3);  python_version >='3.9' and python_version <='3.14'",
+   "sphinx-inline-tabs (==2023.4.21); python_version >='3.8' and python_version <='3.14'",
+   "sphinxcontrib-mermaid (<=1.0.0);  python_version >='3.8' and python_version <='3.14'"
+]
+
+
+# Information required for building (sdist/wheel)
+[tool.poetry]
+packages = [
+    { include = "multimedia_translator", from = "src" },
+]
+
+include = [
+    { path = "tests", format = "sdist" },
+    { path = "docs/**/*.rst", format = "sdist" },
+    { path = "docs/conf.py", format = "sdist" },
+    { path = "src/**/*.typed", format = "sdist" },
+    { path = "src/stubs/*.pyi", format = "sdist" },
+    "pyproject.toml",
+    "LICENSE",
+    "README.rst",
+    "CONTRIBUTING.md",
+    "CHANGELOG.rst",
+]
+
+exclude = [
+    "docs/*",
+    "requirements/*",
+    "scripts/*.py",
+    "tox.ini",
+    ".circleci/config.yml",
+    ".coveragerc",
+    ".DS_Store",
+    ".gitignore",
+    ".prospector.yml",
+    ".pylintrc",
+    ".readthedocs.yml",
+    ".scrutinizer.yml",
+    ".travis.yml"
+]
+
+
+
+#https://python-poetry.org/docs/pyproject/#scripts
+# we will have the rfcentral script installed which will execute the main function in the console module in the rfcentral package.
+[project.scripts]
+translator = 'multimedia_translator.main:main'
+ 
+
+##############
+# TOOLS
+# CONFIG PLACE
+##############
+
+# see https://black.readthedocs.io/en/stable/  code format with max line 95
+[tool.black]
+line-length = 95
+include = '\.pyi?$'
+extend-exclude = '''
+'''
+
+# see https://pycqa.github.io/isort/index.html arrange the import in right order 
+[tool.isort]
+profile = 'black'
+
+# see https://bandit.readthedocs.io/en/latest/  check for security volubility
+#  Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+#  Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+[tool.bandit]
+tests = []
+skips = [
+    "B101", # This plugin test checks for the use of the Python assert keyword. https://bandit.readthedocs.io/en/latest/plugins/b101_assert_used.html
+    "B311"  # https://bandit.readthedocs.io/en/latest/blacklists/blacklist_calls.html
+]
+
+# RUFF covers the above so repeat is done again in one place
+# Linting and formatting with Ruff
+# see https://docs.astral.sh/ruff/configuration/
+[tool.ruff]
+#target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+    "W291",  # Trailing whitespace 
+]
+
+
+# see scripts/parse_version.py 
+# we need to update in toml file above  and below also
+[tool.software-release]
+version_variable = "src/multimedia_translator/__init__.py:__version__"

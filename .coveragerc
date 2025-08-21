@@ -1,0 +1,21 @@
+# https://coverage.readthedocs.io/en/7.6.1/config.html
+[run]
+include =
+  src/*
+  tests/*
+parallel = 1
+# branch is the if else statement 
+branch = 1
+
+[report]
+skip_covered = False
+show_missing = True
+precision = 2
+omit = *migrations*
+exclude_lines =
+    raise NotImplementedError
+    raise NotImplemented
+ignore_errors = False
+
+[html]
+directory = coverage_html_report
