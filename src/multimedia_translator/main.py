@@ -10,7 +10,7 @@
 import platform
 from argparse import ArgumentParser, Namespace
 import asyncio
-from googletrans import Translator
+
 
 
 def get_cli_value()->tuple[float,float,str]:
@@ -18,15 +18,7 @@ def get_cli_value()->tuple[float,float,str]:
 
 
 async def translate_text():
-     async with Translator() as translator:
-       result = await translator.translate('안녕하세요.')
-       print(result)  # <Translated src=ko dest=en text=Good evening. pronunciation=Good evening.>
-       result = await translator.translate('안녕하세요.', dest='ja')
-       print(result)  # <Translated src=ko dest=ja text=こんにちは。 pronunciation=Kon'nichiwa.>
-       result = await translator.translate('veritas lux mea', src='la')
-       print(result)  # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my light>
-       result = await translator.translate('Hej ', src='sv')
-       print(result)  # <Translated src=la dest=en text=The truth is my light pronunciation=The truth is my lightsss>
+    print("Hi I translated this ")
 
 def main()-> None:
     asyncio.run(translate_text())
