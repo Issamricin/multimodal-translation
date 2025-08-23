@@ -60,7 +60,12 @@ urls.Changelog = "https://github.com/alanmehio/multimedia-translator/blob/master
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
  "googletrans==4.0.2", # note reliable person usage and lab 
- "libretranslate==1.7.2" # https://docs.libretranslate.com/
+ "libretranslate==1.7.2",  # https://docs.libretranslate.com/ does not work on window only Linux 
+ "SpeechRecognition==3.14.3",
+ "pocketsphinx==5.0.4",
+ "playsound3==3.2.6",
+ "gTTs==2.5.4", # Google Text to Speech
+  "gTTS-token==1.1.4" # Calculate a token to run Google Translation
 ]
 
 ## optional dependency for test or other purpose 
