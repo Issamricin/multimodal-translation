@@ -29,7 +29,7 @@ One language Text To Many languages Text Translation:
 
 
 | In summary
- you will have two calls. One for  title translation  and the other for title and body but the "title and the body" are a composite of one   which is title translate
+  you will have two calls. One for  title translation  and the other for title and body but the "title and the body" are a composite of one   which is title translate
 
 | You need to allow command line execution for a given payload ( start with title only trans and later implement title and body)
 
@@ -119,6 +119,27 @@ Factory Pattern:
 
 | https://www.geeksforgeeks.org/python/factory-method-python-design-patterns/
 
+
+Audio:
+------
+
+ Currently, SpeechRecognition supports the following file formats:
+
+ WAV: must be in PCM/LPCM format ( we support this only)
+ AIFF AIFF-C
+ FLAC: must be native FLAC format; OGG-FLAC is not supported
+
+
+| Though a WAV file can contain compressed audio, the most common WAV audio format is uncompressed audio in the linear pulse-code modulation (LPCM) format.
+   LPCM is also the standard audio coding format for audio CDs, which store two-channel LPCM audio sampled at 44.1 kHz with 16 bits per sample.
+
+| online play
+  https://www.luxa.org/audio
+
+
+No Noise filter implemtation. No suppport for  ambient noise   . the file needs to be clean of noise. This can be implemented in the future as TODO or techincal debt as per scipy digital signal processing
+see https://realpython.com/python-scipy-cluster-optimize/
+see chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://greenteapress.com/thinkdsp/thinkdsp.pdf
 
 Speed Recognition:
 ------------------
