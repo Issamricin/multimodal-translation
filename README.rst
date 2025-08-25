@@ -3,6 +3,6 @@
 ** Audio To Text Trans **
 
 
- `Tech Spec <https://github.com/alanmehio/multimedia-translator/edit/main/TechSpec.rst>`_.
+ `Tech Spec <https://github.com/alanmehio/multimedia-translator/edit/main/TechnicalSpec.rst>`_.
 
 
