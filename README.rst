@@ -1,8 +1,8 @@
 # multimedia-translator
 ** Text Trans ** 
-Text to Text translation will use free opensource locally host
-https://docs.libretranslate.com/
-https://pypi.org/project/libretranslate/
+** Audio To Text Trans **
 
-| Audio Translate will use operation TODO by Alan to select the library
+
+ `Tech Spec <https://github.com/alanmehio/multimedia-translator/edit/main/TechSpec.rst>`_.
+
 
