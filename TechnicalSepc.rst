@@ -1,3 +1,26 @@
+PREREQUISITES
+=============
+
+You need to install tox to run the workflow tox task or env run task.
+
+| **tox check list before you push to remote repo**
+
+.. code-block:: shell
+
+   python -m pip install tox 
+   tox -v -s false -e pin-deps
+   tox -e type -v -s false
+   tox -v -s false | tee test_output.log
+   tox -e coverage --sitepackages -v -s false
+   tox -e wheel-test -s false
+   tox -e check -v -s false
+   tox -e isort -vv -s false
+   tox -e black -vv -s false
+   tox -e ruff -vv -s false
+   tox -e prospector -vv -s false
+
+So before pushing to the remote repository run the above commands one by one and check for errors and fix them. 
+After all are correct with no errors then you push to the remote repo on github.
 
 THIS SECTION FOR ISO
 ====================
@@ -101,6 +124,27 @@ Audio Search for a given language words(optional):
   the audio to English and do the search for the given English words.
   This is optional now and it is part of pocketsphinx see https://cmusphinx.github.io/wiki/tutorialpocketsphinx/#advanced-usage
   It also allow us to build a language model which we will not do now but who knows
+
+
+THIS SECTION FOR REWAN
+======================
+
+Read the prerequisites at the top of this file (tox), understand the commands.
+And make sure to never push to the remote repo before doing the prerequisites part.
+
+Testing the code in the src folder:
+-----------------------------------
+
+Install pytest and coverage in your env.
+This is the documentation for the coverage: https://coverage.readthedocs.io/en/7.7.0/
+
+The tests should cover about 95% of the code.
+To check how much your tests are covering: 
+$ coverage run -m pytest 
+$ coverage report -m
+
+
+
 
 
 THIS SECTION FOR ALAN
