@@ -28,11 +28,32 @@ THIS SECTION FOR ISO
 One language Text To Many languages Text Translation:
 -----------------------------------------------------
 
-| The product owner wants to be able to send a title with the source language and a target language list to be translated to
-| The product owner wants to be able to send a title and body with the source language and a targe list to be translated to
+| Your backend library ( multimedia-translator) does not know anything about the rest . The library is rest agonistic ( does not have any clue)
+So somebody will call your library  with a payload called "TextTransModel" 
+Your library  will have its own implementation to translate into different languages ( LlibreTranslate local server ) . You Library needs to make sure the language are supported ( your library needs to adhere to the LiberateTranslate languages supported since your library has no capability to do endless languages but rather follows the LilbreTranslate)
+Your library needs to validate the model (TextTransModel) to make sure it can do the job. If one of the selected languages (targets or source ) is not supported, you need to raise an exception to explain this . The caller ( the web application which uses your library) will handle the exception . 
+If the validation is green, your library will communicate with the server ( it is your implementation hidden to me as a caller. I don't care about your internal implementation ) and return back a python model  see below correction for the model (TextModel) 
 
-| The result of translation above will return a list of TextTransModel ( see model package) with the "targets" param is None since the same
- class can be used for request response . it is the same for BodyTransModel
+Update the spec to explain the above in your branch as usual . Let me know . You can push the json object down to my section since I need them later 
+
+
+class  TextModel(): # generic text with language can be used for response 
+    def __init__(self, text:str, lang:LANGUAGES) -> None:
+        self.__title = title
+        self.__lang = lang
+
+
+while this 
+
+class TextTransModel(TextModel): # this is the one your receive 
+
+    def __init__(self, text:str, lang:LANGUAGES, targets:list[LANGUAGES]) -> None:
+        uper().__init__(title, lang) # common
+        self.__targets = targets  # 
+      
+
+
+Now for the body, it will be the split into two calls for the above (TextTransModel) since  body and title  can be one if you send them as one text with "|" seperator ( saving two calls into one call) and once you get back the translated "title|body" you can split them anb build the response back ( You do it later since you need to implement the above first and make end to end integration test ( inside the main of the class as we use to do ) 
 
 
 | In order to test, you need to innstall the libretranslate server and start it locally see
@@ -149,6 +170,16 @@ $ coverage report -m
 
 THIS SECTION FOR ALAN
 =====================
+
+Moved from iso part:
+--------------------
+
+| The product owner wants to be able to send a title with the source language and a target language list to be translated to
+| The product owner wants to be able to send a title and body with the source language and a targe list to be translated to
+
+| The result of translation above will return a list of TextTransModel ( see model package) with the "targets" param is None since the same
+ class can be used for request response . it is the same for BodyTransModel
+
 
 RST File Checker:
 -----------------
