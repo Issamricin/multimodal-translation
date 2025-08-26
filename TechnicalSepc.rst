@@ -62,9 +62,10 @@ One language Text To Many languages Text Translation:
 
 | In your test you don't need to have a server (libretranslate server) up since you can mock the server and product the network error etc..
 
-| finally, you need to run tox staff from the list to make sure things are correct before your push your changes to remote repo. See dmc-view *development* for tox list https://github.com/Issamricin/dmc-view/blob/master/docs/source/contents/development.rst
+| finally, you need to run tox staff from the list to make sure things are correct before your push your changes to remote repo. See dmc-view *development* for tox list https://github.com/Issamricin/dmc-         view/blob/master/docs/source/contents/development.rst
 
-| Example of a json object request which will come from the rest call from the web application
+|
+| Example of a json object request which will come from the rest call from the web application (End Usage)
 
 .. code-block:: shell
 
