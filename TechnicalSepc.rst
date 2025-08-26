@@ -44,6 +44,9 @@ One language Text To Many languages Text Translation:
 | You need to implement the validator so there is a file under src/conf/languages.json  . The support from to many needs to be validated and
 | you need to response with a given error json object see model which explain the issue
 
+| You need to avoid using third party liberary if possible to make http call(rest call with json payload)  **use native if you can** https://docs.python.org/3/library/http.client.html
+| 
+
 | Step:
 
   The call wil come as a json string object and you need to marshal it into the model. The enum class LANGUAGES is the one which protect and does validation
