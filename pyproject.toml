@@ -24,7 +24,7 @@ keywords = [
     "Multimedia Translator", "AI Translation", "Central"
 ]
 
-requires-python = ">=3.8"
+requires-python = ">=3.9,<4.0"
 
 # Troves classifer see https://pypi.org/classifiers/
 classifiers = [
