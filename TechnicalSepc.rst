@@ -65,6 +65,9 @@ Now for the body, it will be the split into two calls for the above (TextTransMo
 | You need to implement the validator so there is a file under src/conf/languages.json  . The support from to many needs to be validated and
 | you need to response with a given error json object see model which explain the issue
 
+| You need to avoid using third party liberary if possible to make http call(rest call with json payload)  **use native if you can** https://docs.python.org/3/library/http.client.html
+| 
+
 | Step:
 
   The call wil come as a json string object and you need to marshal it into the model. The enum class LANGUAGES is the one which protect and does validation
@@ -83,9 +86,10 @@ Now for the body, it will be the split into two calls for the above (TextTransMo
 
 | In your test you don't need to have a server (libretranslate server) up since you can mock the server and product the network error etc..
 
-| finally, you need to run tox staff from the list to make sure things are correct before your push your changes to remote repo. See dmc-view *development* for tox list https://github.com/Issamricin/dmc-view/blob/master/docs/source/contents/development.rst
+| finally, you need to run tox staff from the list to make sure things are correct before your push your changes to remote repo. See dmc-view *development* for tox list https://github.com/Issamricin/dmc-         view/blob/master/docs/source/contents/development.rst
 
-| Example of a json object request which will come from the rest call from the web application
+|
+| Example of a json object request which will come from the rest call from the web application (End Usage)
 
 .. code-block:: shell
 
