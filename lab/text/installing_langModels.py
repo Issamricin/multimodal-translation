@@ -8,7 +8,7 @@ argostranslate.package.update_package_index()
 available_packages = argostranslate.package.get_available_packages()
 
 # Pick English → Italian (example)
-package = next(p for p in available_packages if p.from_code == "en" and p.to_code == "it")
+package = next(p for p in available_packages if p.from_code == "it" and p.to_code == "en")
 
 # Download and install
 path = package.download()
