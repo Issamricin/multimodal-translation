@@ -84,7 +84,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 return
 
             try:
-                title = data['title']
+                title = str(data['title'])
                 lang = data['lang']
                 targets = data['targets']
             except KeyError:
@@ -95,8 +95,12 @@ class MyHandler(BaseHTTPRequestHandler):
                 return
 
             if lang not in LANGUAGE:
-                
-                response = {lang: "This langauge is not available"}
+
+                if not isinstance(lang, str):
+                    response = {str(lang): f"Type error, should be string not {type(lang)}"}
+                else:
+                    response = {lang: "This langauge is not available"}
+
                 response_bytes = json.dumps(response).encode("utf-8")
                 self.send_response(400)
 
@@ -105,6 +109,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.end_headers()
 
                 self.wfile.write(response_bytes)
+                return
 
             responses = []
 
@@ -117,16 +122,19 @@ class MyHandler(BaseHTTPRequestHandler):
                 
 
                 if target not in LANGUAGE:
+                    if not isinstance(target, str):
+                        response = {str(target): f"Type error, should be string not {type(target)}"}
+                    else:
+                        response = {target: "This langauge is not available"}
 
-                    response = {target: "This langauge is not available"}
                     response_bytes = json.dumps(response).encode("utf-8")
-
                     self.send_response(400)
                     self.send_header("Content-Type", "application/json")
                     self.send_header("Content-Length", str(len(response_bytes)))
                     self.end_headers()
 
                     self.wfile.write(response_bytes)
+                    return
 
                 conn = http.client.HTTPConnection("localhost", 5000)
                 json_data = json.dumps(payload)
@@ -162,8 +170,8 @@ class MyHandler(BaseHTTPRequestHandler):
                 return
 
             try:
-                title = data['title']
-                body = data['body']
+                title = str(data['title'])
+                body = str(data['body'])
                 lang = data['lang']
                 targets = data['targets']
             except KeyError:
@@ -174,16 +182,19 @@ class MyHandler(BaseHTTPRequestHandler):
                 return
             
             if lang not in LANGUAGE:
-            
-                response = {lang: "This langauge is not available"}
-                response_bytes = json.dumps(response).encode("utf-8")
+                if not isinstance(lang, str):
+                    response = {str(lang): f"Type error, should be string not {type(lang)}"}
+                else:
+                    response = {lang: "This langauge is not available"}
 
+                response_bytes = json.dumps(response).encode("utf-8")
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(response_bytes)))
                 self.end_headers()
 
                 self.wfile.write(response_bytes)
+                return
 
             responses = []
 
@@ -200,16 +211,19 @@ class MyHandler(BaseHTTPRequestHandler):
                         }
 
                 if target not in LANGUAGE:
+                    if not isinstance(target, str):
+                        response = {str(target): f"Type error, should be string not {type(target)}"}
+                    else:
+                        response = {target: "This langauge is not available"}
 
-                    response = {target: "This langauge is not available"}
                     response_bytes = json.dumps(response).encode("utf-8")
-
                     self.send_response(400)
                     self.send_header("Content-Type", "application/json")
                     self.send_header("Content-Length", str(len(response_bytes)))
                     self.end_headers()
 
                     self.wfile.write(response_bytes)
+                    return
 
                 conn = http.client.HTTPConnection("localhost", 5000)
                 json_data_t = json.dumps(payload_t)
@@ -249,7 +263,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(responses_bytes)))
             self.end_headers()
             self.wfile.write(responses_bytes)
-
+            return
 
 if __name__ == "__main__":
     server = HTTPServer(("localhost", 8000), MyHandler)
