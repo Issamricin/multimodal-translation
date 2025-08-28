@@ -6,12 +6,11 @@ In order to run the one to many api, you have to do the following:
     - Run the server: libretranslate.
     - You need to install the langaues you want in your local server (check lab/text/installing_langModels.py).
 
-2- You need to run the flask server application:
+2- You need to run the one to many server application:
     - Run the one_to_many.py script in a different terminal.
-    - 
 
 3- You can test as a client:
-    - Run the sender_dummy.py to check how the data is received by the flask app.
+    - Run the sender_dummy.py to check how the data is received by the server.
     - Try to put a lang that is not supported, you will get a json explaining the error.
 
 
