@@ -1,4 +1,4 @@
-In order to run the one to many flask application, you have to do the following:
+In order to run the one to many api, you have to do the following:
 
 1- you need to have the libretranslate server live and running:
     - Install libretranslate using pip: pip install libretranslate.
