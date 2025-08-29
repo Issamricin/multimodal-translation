@@ -193,6 +193,7 @@ https://rsted.info.ucl.ac.be/
 
 Factory Pattern:
 ----------------
+| https://realpython.com/python-type-hints-multiple-types/#annotate-the-return-value-of-a-factory-function
 
 | https://realpython.com/factory-method-python/
 
