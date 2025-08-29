@@ -2,7 +2,7 @@ import threading
 import requests
 import pytest
 from http.server import HTTPServer
-from multimedia_translator.one_to_many.one_to_many import MyHandler
+from multimedia_translator.text.translate import MyHandler
 
 #Rewan you have to fill the empty test methods. Leave the functioning complete ones.
 
@@ -21,7 +21,7 @@ def test_title_translate_valid():
     #This is testing the /title path with valid input
     payload = {"title":"Hello", "lang":"en", "targets":["es"]}
     respone = requests.post("http://localhost:8000/title",json=payload)
-    
+
     assert respone.status_code == 200
     data = respone.json()
     assert isinstance(data,list)
@@ -39,7 +39,7 @@ def test_title_translate_invalid_type():
     #This is testing the /title path for invalid content type
     payload = {"title":"Hello", "lang":"en", "targets":["es"]}
     respone = requests.post("http://localhost:8000/title",data=payload, headers={"Content-Type":"text/plain"},)
-    
+
     assert respone.status_code == 400
     data = respone.json()
     assert data["error"] == "Content-Type must be application/json"
@@ -55,7 +55,7 @@ def test_title_invalid_json():
 
     #This is testing the /title path for invalid json
     respone = requests.post("http://localhost:8000/title",data="{bad json", headers={"Content-Type":"application/json"},)
-    
+
     assert respone.status_code == 400
     data = respone.json()
     assert data["error"] == "Invalid JSON"
@@ -80,7 +80,7 @@ def test_title_invalid_lang():
     #This is testing the /title path for unavailable source langauge
     payload = {"title":"Hello", "lang":"no langauge", "targets":["es"]}
     respone = requests.post("http://localhost:8000/title",json=payload)
-    
+
     assert respone.status_code == 400
     data = respone.json()
     assert data['no langauge'] == "This langauge is not available"
@@ -100,10 +100,10 @@ def test_body_invalid_target():
 
 def test_wrong_path():
 
-    #This is testing wrong path given 
+    #This is testing wrong path given
     payload = {"title":"Hello", "lang":"en", "targets":["es"]}
     respone = requests.post("http://localhost:8000/wrong",json=payload)
-    
+
     assert respone.status_code == 400
     data = respone.json()
     assert data['error'] == "wrong path (available: 1-/title 2-/body)"
