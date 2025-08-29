@@ -60,7 +60,7 @@ url = "http://localhost:5000/translate" #for libreTranslate
 
 class MyHandler(BaseHTTPRequestHandler):
     
-    def do_POST(self):
+    def do_POST(self) -> None :
         content_type = self.headers.get("Content-Type", "")
         
         if "application/json" not in content_type:
