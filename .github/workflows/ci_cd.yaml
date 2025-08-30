@@ -1,0 +1,326 @@
+name: CI/CD Pipeline
+# Continuous Integration / Continuous Delivery
+
+# Triggers on all Branches and v* Tags
+
+### Production PyPI Publish, pypi.org, on: ###
+# - release-* tags on 'master' branch only
+
+### Staging/Test PyPI Publish, test.pypi.org, on: ###
+## Test PyPI publish on: ##
+# - test-*  tags
+
+### Dockerhub publish on ###
+# - all branches and tags
+
+on:
+  push:
+    branches:
+      - "*"
+
+env:
+  ### Job MATRIX ###
+  # Python 3.12 is in bugfix mode, same as 3.11 -> can start supporting 3.13 later 
+  UBUNTU_PY313_STRATEGY: "{\"platform\":[\"ubuntu-latest\"], \"python-version\":[\"3.13\"]}"
+ 
+  #########################################################
+  ##### JOB ON/OFF SWITCHES - Top/1st level overrides #####
+  #########################################################
+  RUN_UNIT_TESTS: "true" # Note: we make it off for when we set it value to false  
+  RUN_LINT_CHECKS: "true" # ditto 
+  DOCS_ON: "true"
+  DOCKER_JOB_ON: "true" # ditto 
+  DRAW_DEPENDENCIES: "true" # ditto 
+  ##############################
+
+  ### DOCKER Job Policy ####
+  # Override Docker Policy-dependent decision-making and
+  # Accept any ALL (branch/build) to Publish to Dockerhub
+  # if true, it will push image and ignore DOCKER_JOB_POLICY
+  ALWAYS_BUILD_N_PUBLSIH_DOCKER: "true"
+  DOCKER_JOB_POLICY: "CDeployment"
+  # - CDeployment : Builds and Publishes only if Tests ran and passed
+  # - CDelivery   : Builds and Publishes if Tests Passed or if Tests were Skipped
+  ############################
+
+  #### STATIC CODE ANALYSIS Job ####
+  ALWAYS_LINT: "true"
+  LINT_JOB_POLICY: '2'  # {2, 3}
+  ## Python Runtime version to set the Job runner with ##
+  STATIC_ANALYSIS_PY: "3.13"
+  ## Pylint Minimum Acceptance Rating/Score ##
+  PYLINT_SCORE_THRESHOLD: "4.5"
+
+  #### DOCS Build/Test ####
+  ALWAYS_DOCS: "true"
+  DOCS_JOB_POLICY: '2'  # {2, 3}
+  DOCS_BUILDER_RUNTIME: "3.13"
+
+  #### CODE VISUALIZATION Job ####
+  ALWAYS_CODE_VIZ: "true"
+  CODE_VIZ_POLICY: '2'  # {2, 3}
+  ##########################
+
+jobs:
+  # we use the below to read the workflow env vars and be able to use in "- if:" Job conditionals
+  # now we can do -> if: ${{ needs.set_github_outputs.outputs.TESTS_ENABLED == 'true' }}
+  # github does not have a way to simply do "- if: ${{ env.RUN_UNIT_TESTS == 'true' }} " !!
+  
+  ###############################
+  ### JOB: SET GITHUB OUTPUTS ###
+  ###############################
+  set_github_outputs:
+    name: Read Workflow Env Section Vars and set Github Outputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pass 'env' section variables to GITHUB_OUTPUT
+        id: pass-env-to-output
+        run: | # pip character means multi command line 
+          # set the matrix strategy
+          echo "matrix=$UBUNTU_PY313_STRATEGY" >> $GITHUB_OUTPUT
+          echo "TESTS_ENABLED=$RUN_UNIT_TESTS" >> $GITHUB_OUTPUT
+          echo "RUN_LINT_CHECKS=$RUN_LINT_CHECKS" >> $GITHUB_OUTPUT
+      ## Docker - Pipeline Settings ##
+      # see https://docs.github.com/en/actions/reference/evaluate-expressions-in-workflows-and-actions
+      # evauation: (false && 0) || (true && 1) ends with 0 (first one )
+      # while    (true && 0) || (true && 1) ends with 1 (second one)
+      - name: Derive Docker Policy
+        id: derive_docker_policy
+        run: echo "POL=${{ (env.DOCKER_JOB_ON != 'true' && '0') || (env.ALWAYS_BUILD_N_PUBLSIH_DOCKER == 'true' && '1') || (env.DOCKER_JOB_POLICY == 'CDeployment' && '2') || (env.DOCKER_JOB_POLICY == 'CDelivery' && '3') }}" >> $GITHUB_OUTPUT
+      ## Static Code Analysis - Pipeline Settings ##
+      - name: Derive SQA Policy
+        id: derive_sqa_policy
+        run: echo "POL=${{ (env.RUN_LINT_CHECKS != 'true' && '0') || (env.ALWAYS_LINT == 'true' && '1') || env.LINT_JOB_POLICY }}" >> $GITHUB_OUTPUT
+      - name: Read SQA PY
+        id: read_sqa_py
+        run: echo SQA_PY=${{ env.STATIC_ANALYSIS_PY }} >> $GITHUB_OUTPUT
+      - name: Read Pylint Base Score
+        id: read_pylint_baseline_score
+        run: echo PYLINT_BASELINE_SCORE=${{ env.PYLINT_SCORE_THRESHOLD }} >> $GITHUB_OUTPUT
+      ## Docs Build/Test - Pipeline Settings ##
+      - name: Derive Docs Policy
+        id: derive_docs_policy
+        run: echo "POL=${{ (env.DOCS_ON != 'true' && '0') || (env.ALWAYS_DOCS == 'true' && '1') || env.DOCS_JOB_POLICY }}" >> $GITHUB_OUTPUT
+      - name: Read Docs Py      
+        id: read_docs_py
+        run: echo DOCS_PY=${{ env.DOCS_BUILDER_RUNTIME }} >> $GITHUB_OUTPUT
+      ## Code Visualization - Pipeline Settings ##
+      - name: Derive Code Viz Policy
+        id: derive_code_viz_policy
+        run: echo "POL=${{ (env.DRAW_DEPENDENCIES != 'true' && '0') || (env.ALWAYS_CODE_VIZ == 'true' && '1') || env.CODE_VIZ_POLICY }}" >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ steps.pass-env-to-output.outputs.matrix }}
+      TESTS_ENABLED: ${{ steps.pass-env-to-output.outputs.TESTS_ENABLED }}
+      RUN_LINT_CHECKS: ${{steps.pass-env-to-output.outputs.RUN_LINT_CHECKS}}
+      DOCKER_JOB_ON: ${{ steps.pass-env-to-output.outputs.DOCKER_JOB_ON }}
+    ## Docker - Pipeline Settings ##
+      PIPE_DOCKER_POLICY: ${{ steps.derive_docker_policy.outputs.POL }}
+    ## Static Code Analysis - Pipeline Settings ##
+      PIPE_SQA_POLICY: ${{ steps.derive_sqa_policy.outputs.POL }}
+      PIPE_SQA_PY: ${{ steps.read_sqa_py.outputs.SQA_PY }}
+      PIPE_SQA_PYLINT_PASS_SCORE: ${{ steps.read_pylint_baseline_score.outputs.PYLINT_BASELINE_SCORE }}
+    ## Docs Build/Test - Pipeline Settings ##
+      PIPE_DOCS_POLICY: ${{ steps.derive_docs_policy.outputs.POL }}
+      PIPE_DOCS_PY: ${{ steps.read_docs_py.outputs.DOCS_PY }}
+    ## Code Visualization - Pipeline Settings ##
+      PIPE_CODE_VIZ_POLICY: ${{ steps.derive_code_viz_policy.outputs.POL }}
+
+############################################
+### JOB: RUN TEST SUITE ON ALL PLATFORMS ###
+############################################
+  test_suite:
+    runs-on: ${{ matrix.platform }}
+    needs: set_github_outputs
+    if: ${{ needs.set_github_outputs.outputs.TESTS_ENABLED == 'true' }}
+    strategy:
+      matrix: ${{fromJSON(needs.set_github_outputs.outputs.matrix)}}
+    env:
+      WHEELS_PIP_DIR: "wheels-pip" # see tox.ini  env  DIST_DIR = wheels-pip
+    steps:
+      - run: echo "Platform -> ${{ matrix.platform }} , Python -> ${{ matrix.python-version }}"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip && python -m pip install tox==3.28 tox-gh-actions
+
+      - uses: actions/checkout@v4.2.2
+
+      - name: Pin 'Static Type Checking' Dependencies
+        run: tox -v -s false -e pin-deps  #  -s , --skip-missing-interpreters V -fail tests for missing interpreters: {config,true,false} choice (default: config)
+
+      - name: Do Type Checking
+        run: tox -e type -v -s false  # do not skip missing interpreters don't install (config default)
+
+      ###### TEST SUITE RUN against Edit and Sdist ######
+      - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
+        run: |
+          set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+                          
+          tox -v -s false | tee test_output.log
+        env:
+          PLATFORM: ${{ matrix.platform }}
+          BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
+
+      - name: List Wheel(s) created for Distro and its Requirements
+        run: ls -l ${{ env.WHEELS_PIP_DIR }}
+
+      ### PARSE WHEEL File NAME ###
+      - name: Extract Wheel Name and Size
+        id: extract_wheel_info
+        shell: bash
+        run: |
+          WHEEL_INFO=$(grep -E "Created wheel for" test_output.log | sed -E "s/.*filename=([^ ]+) size=([^ ]+) .*/\1 \2/")
+
+          # extract file name
+          WHEEL_NAME=$(echo $WHEEL_INFO | cut -d ' ' -f 1)
+          echo "WHEEL_NAME=$WHEEL_NAME" >> $GITHUB_ENV
+
+          # extract file size
+          WHEEL_SIZE=$(echo $WHEEL_INFO | cut -d ' ' -f 2)
+          echo "WHEEL_SIZE=$WHEEL_SIZE" >> $GITHUB_ENV
+
+          # extract '0.3.2' from 'multimodaltranslation-0.3.2-py3-none-any.whl'
+          #echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/'
+          PEP_VERSION=$(echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/')
+          echo "PEP_VERSION=$PEP_VERSION"
+          echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_OUTPUT
+          echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_ENV
+
+      - run: 'echo "WHEEL_NAME: $WHEEL_NAME SIZE: $WHEEL_SIZE"'
+      - run: 'echo "PEP_VERSION: $PEP_VERSION"'
+
+      ###### TEST SUITE RUN against Wheel ######
+      - name: Run Test Suite Against Wheel
+        run: tox -e wheel-test -s false
+        env:
+          PLATFORM: ${{ matrix.platform }}
+          BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
+          WHEEL: ${{ env.WHEEL_NAME }}
+          PIP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION}}
+    
+      ## Combine Coverage Data from Tests' Results ##
+      - name: "Combine Coverage (dev, sdist, wheel) & make Reports"
+        run: tox -e coverage --sitepackages -v -s false
+
+      - name: Rename Coverage Files
+        shell: bash
+        run: |
+          mv ./.tox/coverage.xml ./coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml
+
+      ## UPLOAD CI ARTIFACTS - Coverage Reports ##
+      - name: "Upload Test Coverage as Artifacts"
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: all_coverage_raw
+          path: coverage-${{ matrix.platform }}-${{ matrix.python-version }}.xml
+          if-no-files-found: error
+
+      - name: Check for compliance with Python Best Practices
+        shell: bash
+        env:
+          PKG_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
+          WHEEL_PATH: ${{ env.WHEELS_PIP_DIR }}/${{ env.WHEEL_NAME }}
+        run: |
+          DIST_DIR=dist
+          echo "DIST_DIR=${DIST_DIR}" >> $GITHUB_ENV
+          mkdir ${DIST_DIR}
+          cp ".tox/${DIST_DIR}/multimodaltranslation-${PKG_VERSION}.tar.gz" "${DIST_DIR}"
+          cp "${{ env.WHEEL_PATH }}" "${DIST_DIR}"
+          tox -e check -v -s false
+
+      ## UPLOAD CI ARTIFACTS - Distro Build(s), 1 sdist and 1 or more wheels ##
+      - name: Upload Source & Wheel distributions as Artefacts
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: dist-${{ matrix.platform }}-${{ matrix.python-version }}
+          path: ${{ env.DIST_DIR }}
+          if-no-files-found: error
+    outputs:
+      TEST_RESULT: ${{'success'}}
+      PEP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
+      
+
+
+ ###############################
+ ### JOB: CODE COVERAGE HOST ###
+ ###############################
+  codecov_coverage_host:
+    runs-on: ubuntu-latest
+    needs: test_suite
+    steps:
+    - uses: actions/checkout@v4.2.2
+    - name: Get Codecov binary
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+    - name: Download Raw Coverage Data Artefacts
+      uses: actions/download-artifact@v4.3.0
+      with:
+        name: all_coverage_raw
+    - name: Upload Coverage Reports to Codecov
+      run: |
+        for file in coverage*.xml; do
+          OS_NAME=$(echo $file | sed -E "s/coverage-(\w\+)-/\1/")
+          PY_VERSION=$(echo $file | sed -E "s/coverage-\w\+-(\d\.)\+/\1/")
+          ./codecov -f $file -e "OS=$OS_NAME,PYTHON=$PY_VERSION" --flags unittests --verbose
+          echo "Sent to Codecov: $file !"
+        done
+
+###########################################
+### JOB: STATIC CODE ANALYSIS & LINTING ###
+###########################################
+  lint:
+    name: Static Code Analysis
+    needs: [set_github_outputs, test_suite]
+    uses: ./.github/workflows/policy_lint.yml
+    if: ${{ needs.set_github_outputs.outputs.RUN_LINT_CHECKS == 'true' }}
+    with:
+      run_policy: ${{ needs.set_github_outputs.outputs.PIPE_SQA_POLICY }}
+      dedicated_branches: 'main, master, dev'
+      source_code_targets: 'src,tests,scripts'
+      python_version: ${{ needs.set_github_outputs.outputs.PIPE_SQA_PY }}
+      pylint_threshold: ${{ needs.set_github_outputs.outputs.PIPE_SQA_PYLINT_PASS_SCORE }}
+
+#################################################
+### JOB: DOCS BUILD/TEST - DOCUMENTATION SITE ###
+#################################################
+  docs:
+    name: Build Documentation
+    needs: set_github_outputs
+    uses: ./.github/workflows/policy_docs.yml
+    with:
+      run_policy: '${{ needs.set_github_outputs.outputs.PIPE_DOCS_POLICY }}'
+      python_version: ${{ needs.set_github_outputs.outputs.PIPE_DOCS_PY }}
+      command: 'tox -s false -e pin-deps -- -E docs && tox -e docs --sitepackages -vv -s false'
+
+##################################################
+### JOB: DOCKER BUILD and PUBLISH ON DOCKERHUB ###
+##################################################
+# Ref Page: https://automated-workflows.readthedocs.io/en/main/ref_docker/
+  docker_build:
+    needs: [set_github_outputs, test_suite]
+    uses: ./.github/workflows/docker.yml
+    with:
+      acceptance_policy: ${{ needs.set_github_outputs.outputs.PIPE_DOCKER_POLICY }}
+      image_slug: "multimodaltranslation"
+      # target_stage: "some_stage_alias"  # no stage, means no `--target` flag, on build
+      tests_pass: ${{ needs.test_suite.outputs.TEST_RESULT == 'success' }}
+      DOCKER_USER: ${{ vars.DOCKER_USER }}
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+
+##########################################
+### JOB: DRAW PYTHON DEPENDENCY GRAPHS ###
+##########################################
+  code_visualization:
+    needs: set_github_outputs
+    name: Code Visualization of Python Imports as Graphs, in .svg
+    uses: ./.github/workflows/python_imports.yml
+    with:
+      run_policy: '${{ needs.set_github_outputs.outputs.PIPE_CODE_VIZ_POLICY }}'
+      branches: 'main, master, dev'
+      source_code_targets: 'src'
+      python_version: '3.13'
+      artifacts_dir: 'dependency-graphs'

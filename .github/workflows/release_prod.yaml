@@ -1,0 +1,52 @@
+name: Release to PROD PyPI
+on:
+  push:
+    tags: ["release-*"] # test-1.0.0 trigger to deploy on test pypi while release-1.0.0 is on production pypi
+
+env:
+  dists-artifact-name: python-package-distributions
+  FORCE_COLOR: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6.4.3 # https://github.com/marketplace/actions/astral-sh-setup-uv
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build package
+        run: uv build --python 3.13 --python-preference only-managed --sdist --wheel . --out-dir dist
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v4 
+        with:
+          name: ${{ env.dists-artifact-name }}
+          path: dist/*
+
+  publish-to-pypi:
+    name: >-
+      Publish Python 🐍 distribution 📦 to PyPI
+    if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/multimodaltranslation  # Replace <package-name> with your PyPI project name
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true
