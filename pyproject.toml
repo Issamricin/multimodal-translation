@@ -5,7 +5,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [project]
-name = "multimedia_translator" # package name same as project name 
+name = "multimodal-translation" # package name same as project name 
 version = "1.0.0"
 description = "AI based translation from one language to many "
 authors = [

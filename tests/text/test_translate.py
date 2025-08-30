@@ -2,7 +2,7 @@ import threading
 import requests
 import pytest
 from http.server import HTTPServer
-from multimedia_translator.text.translate import MyHandler
+from multimodaltranslation.text.translate import MyHandler
 
 #Rewan you have to fill the empty test methods. Leave the functioning complete ones.
 
