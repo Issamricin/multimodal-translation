@@ -3,9 +3,9 @@
 include =
   src/*
   tests/*
-parallel = 1
+parallel = True
 # branch is the if else statement 
-branch = 1
+branch = True
 
 [report]
 skip_covered = False

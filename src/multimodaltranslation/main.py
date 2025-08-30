@@ -14,10 +14,10 @@ import asyncio
 
 
 def get_cli_value()->tuple[float,float,str]:
-   pass
+   return (1,1,'test')
 
 
-async def translate_text():
+async def translate_text() -> None:
     print("Hi I translated this ")
 
 def main()-> None:

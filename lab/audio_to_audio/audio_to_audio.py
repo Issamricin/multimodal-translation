@@ -7,6 +7,8 @@ from googletrans import Translator
 from gtts import gTTS
 import os
 from pathlib import Path
+import optional 
+
 flag = 0
 
 # A tuple containing all the language and
@@ -62,7 +64,7 @@ dic = ('afrikaans', 'af', 'albanian', 'sq',
 
 # Capture Voice
 # takes command through microphone
-def takecommand():
+def takecommand() -> optional[str]:
     r = sr.Recognizer()
     AUDIO_FILE = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + os.path.sep + 'sample1' + os.path.sep + "english.wav"
     audio = sr.AudioData.from_file(AUDIO_FILE)
@@ -84,7 +86,7 @@ while (query == "None"):
     query = takecommand()
 
 
-def destination_language():
+def destination_language() -> str:
     print("Enter the language in which you\
     want to convert : Ex. Hindi , English , etc.")
     print()
@@ -111,7 +113,7 @@ while (to_lang not in dic):
 to_lang = dic[dic.index(to_lang)+1]
 
 
-async def translate_text(query:str,dest=to_lang):
+async def translate_text(query:str,dest:str =to_lang) -> optional[str]:
      async with Translator() as translator:
        result = await  translator.translate(query, dest=to_lang)
        return result
