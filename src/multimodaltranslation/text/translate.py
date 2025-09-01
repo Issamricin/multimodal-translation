@@ -71,11 +71,11 @@ class MyHandler(BaseHTTPRequestHandler):
             return
         
         if self.path == "/title": # route(/title)
-            content_length = int(self.headers.get('Content-Length'))
-            body = self.rfile.read(content_length)
+            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
+            content = self.rfile.read(content_length)
 
             try:
-                data = json.loads(body)
+                data = json.loads(content)
             except json.JSONDecodeError:
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
@@ -142,8 +142,8 @@ class MyHandler(BaseHTTPRequestHandler):
                 headers = {"Content-Type": "application/json"}
                 conn.request("POST", "/translate", body=json_data, headers=headers)
 
-                response = conn.getresponse()
-                response_body = response.read()
+                translation = conn.getresponse()
+                response_body = translation.read()
                 data = json.loads(response_body)
                 
                 responses.append({"title": data["translatedText"], "lang": target})
@@ -157,11 +157,11 @@ class MyHandler(BaseHTTPRequestHandler):
             self.wfile.write(responses_bytes)
 
         elif self.path == "/body": #route(/body)
-            content_length = int(self.headers.get('Content-Length'))
-            body = self.rfile.read(content_length)
+            content_length = int(self.headers.get('Content-Length',0)) #could return none so we give a default value of 0
+            content = self.rfile.read(content_length)
 
             try:
-                data = json.loads(body)
+                data = json.loads(content)
             except json.JSONDecodeError:
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
@@ -171,7 +171,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
             try:
                 title = str(data['title'])
-                body = str(data['body'])
+                body:str = str(data['body'])
                 lang = data['lang']
                 targets = data['targets']
             except KeyError:
@@ -231,15 +231,15 @@ class MyHandler(BaseHTTPRequestHandler):
                 headers = {"Content-Type": "application/json"}
                 conn.request("POST", "/translate", body=json_data_t, headers=headers)
 
-                response = conn.getresponse()
-                response_t = response.read()
+                translation = conn.getresponse()
+                response_t = translation.read()
                 data_t = json.loads(response_t)
 
                 json_data_b = json.dumps(payload_b)
                 conn.request("POST", "/translate", body=json_data_b, headers=headers)
 
-                response = conn.getresponse()
-                response_b = response.read()
+                translation = conn.getresponse()
+                response_b = translation.read()
                 data_b = json.loads(response_b)
 
                 responses.append({"title": data_t["translatedText"], "body": data_b["translatedText"], "lang": target})

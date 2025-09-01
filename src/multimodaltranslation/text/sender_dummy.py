@@ -3,11 +3,11 @@
 import requests
 import pprint
 
-def translate_title(my_object):
+def translate_title(my_object:dict) -> None:
     response = requests.post("http://localhost:8000/title", json=my_object, headers={"Content-Type": "application/json"})
     pprint.pprint(response.json())
 
-def translate_body(my_object):
+def translate_body(my_object:dict) -> None:
     response = requests.post("http://localhost:8000/body", json=my_object, headers={"Content-Type": "application/json"})
     pprint.pprint(response.json())
 
