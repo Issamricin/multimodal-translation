@@ -97,7 +97,7 @@ class MyHandler(BaseHTTPRequestHandler):
             if check_lang(self, lang):
                 return
 
-            responses = []
+            responses:list = []
 
             translate_title(self, title, lang, targets, responses)
 
@@ -162,7 +162,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.wfile.write(responses_bytes)
             return
 
-def translate_title(self, title, lang, targets, responses):
+def translate_title(self:MyHandler, title:str, lang:str, targets:list, responses:list) -> None:
             for target in targets:
                 payload = {
                     "q": title,
@@ -198,7 +198,7 @@ def translate_title(self, title, lang, targets, responses):
 
                 responses.append({"title": data["translatedText"], "lang": target})
 
-def translate_body(self, title, body, lang, targets, responses):
+def translate_body(self:MyHandler, title:str, body:str, lang:str, targets:list, responses:list) -> None:
             for target in targets:
                 payload_t = {
                         "q": title,
@@ -245,7 +245,7 @@ def translate_body(self, title, body, lang, targets, responses):
 
                 responses.append({"title": data_t["translatedText"], "body": data_b["translatedText"], "lang": target})
 
-def check_lang(self, lang) -> bool:
+def check_lang(self:MyHandler, lang:str) -> bool:
 
             if lang not in LANGUAGE:
 
@@ -265,7 +265,7 @@ def check_lang(self, lang) -> bool:
                 return True
             else:
                 return False
-            
+
 if __name__ == "__main__":
     server = HTTPServer(("localhost", 8000), MyHandler)
     server.serve_forever()
