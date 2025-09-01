@@ -59,17 +59,17 @@ LANGUAGE = [
 url = "http://localhost:5000/translate" #for libreTranslate
 
 class MyHandler(BaseHTTPRequestHandler):
-    
+
     def do_POST(self) -> None :
         content_type = self.headers.get("Content-Type", "")
-        
+
         if "application/json" not in content_type:
             self.send_response(400)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(b'{"error": "Content-Type must be application/json"}')
             return
-        
+
         if self.path == "/title": # route(/title)
             content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
             content = self.rfile.read(content_length)
@@ -119,7 +119,7 @@ class MyHandler(BaseHTTPRequestHandler):
                     "source": lang,
                     "target": target 
                     }
-                
+
 
                 if target not in LANGUAGE:
                     if not isinstance(target, str):
@@ -145,7 +145,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 translation = conn.getresponse()
                 response_body = translation.read()
                 data = json.loads(response_body)
-                
+
                 responses.append({"title": data["translatedText"], "lang": target})
 
             responses_bytes = json.dumps(responses).encode("utf-8")
@@ -180,7 +180,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(b'{"error": "Invalid keys", "keys": "title, body, lang, targets"}')
                 return
-            
+
             if lang not in LANGUAGE:
                 if not isinstance(lang, str):
                     response = {str(lang): f"Type error, should be string not {type(lang)}"}

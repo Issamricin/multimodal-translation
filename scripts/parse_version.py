@@ -8,13 +8,13 @@ import typing as t
 # TODO Improve: try using the semantic_version_checker package for semver regex
 
 ExceptionFactory = t.Callable[[str, str, str], Exception]
-ClientCallback = t.Callable[[str, str], t.Tuple]
+ClientCallback = t.Callable[[str, str], tuple]
 
-MatchConverter = t.Callable[[t.Match], t.Tuple]
+MatchConverter = t.Callable[[t.Match], tuple]
 MatchData = t.Union[
-    t.Tuple[t.Callable[[t.Match], t.Tuple], str, t.List[t.Any]],
-    t.Tuple[t.Callable[[t.Match], t.Tuple], str],
-    t.Tuple[t.Callable[[t.Match], t.Tuple]],
+    tuple[t.Callable[[t.Match], tuple], str, list[t.Any]],
+    tuple[t.Callable[[t.Match], tuple], str],
+    tuple[t.Callable[[t.Match], tuple]],
 ]
 # 1st item (Callable): takes a Match object and return a tuple of strings
 # 2nd item (str): 'method'/'callable attribute' of the 're' python module)
@@ -33,7 +33,7 @@ def build_client_callback(data: MatchData, factory: ExceptionFactory) -> ClientC
     elif len(data) == 2:
         data = (data[0], data[1], [re.MULTILINE])
 
-    def client_callback(file_path: str, regex: str) -> t.Tuple:
+    def client_callback(file_path: str, regex: str) -> tuple:
         with open(file_path) as _file:
             contents = _file.read()
         match = getattr(re, data[1])(regex, contents, *data[2])
@@ -105,7 +105,7 @@ def parse_version(software_release_cfg: str) -> str:
     return version
 
 
-def get_arguments(sys_args: t.List[str]):
+def get_arguments(sys_args: list[str]):
     project_dir:str = ''
     if len(sys_args) == 1:  # no input path was given by user, as console arg
         project_dir = os.getcwd()

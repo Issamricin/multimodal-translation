@@ -8,7 +8,7 @@
 |
 '''
 import asyncio
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
 
 
 def get_cli_value()->tuple[float,float,str]:
@@ -54,10 +54,6 @@ def main()-> None:
         metavar = 'device'
 
      )
-
-    args : Namespace = parser.parse_args()
-    power:float = args.p
-    device:str = args.d
 
 
 # this is important so that it does not run from pytest
