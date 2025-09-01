@@ -1,7 +1,6 @@
 # copied from https://github.com/argosopentech/LibreTranslate-py/tree/main
 # see  https://docs.python.org/3/library/urllib.request.html#module-urllib.request
 import json
-import sys
 from typing import Any, Dict
 from urllib import request, parse
 
