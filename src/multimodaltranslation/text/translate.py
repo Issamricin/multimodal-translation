@@ -1,6 +1,6 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
 import http.client
 import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 LANGUAGE = [
         "ar",
