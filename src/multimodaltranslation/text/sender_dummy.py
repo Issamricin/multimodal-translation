@@ -14,9 +14,9 @@ def translate_body(my_object:dict) -> None:
     pprint.pprint(response.json())
 
 
-#my_object = {"title": "Hello", "body": "this is the body", "lang": "en", "targets": ["it","es"]}
-#translate_body(my_object)
+my_object = {"title": "Hello", "body": "this is the body", "lang": "en", "targets": ["it","es"]}
+translate_body(my_object)
 
 
-my_object = {"tditle": "dsf","lang": "en", "targets": ["it","es"]}
-translate_title(my_object)
+#my_object = {"title": "hello","lang": "en", "targets": ["it","es"]}
+#translate_title(my_object)

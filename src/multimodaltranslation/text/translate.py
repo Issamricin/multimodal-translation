@@ -94,25 +94,75 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"error": "Invalid keys", "keys": "title, lang, targets"}')
                 return
 
-            if lang not in LANGUAGE:
-
-                if not isinstance(lang, str):
-                    response = {str(lang): f"Type error, should be string not {type(lang)}"}
-                else:
-                    response = {lang: "This langauge is not available"}
-
-                response_bytes = json.dumps(response).encode("utf-8")
-                self.send_response(400)
-
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Length", str(len(response_bytes)))
-                self.end_headers()
-
-                self.wfile.write(response_bytes)
+            if check_lang(self, lang):
                 return
 
             responses = []
 
+            translate_title(self, title, lang, targets, responses)
+
+            responses_bytes = json.dumps(responses).encode("utf-8")
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(responses_bytes)))
+            self.end_headers()
+            self.wfile.write(responses_bytes)
+
+        elif self.path == "/body": #route(/body)
+            content_length = int(self.headers.get('Content-Length',0)) #could return none so we give a default value of 0
+            content = self.rfile.read(content_length)
+
+            try:
+                data = json.loads(content)
+            except json.JSONDecodeError:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(b'{"error": "Invalid JSON"}')
+                return
+
+            try:
+                title = str(data['title'])
+                body:str = str(data['body'])
+                lang = data['lang']
+                targets = data['targets']
+            except KeyError:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(b'{"error": "Invalid keys", "keys": "title, body, lang, targets"}')
+                return
+
+            if check_lang(self, lang):
+                return
+
+            responses = []
+
+            translate_body(self, title, body, lang, targets, responses)
+
+            responses_bytes = json.dumps(responses).encode("utf-8")
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(responses_bytes)))
+            self.end_headers()
+            self.wfile.write(responses_bytes)
+
+        else:
+
+            response = {"error": "wrong path (available: 1-/title 2-/body)"}
+
+            responses_bytes = json.dumps(response).encode("utf-8")
+
+            self.send_response(400)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(responses_bytes)))
+            self.end_headers()
+            self.wfile.write(responses_bytes)
+            return
+
+def translate_title(self, title, lang, targets, responses):
             for target in targets:
                 payload = {
                     "q": title,
@@ -148,56 +198,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
                 responses.append({"title": data["translatedText"], "lang": target})
 
-            responses_bytes = json.dumps(responses).encode("utf-8")
-
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(responses_bytes)))
-            self.end_headers()
-            self.wfile.write(responses_bytes)
-
-        elif self.path == "/body": #route(/body)
-            content_length = int(self.headers.get('Content-Length',0)) #could return none so we give a default value of 0
-            content = self.rfile.read(content_length)
-
-            try:
-                data = json.loads(content)
-            except json.JSONDecodeError:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(b'{"error": "Invalid JSON"}')
-                return
-
-            try:
-                title = str(data['title'])
-                body:str = str(data['body'])
-                lang = data['lang']
-                targets = data['targets']
-            except KeyError:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(b'{"error": "Invalid keys", "keys": "title, body, lang, targets"}')
-                return
-
-            if lang not in LANGUAGE:
-                if not isinstance(lang, str):
-                    response = {str(lang): f"Type error, should be string not {type(lang)}"}
-                else:
-                    response = {lang: "This langauge is not available"}
-
-                response_bytes = json.dumps(response).encode("utf-8")
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Length", str(len(response_bytes)))
-                self.end_headers()
-
-                self.wfile.write(response_bytes)
-                return
-
-            responses = []
-
+def translate_body(self, title, body, lang, targets, responses):
             for target in targets:
                 payload_t = {
                         "q": title,
@@ -244,27 +245,27 @@ class MyHandler(BaseHTTPRequestHandler):
 
                 responses.append({"title": data_t["translatedText"], "body": data_b["translatedText"], "lang": target})
 
-            responses_bytes = json.dumps(responses).encode("utf-8")
+def check_lang(self, lang) -> bool:
 
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(responses_bytes)))
-            self.end_headers()
-            self.wfile.write(responses_bytes)
+            if lang not in LANGUAGE:
 
-        else:
+                if not isinstance(lang, str):
+                    response = {str(lang): f"Type error, should be string not {type(lang)}"}
+                else:
+                    response = {lang: "This langauge is not available"}
 
-            response = {"error": "wrong path (available: 1-/title 2-/body)"}
+                response_bytes = json.dumps(response).encode("utf-8")
+                self.send_response(400)
 
-            responses_bytes = json.dumps(response).encode("utf-8")
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(response_bytes)))
+                self.end_headers()
 
-            self.send_response(400)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(responses_bytes)))
-            self.end_headers()
-            self.wfile.write(responses_bytes)
-            return
-
+                self.wfile.write(response_bytes)
+                return True
+            else:
+                return False
+            
 if __name__ == "__main__":
     server = HTTPServer(("localhost", 8000), MyHandler)
     server.serve_forever()
