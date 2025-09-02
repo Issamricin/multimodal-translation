@@ -173,18 +173,12 @@ def translate_title(self:MyHandler, title:str, lang:str, targets:list, responses
 
                 if target not in LANGUAGE:
                     if not isinstance(target, str):
-                        response = {str(target): f"Type error, should be string not {type(target)}"}
+                        responses.append({str(target): f"Type error, should be string not {type(target)}"})
                     else:
-                        response = {target: "This langauge is not available"}
+                        responses.append({target: "This langauge is not available"})
+                    
+                    continue
 
-                    response_bytes = json.dumps(response).encode("utf-8")
-                    self.send_response(400)
-                    self.send_header("Content-Type", "application/json")
-                    self.send_header("Content-Length", str(len(response_bytes)))
-                    self.end_headers()
-
-                    self.wfile.write(response_bytes)
-                    return
 
                 conn = http.client.HTTPConnection("localhost", 5000)
                 json_data = json.dumps(payload)
@@ -213,18 +207,11 @@ def translate_body(self:MyHandler, title:str, body:str, lang:str, targets:list, 
 
                 if target not in LANGUAGE:
                     if not isinstance(target, str):
-                        response = {str(target): f"Type error, should be string not {type(target)}"}
+                        responses.append({str(target): f"Type error, should be string not {type(target)}"})
                     else:
-                        response = {target: "This langauge is not available"}
-
-                    response_bytes = json.dumps(response).encode("utf-8")
-                    self.send_response(400)
-                    self.send_header("Content-Type", "application/json")
-                    self.send_header("Content-Length", str(len(response_bytes)))
-                    self.end_headers()
-
-                    self.wfile.write(response_bytes)
-                    return
+                        responses.append({target: "This langauge is not available"})
+                    
+                    continue
 
                 conn = http.client.HTTPConnection("localhost", 5000)
                 json_data_t = json.dumps(payload_t)
