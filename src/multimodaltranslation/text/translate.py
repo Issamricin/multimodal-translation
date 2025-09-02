@@ -59,8 +59,26 @@ LANGUAGE = [
 url = "http://localhost:5000/translate" #for libreTranslate
 
 class MyHandler(BaseHTTPRequestHandler):
+    """
+    Handles the calls for the server. You use this class to create a server on a specific port.
+    """
 
     def do_POST(self) -> None :
+        """
+        Handles the different routes. Fot /title it will translate the title into the desired languages. 
+        For /body it will translate the title and the body into the desired languages.
+
+        Args:
+            - None
+
+        Returns:
+            - None
+
+        Example:
+            >>> server = HTTPServer(("localhost", 8000), MyHandler)
+            >>> server.serve_forever()
+        """
+
         content_type = self.headers.get("Content-Type", "")
 
         if "application/json" not in content_type:
@@ -94,7 +112,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"error": "Invalid keys", "keys": "title, lang, targets"}')
                 return
 
-            if check_lang(self, lang):
+            if check_lang(self, lang, LANGUAGE):
                 return
 
             responses:list = []
@@ -134,7 +152,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"error": "Invalid keys", "keys": "title, body, lang, targets"}')
                 return
 
-            if check_lang(self, lang):
+            if check_lang(self, lang, LANGUAGE):
                 return
 
             responses = []
@@ -163,6 +181,26 @@ class MyHandler(BaseHTTPRequestHandler):
             return
 
 def translate_title(self:MyHandler, title:str, lang:str, targets:list, responses:list) -> None:
+            """
+            Handles the /title route. It translates the title into the desired output.
+
+            Args:
+                - self (MyHandler): The handler class.
+                - title (str): The title you want to translate.
+                - lang (str): The original lanuage of the title.
+                - targets (list): List of lanuages you want to translate the title to.
+                - responses (list): The list containing the responses of different languages and errors. 
+
+            Returns:
+                - None
+
+            Example:
+
+                >>> responses = []
+                >>> translate_title(self, title, lang, targets, responses)
+                >>> responses_bytes = json.dumps(response).encode("utf-8")
+            """
+
             for target in targets:
                 payload = {
                     "q": title,
@@ -193,6 +231,26 @@ def translate_title(self:MyHandler, title:str, lang:str, targets:list, responses
                 responses.append({"title": data["translatedText"], "lang": target})
 
 def translate_body(self:MyHandler, title:str, body:str, lang:str, targets:list, responses:list) -> None:
+            """
+            Handles the /body route. It translates the title and the body into the desired output.
+
+            Args:
+                - self (MyHandler): The handler class.
+                - title (str): The title you want to translate.
+                - body (str): The body you want to translate.
+                - lang (str): The original lanuage of the title.
+                - targets (list): List of lanuages you want to translate the title to.
+                - responses (list): The list containing the responses of different languages and errors. 
+
+            Returns:
+                - None
+
+            Example:
+
+                >>> responses = []
+                >>> translate_body(self, title, body, lang, targets, responses)
+                >>> responses_bytes = json.dumps(response).encode("utf-8")
+            """
             for target in targets:
                 payload_t = {
                         "q": title,
@@ -232,9 +290,19 @@ def translate_body(self:MyHandler, title:str, body:str, lang:str, targets:list, 
 
                 responses.append({"title": data_t["translatedText"], "body": data_b["translatedText"], "lang": target})
 
-def check_lang(self:MyHandler, lang:str) -> bool:
+def check_lang(self:MyHandler, lang:str, langs:list) -> bool:
+            """
+            Checks if the original language of the title or the body is available in the list of languages or not.
 
-            if lang not in LANGUAGE:
+            Args:
+                - self (MyHandler): The handler class.
+                - lang (str): The language you want to check.
+                - langs (list): The list of the languages that are available.
+
+            Returns:
+                - bool: True or False
+            """
+            if lang not in langs:
 
                 if not isinstance(lang, str):
                     response = {str(lang): f"Type error, should be string not {type(lang)}"}
