@@ -12,8 +12,8 @@ Development
 
 .. code-block:: shell
 
-    git clone git@github.com:alanmehio/multimedia-translator.git
-    cd  multimedia-translator
+    git clone git@github.com:alanmehio/multimodal-translator.git
+    cd  multimodal-translator
 
 | Make the project in edit mode
 
@@ -25,7 +25,7 @@ Then, for any changes in the code you can execute it from command line
 
 .. code-block:: shell
 
-   rfcentral -p 65.55 -d ttyACM0
+   multimodal-translation
 
 
 
@@ -66,7 +66,7 @@ Testing, Documentation Building, Scripts, CI/CD, Static Code Analysis for this p
 Prerequisites
 -------------
 
-You need to have `Python` and  `PySide6`  installed for Development
+You need to have `Python` installed for Development
 
 API Documentation
 -----------------

@@ -1,5 +1,8 @@
 # This is a simulation for sending a request to the server. And getting a response back.
-
+"""
+This is a script to test the server. 
+It sends dummy data to the server to see the different responses.
+"""
 import pprint
 
 import requests

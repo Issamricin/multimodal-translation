@@ -21,7 +21,7 @@ repository = "https://github.com/alanmehio/multimodal-translation"
 documentation = "https://multimodal-translation.readthedocs.io/"
 
 keywords = [
-    "Multimedia Translator", "AI Translation", "Central"
+    "Multimodal Translator", "AI Translation"
 ]
 
 requires-python = ">=3.9,<4.0"

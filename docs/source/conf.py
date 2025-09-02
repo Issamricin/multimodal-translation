@@ -37,13 +37,13 @@ def get_templated_vars():
         'TemplatedVariables',
         (),
         dict(
-            project_slug='multimedia-translator',
-            package_name='rfcentral',
+            project_slug='multimodal-translator',
+            package_name='multimodaltranslation',
             author_name='Alan',
             year='2025',
             version='1.0.0',
             github_username='alanmehio',
-            repo_name='rf-surveillance-node',
+            repo_name='multimodal-translation',
         ),
     )
 
