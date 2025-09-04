@@ -152,55 +152,6 @@ Audio Search for a given language words(optional):
   It also allow us to build a language model which we will not do now but who knows
 
 
-THIS SECTION FOR REWAN
-======================
-
-Read the prerequisites at the top of this file (tox), understand the commands.
-And make sure to never push to the remote repo before doing the prerequisites part.
-
-Testing the code in the src folder:
------------------------------------
-
-Install pytest and coverage in your env.
-This is the documentation for the coverage: https://coverage.readthedocs.io/en/7.7.0/
-
-The tests should cover about 95% of the code.
-To check how much your tests are covering:
-$ coverage run -m pytest
-$ coverage report -m
-
-
-
-
-
-THIS SECTION FOR ALAN
-=====================
-
-Moved from iso part:
---------------------
-
-| The product owner wants to be able to send a title with the source language and a target language list to be translated to
-| The product owner wants to be able to send a title and body with the source language and a targe list to be translated to
-
-| The result of translation above will return a list of TextTransModel ( see model package) with the "targets" param is None since the same
- class can be used for request response . it is the same for BodyTransModel
-
-
-RST File Checker:
------------------
-
-https://rsted.info.ucl.ac.be/
-
-
-Factory Pattern:
-----------------
-| https://realpython.com/python-type-hints-multiple-types/#annotate-the-return-value-of-a-factory-function
-
-| https://realpython.com/factory-method-python/
-
-| https://www.geeksforgeeks.org/python/factory-method-python-design-patterns/
-
-
 Audio:
 ------
 
@@ -259,5 +210,55 @@ Video Translation:
 | Developing Video translation
  https://medium.com/@jianchang512/developing-a-video-translation-and-dubbing-tool-using-python-a1120b8b5b47
  https://dev.to/devasservice/video-captioning-and-translating-with-python-and-streamlit-5e0k
+
+| 
+
+THIS SECTION FOR REWAN
+======================
+
+Read the prerequisites at the top of this file (tox), understand the commands.
+And make sure to never push to the remote repo before doing the prerequisites part.
+
+Testing the code in the src folder:
+-----------------------------------
+
+Install pytest and coverage in your env.
+This is the documentation for the coverage: https://coverage.readthedocs.io/en/7.7.0/
+
+The tests should cover about 95% of the code.
+To check how much your tests are covering:
+$ coverage run -m pytest
+$ coverage report -m
+
+
+
+|
+
+THIS SECTION FOR ALAN
+=====================
+
+Moved from iso part:
+--------------------
+
+| The product owner wants to be able to send a title with the source language and a target language list to be translated to
+| The product owner wants to be able to send a title and body with the source language and a targe list to be translated to
+
+| The result of translation above will return a list of TextTransModel ( see model package) with the "targets" param is None since the same
+ class can be used for request response . it is the same for BodyTransModel
+
+
+RST File Checker:
+-----------------
+
+https://rsted.info.ucl.ac.be/
+
+
+Factory Pattern:
+----------------
+| https://realpython.com/python-type-hints-multiple-types/#annotate-the-return-value-of-a-factory-function
+
+| https://realpython.com/factory-method-python/
+
+| https://www.geeksforgeeks.org/python/factory-method-python-design-patterns/
 
 
