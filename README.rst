@@ -12,4 +12,4 @@ Multimodal Translation
 |
 
 
-`Technical Specification <TechnicalSpec.rst>`_
+`Technical Specification <./TechnicalSpec.rst>`_
