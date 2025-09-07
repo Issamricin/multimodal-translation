@@ -8,3 +8,8 @@ Multimodal Translation
   from various sources, such as text, images, audio, and video, to convey a message accurately.
   `What is multimodal translation? <https://www.educative.io/answers/what-is-multimodal-translation/>`_
 
+
+|
+
+
+`Technical Specification <TechnicalSpec.rst>`_
