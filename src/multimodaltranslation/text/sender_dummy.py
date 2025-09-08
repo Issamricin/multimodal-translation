@@ -7,19 +7,10 @@ import pprint
 
 import requests
 
-
-def translate_title(my_object:dict) -> None:
-    response = requests.post("http://localhost:8000/title", json=my_object, headers={"Content-Type": "application/json"})
-    pprint.pprint(response.json())
-
-def translate_body(my_object:dict) -> None:
-    response = requests.post("http://localhost:8000/body", json=my_object, headers={"Content-Type": "application/json"})
+def translate_text(my_object:dict) -> None:
+    response = requests.post("http://localhost:8000/translate", json=my_object, headers={"Content-Type": "application/json"})
     pprint.pprint(response.json())
 
 
-my_object = {"title": "Hello", "body": "this is the body", "lang": "edn", "targets": ["it","eds"]}
-translate_body(my_object)
-
-
-#my_object = {"title": "hello","lang": "en", "targets": ["it","es"]}
-#translate_title(my_object)
+my_object = {"text": "Hello", "lang": "en", "targets": ["it","eds"]}
+translate_text(my_object)
