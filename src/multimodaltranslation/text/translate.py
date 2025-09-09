@@ -42,7 +42,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.wfile.write(b'{"error": "Content-Type must be application/json"}')
             return
 
-        if self.path == "/translate": # route(/title)
+        if self.path == "/text": # route(/title)
             content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
             content = self.rfile.read(content_length)
 
@@ -83,7 +83,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         else:
 
-            response = {"error": "wrong path (available: /translate)"}
+            response = {"error": "wrong path (available: /text)"}
 
             responses_bytes = json.dumps(response).encode("utf-8")
 

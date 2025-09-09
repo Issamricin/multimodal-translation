@@ -235,6 +235,11 @@ To check how much your tests are covering:
 $ coverage run -m pytest
 $ coverage report -m
 
+fixing the test cases:
+----------------------
+
+I did some tests but then we changed the code so now the tests are broken so fix them. 
+for example before the url was host/title but now we don't have this route /title we have /text. so fix the broken tests and contiue making new tests.
 
 
 
