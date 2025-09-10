@@ -1,6 +1,4 @@
-======================
-Multimodal Translation
-======================
+|logo|
 
 `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
 
@@ -13,3 +11,9 @@ Multimodal Translation
 
 
 `Technical Specification <./TechnicalSpec.rst>`_
+
+
+
+
+.. |logo| image:: ../media/muiltimodal-translation-small.jpg
+                :alt: multimodal translator
