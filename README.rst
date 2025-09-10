@@ -15,5 +15,5 @@
 
 
 
-.. |logo| image:: ../media/muiltimodal-translation-small.jpg
+.. |logo| image:: media/muiltimodal-translation-small.jpg
                 :alt: multimodal translator
