@@ -61,7 +61,7 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     script_dir = Path(__file__).resolve()
     model_path = str(script_dir.parent.parent.parent.parent)
 
-    if lang == "en":
+    if lang == "en": #coult be match: case: but the tox is failling since match was introduced in python 3.10, tox is testing on 3.9
         model_path = os.path.join(model_path,"models","vosk-model-small-en-us-0.15")
     elif lang == "zh":
         model_path = os.path.join(model_path,"models","vosk-model-small-cn-0.22")
