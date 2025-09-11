@@ -28,7 +28,7 @@ def translate_to_text(file, source="en", targets=["it","es"]):
 
     text = extract_text_from_audio(file)
 
-    my_object = {f"title": text, "lang": source, "targets": targets}
+    my_object = {"title": text, "lang": source, "targets": targets}
 
     response = requests.post("http://localhost:8000/title", json=my_object, headers={"Content-Type": "application/json"})
     pprint.pprint(response.json())

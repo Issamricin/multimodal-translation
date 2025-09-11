@@ -1,8 +1,8 @@
-import http.client
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from multimodaltranslation.text.translate import translate_text
+
 from multimodaltranslation.audio.translate import translate_audio
+from multimodaltranslation.text.translate import translate_text
 
 LANGUAGE = [
      "en",
@@ -73,7 +73,7 @@ class MyHandler(BaseHTTPRequestHandler):
             if check_lang(self, lang, LANGUAGE):
                 return
 
-            responses:list = translate_text( text, lang, targets)
+            responses = translate_text( text, lang, targets)
 
             responses_bytes = json.dumps(responses).encode("utf-8")
 
@@ -83,7 +83,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(responses_bytes)
 
-        if self.path == "/audio":
+        elif self.path == "/audio":
             content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
             content = self.rfile.read(content_length)
 
@@ -109,10 +109,10 @@ class MyHandler(BaseHTTPRequestHandler):
 
             if check_lang(self, lang, LANGUAGE):
                 return
-        
+
             audio_bytes = bytes.fromhex(audio)
 
-            responses:list = translate_audio(audio_bytes,  lang, targets)
+            responses = translate_audio(audio_bytes,  lang, targets)
 
             responses_bytes = json.dumps(responses, ensure_ascii=False).encode("utf-8")
 
@@ -174,4 +174,3 @@ if __name__ == "__main__":
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nClosing server...")
-    

@@ -1,15 +1,18 @@
-from vosk import Model, KaldiRecognizer
-import wave
-import json
-import subprocess
 import io
+import json
 import os
+import subprocess
+import typing
+import wave
 from pathlib import Path
+
+from vosk import KaldiRecognizer, Model
 
 from multimodaltranslation.text.translate import translate_text
 
-def convert_to_wav_bytes(audio_bytes):
-    input_file = f"temp"
+
+def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
+    input_file = "temp"
     with open(input_file, "wb") as f:
         f.write(audio_bytes)
     command = [
@@ -21,13 +24,13 @@ def convert_to_wav_bytes(audio_bytes):
         "pipe:1"            # write to stdout instead of file
     ]
     proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True)
-    
+
     # Wrap bytes in BytesIO so it behaves like a file
     os.remove(input_file)
     return io.BytesIO(proc.stdout)
 
 
-def audio_to_text(audio_bytes, model):
+def audio_to_text(audio_bytes:bytes, model:str) -> typing.Any:
     wav_buffer = convert_to_wav_bytes(audio_bytes)
 
 
@@ -49,23 +52,23 @@ def audio_to_text(audio_bytes, model):
 
     results.append(json.loads(rec.FinalResult()))
 
-    return results[0]["text"]
+    result = results[0]["text"]
+    return result
 
 
-def translate_audio(audio_bytes, lang, targets) -> list:
+def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
 
     script_dir = Path(__file__).resolve()
-    model_path = script_dir.parent.parent.parent.parent
+    model_path = str(script_dir.parent.parent.parent.parent)
 
-    match lang:
-        case "en":
-            model_path = os.path.join(model_path,"models","vosk-model-small-en-us-0.15")
-        case "zh":
-            model_path = os.path.join(model_path,"models","vosk-model-small-cn-0.22")
-        case "fr":
-            model_path = os.path.join(model_path,"models","vosk-model-small-fr-0.22")
-        case default:
-            return {"error": f"The language {lang} is not available"}
+    if lang == "en":
+        model_path = os.path.join(model_path,"models","vosk-model-small-en-us-0.15")
+    elif lang == "zh":
+        model_path = os.path.join(model_path,"models","vosk-model-small-cn-0.22")
+    elif lang == "fr":
+        model_path = os.path.join(model_path,"models","vosk-model-small-fr-0.22")
+    else:
+        return [{"error": f"The language {lang} is not available"}]
 
 
     text = audio_to_text(audio_bytes, model_path)

@@ -4,7 +4,7 @@ from http.server import HTTPServer
 import pytest
 import requests
 
-from multimodaltranslation.text.translate import MyHandler
+from multimodaltranslation.server import MyHandler
 
 #Rewan you have to fill the empty test methods. Leave the functioning complete ones.
 

@@ -1,7 +1,6 @@
 import http.client
 import json
 
-
 LANGUAGE = [
      "en",
      "it",
@@ -46,7 +45,7 @@ def translate_text(text:str, lang:str, targets:list) -> list:
                         responses.append({str(target): f"Type error, should be string not {type(target)}"})
                     else:
                         responses.append({target: "This langauge is not available"})
-                    
+
                     continue
 
 
