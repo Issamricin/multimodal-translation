@@ -23,11 +23,11 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None :
         """
-        Handles the different routes. Fot /title it will translate the title into the desired languages. 
-        For /body it will translate the title and the body into the desired languages.
+        Handles the different routes. For /text it will translate the text into the desired languages. 
+        For /audio it will transcript and translate the audio into the desired languages.
 
         Args:
-            - None
+            - self
 
         Returns:
             - None
@@ -137,7 +137,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
 def check_lang(self:MyHandler, lang:str, langs:list) -> bool:
             """
-            Checks if the original language of the title or the body is available in the list of languages or not.
+            Checks if the original language of the /text or /audio is available in the list of languages or not.
 
             Args:
                 - self (MyHandler): The handler class.

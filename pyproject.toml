@@ -66,7 +66,7 @@ dependencies = [
  "playsound3==3.2.6",
  "gTTs==2.5.4", # Google Text to Speech
   "gTTS-token==1.1.4", # Calculate a token to run Google Translation
-  "vosk == 0.3.45"
+  "vosk >= 0.3.45"
 ]
 
 ## optional dependency for test or other purpose 
@@ -76,7 +76,8 @@ dependencies = [
 test = [
   "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",
   "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
-  "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'"
+  "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'",
+  "vosk >= 0.3.45"
 ]
 docs =[
    "Sphinx (<=8.2.3);  python_version >='3.11' and python_version <='3.14'",

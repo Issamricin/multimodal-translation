@@ -12,23 +12,15 @@ LANGUAGE = [
 
 def translate_text(text:str, lang:str, targets:list) -> list:
             """
-            Handles the /title route. It translates the title into the desired output.
+            Translates the text sent to it into the desired languages (targets).
 
             Args:
-                - self (MyHandler): The handler class.
-                - title (str): The title you want to translate.
-                - lang (str): The original lanuage of the title.
+                - text (str): The text you want to translate.
+                - lang (str): The original lanuage of the text.
                 - targets (list): List of lanuages you want to translate the title to.
-                - responses (list): The list containing the responses of different languages and errors. 
 
             Returns:
-                - None
-
-            Example:
-
-                >>> responses = []
-                >>> translate_title(self, title, lang, targets, responses)
-                >>> responses_bytes = json.dumps(response).encode("utf-8")
+                - list: List of translated texts with their target languages.
             """
 
             responses:list = []
