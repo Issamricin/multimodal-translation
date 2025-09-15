@@ -18,7 +18,7 @@ url = "http://localhost:5000/translate" #for libreTranslate
 class MyHandler(BaseHTTPRequestHandler):
     """
     Handles the calls for the server. You use this class to create a server on a specific port.        
-    
+
     Example:
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
         >>> server.serve_forever()
@@ -43,7 +43,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.send_response(400)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
-            self.wfile.write(b'{"error": "Content-Type must be application/json"}')
+            self.wfile.write(b'{"Error": "Content-Type must be application/json"}')
             return
 
         if self.path == "/text": # route(/title)
@@ -56,7 +56,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(b'{"error": "Invalid JSON"}')
+                self.wfile.write(b'{"Error": "Invalid JSON"}')
                 return
 
             try:
@@ -67,7 +67,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(b'{"error": "Invalid keys", "keys": "text, lang, targets"}')
+                self.wfile.write(b'{"Error": "Invalid keys", "keys": "text, lang, targets"}')
                 return
 
             if check_lang(self, lang, LANGUAGE):
@@ -93,7 +93,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(b'{"error": "Invalid JSON"}')
+                self.wfile.write(b'{"Error": "Invalid JSON"}')
                 return
 
             try:
@@ -104,7 +104,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.send_response(400)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(b'{"error": "Invalid keys", "keys": "audio, lang, targets"}')
+                self.wfile.write(b'{"Error": "Invalid keys", "keys": "audio, lang, targets"}')
                 return
 
             if check_lang(self, lang, LANGUAGE):
@@ -124,7 +124,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         else:
 
-            response = {"error": "wrong path (available: /text, /audio)"}
+            response = {"Error": "Wrong path (available: /text, /audio)"}
 
             responses_bytes = json.dumps(response).encode("utf-8")
 
@@ -150,9 +150,9 @@ def check_lang(self:MyHandler, lang:str, langs:list) -> bool:
             if lang not in langs:
 
                 if not isinstance(lang, str):
-                    response = {str(lang): f"Type error: Should be string not {type(lang)}"}
+                    response = {"Type error": f"{lang} should be string not {type(lang)}"}
                 else:
-                    response = {lang: "Error, this langauge is not available"}
+                    response = {"Error": f"This language is not available: {lang}"}
 
                 response_bytes = json.dumps(response).encode("utf-8")
                 self.send_response(400)

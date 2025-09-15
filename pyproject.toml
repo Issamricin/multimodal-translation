@@ -65,8 +65,9 @@ dependencies = [
  "pocketsphinx==5.0.4",
  "playsound3==3.2.6",
  "gTTs==2.5.4", # Google Text to Speech
-  "gTTS-token==1.1.4", # Calculate a token to run Google Translation
-  "vosk >= 0.3.45"
+ "gTTS-token==1.1.4", # Calculate a token to run Google Translation
+ "vosk >= 0.3.45",
+ "torch>=2.5,<2.9"
 ]
 
 ## optional dependency for test or other purpose 

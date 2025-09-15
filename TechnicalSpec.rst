@@ -215,35 +215,6 @@ Video Translation:
  https://dev.to/devasservice/video-captioning-and-translating-with-python-and-streamlit-5e0k
 
 
-
-
-
-THIS SECTION FOR REWAN
-======================
-
-Read the prerequisites at the top of this file (tox), understand the commands.
-And make sure to never push to the remote repo before doing the prerequisites part.
-
-Testing the code in the src folder:
------------------------------------
-
-Install pytest and coverage in your env.
-This is the documentation for the coverage: https://coverage.readthedocs.io/en/7.7.0/
-
-The tests should cover about 95% of the code.
-To check how much your tests are covering:
-$ coverage run -m pytest
-$ coverage report -m
-
-fixing the test cases:
-----------------------
-
-I did some tests but then we changed the code so now the tests are broken so fix them. 
-for example before the url was host/title but now we don't have this route /title we have /text. so fix the broken tests and contiue making new tests.
-
-
-
-
 THIS SECTION FOR ALAN
 =====================
 

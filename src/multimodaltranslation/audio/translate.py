@@ -19,7 +19,7 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
 
     Returns:
         - io.BytesIO: The converted audio file. 
-    
+
     Raises:
         - RuntimeError: If the conversion process fails. This is a description of the error.
     """
@@ -39,10 +39,10 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
 
     try:
         proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True) # Run the command and catch the stdout
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError :
         os.remove(input_file)
-        raise RuntimeError({"error":f"ffmpeg conversion failed, {e}"})# We return None if the conversion failed, we then catch this none in the main def and return a error message.
-    
+        raise RuntimeError("ffmpeg conversion failed")
+
      # Delete the temporary file.
     os.remove(input_file)
     # Wrap bytes in BytesIO so it behaves like a file.
@@ -112,19 +112,19 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     script_dir = Path(__file__).resolve()
     model_path = str(script_dir.parent.parent.parent.parent)
 
-    if lang == "en": #coult be match: case: but the tox is failling since match was introduced in python 3.10, tox is testing on 3.9
+    if lang == "en": #could be match: case: but the tox is failling since match was introduced in python 3.10, tox is testing on 3.9
         model_path = os.path.join(model_path,"models","vosk-model-small-en-us-0.15")
     elif lang == "zh":
         model_path = os.path.join(model_path,"models","vosk-model-small-cn-0.22")
     elif lang == "fr":
         model_path = os.path.join(model_path,"models","vosk-model-small-fr-0.22")
     else:
-        return [{"error": f"The language {lang} is not available"}]
+        return [{"Error": f"The language {lang} is not available"}]
 
     try:
         text = audio_to_text(audio_bytes, model_path)
     except RuntimeError as e:
-        return [str(e)]
-    
+        return [{"Error":str(e)}]
+
     translated_text = translate_text(text, lang, targets)
     return translated_text

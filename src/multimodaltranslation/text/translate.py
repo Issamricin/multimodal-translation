@@ -34,9 +34,9 @@ def translate_text(text:str, lang:str, targets:list) -> list:
 
                 if target not in LANGUAGE:
                     if not isinstance(target, str):
-                        responses.append({str(target): f"Type error, should be string not {type(target)}"})
+                        responses.append({"Error": f"{target} should be string not {type(target)}"})
                     else:
-                        responses.append({target: "This langauge is not available"})
+                        responses.append({"Error": f"This language is not available: {target}"})
 
                     continue
 
