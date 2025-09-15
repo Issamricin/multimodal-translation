@@ -17,7 +17,11 @@ url = "http://localhost:5000/translate" #for libreTranslate
 
 class MyHandler(BaseHTTPRequestHandler):
     """
-    Handles the calls for the server. You use this class to create a server on a specific port.
+    Handles the calls for the server. You use this class to create a server on a specific port.        
+    
+    Example:
+        >>> server = HTTPServer(("localhost", 8000), MyHandler)
+        >>> server.serve_forever()
     """
     print("Starting server ...")
 
@@ -31,10 +35,6 @@ class MyHandler(BaseHTTPRequestHandler):
 
         Returns:
             - None
-
-        Example:
-            >>> server = HTTPServer(("localhost", 8000), MyHandler)
-            >>> server.serve_forever()
         """
 
         content_type = self.headers.get("Content-Type", "")
@@ -124,7 +124,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
         else:
 
-            response = {"error": "wrong path (available: /text)"}
+            response = {"error": "wrong path (available: /text, /audio)"}
 
             responses_bytes = json.dumps(response).encode("utf-8")
 

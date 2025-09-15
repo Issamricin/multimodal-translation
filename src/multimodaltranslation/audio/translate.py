@@ -21,7 +21,7 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
         - io.BytesIO: The converted audio file. 
     
     Raises:
-        - RuntimeError: If the conversion process fails, description of the error.
+        - RuntimeError: If the conversion process fails. This is a description of the error.
     """
 
     input_file = "temp" # A temporary file to store our audio in.
@@ -52,7 +52,7 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
 
 def audio_to_text(audio_bytes:bytes, model:str) -> str:
     """
-    Converts the audio files into text (using vosk). 
+    Converts the audio files into text. 
 
     Args:
         - audio_bytes (bytes): The bytes of the audio file.
@@ -95,7 +95,7 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
 
 def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     """
-    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langes using the translate_text() method.
+    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the translate_text() method.
 
     Args:
         - audio_bytes (bytes): The bytes of the audio file.
@@ -103,7 +103,7 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
         - targets (list): A list of lanuages desired for translation.
 
     Returns:
-        - list :  list of translated texts with the target language.
+        - list : List of translated texts with the target language.
 
     Raises:
         - RuntimeError: If the conversion of the audio file to wav type failed.

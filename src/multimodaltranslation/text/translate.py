@@ -17,7 +17,7 @@ def translate_text(text:str, lang:str, targets:list) -> list:
             Args:
                 - text (str): The text you want to translate.
                 - lang (str): The original lanuage of the text.
-                - targets (list): List of lanuages you want to translate the title to.
+                - targets (list): List of lanuages you want to translate to.
 
             Returns:
                 - list: List of translated texts with their target languages.
