@@ -23,7 +23,6 @@ class MyHandler(BaseHTTPRequestHandler):
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
         >>> server.serve_forever()
     """
-    print("Starting server ...")
 
     def do_POST(self) -> None :
         """
@@ -70,9 +69,6 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"Error": "Invalid keys", "keys": "text, lang, targets"}')
                 return
 
-            if check_lang(self, lang, LANGUAGE):
-                return
-
             responses = translate_text( text, lang, targets)
 
             responses_bytes = json.dumps(responses).encode("utf-8")
@@ -107,9 +103,6 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"Error": "Invalid keys", "keys": "audio, lang, targets"}')
                 return
 
-            if check_lang(self, lang, LANGUAGE):
-                return
-
             audio_bytes = bytes.fromhex(audio)
 
             responses = translate_audio(audio_bytes,  lang, targets)
@@ -134,43 +127,3 @@ class MyHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(responses_bytes)
             return
-
-def check_lang(self:MyHandler, lang:str, langs:list) -> bool:
-            """
-            Checks if the original language of the /text or /audio is available in the list of languages or not.
-
-            Args:
-                - self (MyHandler): The handler class.
-                - lang (str): The language you want to check.
-                - langs (list): The list of the languages that are available.
-
-            Returns:
-                - bool: True or False
-            """
-            if lang not in langs:
-
-                if not isinstance(lang, str):
-                    response = {"Type error": f"{lang} should be string not {type(lang)}"}
-                else:
-                    response = {"Error": f"This language is not available: {lang}"}
-
-                response_bytes = json.dumps(response).encode("utf-8")
-                self.send_response(400)
-
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Length", str(len(response_bytes)))
-                self.end_headers()
-
-                self.wfile.write(response_bytes)
-                return True
-            else:
-                return False
-
-if __name__ == "__main__":
-    port = 8000
-    server = HTTPServer(("localhost", port), MyHandler)
-    print(f"server started on localhost port: {port}")
-    try:
-        server.serve_forever()
-    except KeyboardInterrupt:
-        print("\nClosing server...")

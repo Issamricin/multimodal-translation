@@ -89,9 +89,9 @@ def test_audio_invalid_lang():
     payload = {"audio":audio_str, "lang":"edd", "targets":["es"]}
     respone = requests.post("http://localhost:8000/audio",json=payload)
 
-    assert respone.status_code == 400
+    assert respone.status_code == 200
     data = respone.json()
-    assert data['Error'] == "This language is not available: edd"
+    assert data[0]['Error'] == "The language edd is not available"
 
 
 def test_audio_invalid_target():
@@ -110,5 +110,5 @@ def test_audio_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "This language is not available: bbc"
+    assert data[0]['Error'] == "This language is not available, bbc"
 

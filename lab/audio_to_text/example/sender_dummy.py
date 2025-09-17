@@ -9,7 +9,7 @@ model_path = str(script_dir.parent.parent.parent.parent)
 model_path = os.path.join(model_path,"audio_files","sample1","english.wav")
 
 with open(model_path, "rb") as f:
-    audio_bytes = b"2334324" + f.read()    
+    audio_bytes = f.read()    
 
 audio_str = audio_bytes.hex()
 files = {

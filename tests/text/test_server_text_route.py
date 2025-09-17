@@ -67,9 +67,9 @@ def test_text_invalid_lang():
     payload = {"text":"Hello", "lang":"no language", "targets":["es"]}
     respone = requests.post("http://localhost:8000/text",json=payload)
 
-    assert respone.status_code == 400
+    assert respone.status_code == 200
     data = respone.json()
-    assert data['Error'] == "This language is not available: no language"
+    assert data[0]['Error'] == "This language is not available, no language"
 
 
 def test_text_invalid_target():
@@ -80,7 +80,7 @@ def test_text_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "This language is not available: bbc"
+    assert data[0]['Error'] == "This language is not available, bbc"
 
 
 def test_wrong_path():

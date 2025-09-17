@@ -1,11 +1,13 @@
 import io
 import json
 import os
+import sys
 import subprocess
 import wave
 from pathlib import Path
 
-from vosk import KaldiRecognizer, Model
+from vosk import KaldiRecognizer, Model, SetLogLevel
+SetLogLevel(-1)
 
 from multimodaltranslation.text.translate import translate_text
 
@@ -72,6 +74,9 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
 
 
     wf = wave.open(wav_buffer, "rb")
+
+    stderr_fileno = sys.stderr
+    sys.stderr = open(os.devnull, "w")  # Redirect C++ logs to null
 
     mod = Model(model)
 
