@@ -1,9 +1,10 @@
 """
 This is the free google recognizer. It only lisens to english audio, if you try chinese it says forbidden. 
 """
-import speech_recognition as sr
-from pathlib import Path
 import os
+from pathlib import Path
+
+import speech_recognition as sr
 
 
 def extract_text_from_audio(file:str) -> str:

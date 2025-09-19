@@ -4,16 +4,21 @@ from http.server import HTTPServer
 import pytest
 import requests
 
+from multimodaltranslation.libretranslate_server import Libretranslate_Server
 from multimodaltranslation.server import MyHandler
 
 
 @pytest.fixture(scope="module", autouse=True)
 def start_server():
+    lib_server = Libretranslate_Server()
+    lib_server.start_libretranslate_server(libport=5000)
+
     server = HTTPServer(("localhost", 8000), MyHandler)
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon=True #So python can still shutdown the server cleanly if we forgot to.
     thread.start()
     yield # means do the tests and finish them then come back and continue after the yield.
+    lib_server.stop_libretranslate_server()
     server.shutdown()
     thread.join()
 

@@ -1,23 +1,17 @@
-from multimodaltranslation.version import __version__
-from argparse import ArgumentParser
-from multimodaltranslation.server import MyHandler
+import subprocess
+import time
+from argparse import ArgumentParser, RawTextHelpFormatter
+from http.server import HTTPServer
+from pathlib import Path
+
 from multimodaltranslation.audio.translate import translate_audio
 from multimodaltranslation.libretranslate_server import Libretranslate_Server
+from multimodaltranslation.server import MyHandler
 from multimodaltranslation.text.translate import send_text
+from multimodaltranslation.version import __version__
 
-from http.server import HTTPServer
-import time
-
-import subprocess
-from pathlib import Path
-
-from argparse import ArgumentParser, RawTextHelpFormatter
-from pathlib import Path
 
 def main() -> None:
-
-    LANGUAGE = ["en", "it", "es", "fr", "zh"]
-
     parser = ArgumentParser(
         description=(
             "Multimodal Translator\n"
@@ -113,7 +107,7 @@ def main() -> None:
     else:
         cli_translate(args.o, args.t, args.txt, args.f, args.lp)
 
-def cli_translate(original, target, text, file, port=5000):
+def cli_translate(original:str, target:list, text:str, file:str, port:int =5000) -> None:
 
     process = subprocess.Popen(
         [ "libretranslate", "--port", f"{port}"],  # disable api keys so that libretranslate does not creats sessions for the api databases.
@@ -126,19 +120,19 @@ def cli_translate(original, target, text, file, port=5000):
     txt = text
     f = file
 
-    if o == None:
+    if o is None:
         o = input("Enter the original language of the text: ")
 
-    if t == None:
-        t = input("Enter the target languages seperated by space: ")
-        t = t.split(" ")
+    if t is None:
+        inp = input("Enter the target languages seperated by space: ")
+        t = inp.split(" ")
 
-    if txt != None:
+    if txt is not None:
         cont = " ".join(txt)
         translated = send_text(cont, o, t, port)
         process.kill()
         process.wait()
-    elif file != None:
+    elif file is not None:
         cont = f
 
         try:
@@ -157,34 +151,33 @@ def cli_translate(original, target, text, file, port=5000):
         translated = send_text(cont, o, t, port)
         process.kill()
         process.wait()
-    
+
     print(translated)
 
-def start_server(port=8000, libport=5000):
+def start_server(port:int =8000, libport:int =5000) -> None:
     # Start the LibreTranslate server
     print("starting server ... ")
     try:
         lib_server = Libretranslate_Server()
         lib_server.start_libretranslate_server(libport=libport)
-    except Exception as e:
+    except Exception:
         lib_server.stop_libretranslate_server()
         return print([f"-{libport} Port might be taken!"])
 
-    handler = MyHandler
-    handler.set_libport(MyHandler, libport)
+    MyHandler.set_libport(libport)
     try:
-        server = HTTPServer(("localhost", port), handler)
-        
+        server = HTTPServer(("localhost", port), MyHandler)
+
     except OSError:
         return print("Error: Ports are in use. You can change the ports using the -lp and -ap flags. (-h for more help)")    
-        
+
     try:
         print(f"server started on localhost port: {port}")
         server.serve_forever()
 
     except KeyboardInterrupt:  
         lib_server.stop_libretranslate_server()      
-        print("\nClosing server...")
+        return print("\nClosing server...")
 
 
 

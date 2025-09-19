@@ -6,9 +6,11 @@ import wave
 from pathlib import Path
 
 from vosk import KaldiRecognizer, Model, SetLogLevel
-SetLogLevel(-1)
 
 from multimodaltranslation.text.translate import send_text
+
+SetLogLevel(-1)
+
 
 
 def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:

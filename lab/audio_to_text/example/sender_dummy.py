@@ -1,6 +1,7 @@
-import requests
-from pathlib import Path
 import os
+from pathlib import Path
+
+import requests
 
 url = "http://localhost:8000/audio"
 

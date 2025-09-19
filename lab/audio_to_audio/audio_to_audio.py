@@ -1,13 +1,14 @@
 # copied from https://www.geeksforgeeks.org/python/create-a-real-time-voice-translator-using-python/
 # with correction also
 import asyncio
-from playsound3 import playsound
+import os
+from pathlib import Path
+
+import optional
 import speech_recognition as sr
 from googletrans import Translator
 from gtts import gTTS
-import os
-from pathlib import Path
-import optional 
+from playsound3 import playsound
 
 flag = 0
 

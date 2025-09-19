@@ -23,7 +23,8 @@ class MyHandler(BaseHTTPRequestHandler):
     """
     libport = 5000
 
-    def set_libport(self, libport:int ):
+    @classmethod
+    def set_libport(self, libport:int ) -> None:
         self.libport = libport
 
     def do_POST(self) -> None :

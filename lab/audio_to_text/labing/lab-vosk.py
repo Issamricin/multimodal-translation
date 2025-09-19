@@ -1,8 +1,10 @@
-from vosk import Model, KaldiRecognizer
-import wave
+import io
 import json
 import subprocess
-import io
+import wave
+
+from vosk import KaldiRecognizer, Model
+
 
 def convert_to_wav_bytes(input_file):
     command = [

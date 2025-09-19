@@ -2,7 +2,7 @@
 # see  https://docs.python.org/3/library/urllib.request.html#module-urllib.request
 import json
 from typing import Any, Dict
-from urllib import request, parse
+from urllib import parse, request
 
 
 class LibreTranslateAPI:

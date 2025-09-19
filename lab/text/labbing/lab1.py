@@ -1,5 +1,7 @@
 import asyncio
+
 from googletrans import Translator
+
 
 async def translate_text():
      async with Translator() as translator:

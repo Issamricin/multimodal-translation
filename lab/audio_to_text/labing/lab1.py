@@ -1,11 +1,12 @@
 """
 This is sphinx recognizer. It only lisens to english audio. 
 """
-import speech_recognition as sr
-import requests
-from pathlib import Path
 import os
 import pprint
+from pathlib import Path
+
+import requests
+import speech_recognition as sr
 
 
 def extract_text_from_audio(file:str) -> str:

@@ -1,5 +1,6 @@
 import http.client
 import json
+
 from multimodaltranslation.libretranslate_server import Libretranslate_Server
 
 LANGUAGE = [
@@ -10,7 +11,7 @@ LANGUAGE = [
      "zh"
     ]
 
-def translate_text(text:str, lang:str, targets:list, libport = 5000) -> list:
+def translate_text(text:str, lang:str, targets:list, libport:int = 5000) -> list:
     """
     Translates the text sent to it into the desired languages (targets).
 
@@ -25,16 +26,16 @@ def translate_text(text:str, lang:str, targets:list, libport = 5000) -> list:
     try:
         lib_server = Libretranslate_Server()
         lib_server.start_libretranslate_server(libport=libport)
-    except Exception as e:
+    except Exception:
         lib_server.stop_libretranslate_server()
         return [f"-{libport} Port might be taken!"]
 
     translation = send_text(text, lang, targets, libport)
-    
+
     lib_server.stop_libretranslate_server()
     return translation
 
-def send_text(text:str, lang:str, targets:list, libport ) -> list:
+def send_text(text:str, lang:str, targets:list, libport:int ) -> list:
 
             responses:list = []
 
@@ -69,7 +70,7 @@ def send_text(text:str, lang:str, targets:list, libport ) -> list:
                 try:
                     conn.request("POST", "/translate", body=json_data, headers=headers)
                 except Exception as e:
-                     return e
+                     return [e]
 
                 translation = conn.getresponse()
                 response_body = translation.read()

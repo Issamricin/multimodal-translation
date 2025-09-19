@@ -1,10 +1,11 @@
 # copied from https://github.com/Uberi/speech_recognition/tree/master/examples
 # only one language model English see https://github.com/Uberi/speech_recognition/tree/master/speech_recognition/pocketsphinx-data/en-US
-import speech_recognition as sr
-
 # obtain path to "english.wav" in the same folder as this script
 from os import path
 from pathlib import Path
+
+import speech_recognition as sr
+
 
 # recognize speech using Sphinx; we don't need any registration or api-key
 # English
