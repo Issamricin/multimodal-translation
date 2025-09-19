@@ -1,7 +1,6 @@
 import io
 import json
 import os
-import sys
 import subprocess
 import wave
 from pathlib import Path
@@ -9,7 +8,7 @@ from pathlib import Path
 from vosk import KaldiRecognizer, Model, SetLogLevel
 SetLogLevel(-1)
 
-from multimodaltranslation.text.translate import translate_text
+from multimodaltranslation.text.translate import send_text
 
 
 def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
@@ -20,10 +19,10 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
         - audio_bytes (bytes): The audio file in bytes.
 
     Returns:
-        - io.BytesIO: The converted audio file. 
+        io.BytesIO: The converted audio file. 
 
     Raises:
-        - RuntimeError: If the conversion process fails. This is a description of the error.
+        RuntimeError: If the conversion process fails.
     """
 
     input_file = "temp" # A temporary file to store our audio in.
@@ -61,10 +60,10 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
         - model (str): The path to the correct model as a string.
 
     Returns:
-        - result (str): The transcription of the audio. 
+        str : The transcription of the audio. 
 
     Raises:
-        - RuntimeError: If the conversion of the audio file to wav type failed.
+        RuntimeError: If the conversion of the audio file to wav type failed.
     """
 
     try:
@@ -74,9 +73,6 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
 
 
     wf = wave.open(wav_buffer, "rb")
-
-    stderr_fileno = sys.stderr
-    sys.stderr = open(os.devnull, "w")  # Redirect C++ logs to null
 
     mod = Model(model)
 
@@ -98,7 +94,7 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
     return result
 
 
-def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
+def translate_audio(audio_bytes:bytes, lang:str, targets:list, libport:int = 5000) -> list:
     """
     Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the translate_text() method.
 
@@ -108,10 +104,10 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
         - targets (list): A list of lanuages desired for translation.
 
     Returns:
-        - list : List of translated texts with the target language.
+        list : List of translated texts with the target language.
 
     Raises:
-        - RuntimeError: If the conversion of the audio file to wav type failed.
+        RuntimeError: If the conversion of the audio file to wav type failed.
 
     """
     script_dir = Path(__file__).resolve()
@@ -131,5 +127,5 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     except RuntimeError as e:
         return [{"Error":str(e)}]
 
-    translated_text = translate_text(text, lang, targets)
+    translated_text = send_text(text, lang, targets, libport)
     return translated_text

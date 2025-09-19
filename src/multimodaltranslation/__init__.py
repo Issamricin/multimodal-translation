@@ -1,9 +1,6 @@
 """
 
-| **Multimodal Translator**, a *Python Package*  which deals with different media translation from text, audio to video; one language to many languages
-| AI is used to make better translation accuracy 
-
-|
+| **Multimodal Translator**, a *Python Package*  which deals with different media translation from text and audio; one language to many languages
 
 """
 

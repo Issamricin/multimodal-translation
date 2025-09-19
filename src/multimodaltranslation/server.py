@@ -1,8 +1,8 @@
 import json
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler
 
 from multimodaltranslation.audio.translate import translate_audio
-from multimodaltranslation.text.translate import translate_text
+from multimodaltranslation.text.translate import send_text
 
 LANGUAGE = [
      "en",
@@ -13,8 +13,6 @@ LANGUAGE = [
     ]
 
 
-url = "http://localhost:5000/translate" #for libreTranslate
-
 class MyHandler(BaseHTTPRequestHandler):
     """
     Handles the calls for the server. You use this class to create a server on a specific port.        
@@ -23,6 +21,10 @@ class MyHandler(BaseHTTPRequestHandler):
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
         >>> server.serve_forever()
     """
+    libport = 5000
+
+    def set_libport(self, libport:int ):
+        self.libport = libport
 
     def do_POST(self) -> None :
         """
@@ -30,10 +32,10 @@ class MyHandler(BaseHTTPRequestHandler):
         For /audio it will transcript and translate the audio into the desired languages.
 
         Args:
-            - self
+            self
 
         Returns:
-            - None
+            None
         """
 
         content_type = self.headers.get("Content-Type", "")
@@ -69,7 +71,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"Error": "Invalid keys", "keys": "text, lang, targets"}')
                 return
 
-            responses = translate_text( text, lang, targets)
+            responses = send_text( text, lang, targets, self.libport)
 
             responses_bytes = json.dumps(responses).encode("utf-8")
 
@@ -105,7 +107,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
             audio_bytes = bytes.fromhex(audio)
 
-            responses = translate_audio(audio_bytes,  lang, targets)
+            responses = translate_audio(audio_bytes,  lang, targets, self.libport)
 
             responses_bytes = json.dumps(responses, ensure_ascii=False).encode("utf-8")
 

@@ -20,7 +20,7 @@ COMMUNITY VERSION
    :maxdepth: 2
    :caption: API:
 
-   api/
+   api/multimodaltranslation
 
 
 

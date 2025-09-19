@@ -1,7 +1,7 @@
 multimodaltranslation
 ---------------------
 
-Multiple language translation server
+Multiple language translation
 
 .. automodule:: multimodaltranslation
    :members:
@@ -11,6 +11,9 @@ Multiple language translation server
 
 .. toctree::
    :maxdepth: 2
+   :caption: API Reference
 
- multimodaltranslation/text
+   multimodaltranslation/audio/translate
+   multimodaltranslation/text/translate
+   multimodaltranslation/server
 
