@@ -3,9 +3,19 @@ import time
 
 
 class Libretranslate_Server:
-    def __init__(self) -> None:
-        pass
+    """
+    Handles the translation library server. Starts and stops the server through this object.
+    """
     def start_libretranslate_server(self, libport:int) -> None:
+        """
+        Starts the library server. 
+
+        Args:
+            libport (int): The port for the translating library to start on.
+
+        Returns:
+            None
+        """
         self.process = subprocess.Popen(
             [ "libretranslate", "--port", f"{libport}"],  
             stdout=subprocess.PIPE,   
@@ -16,10 +26,19 @@ class Libretranslate_Server:
         except subprocess.TimeoutExpired:
             pass
         else:
-            raise Exception
+            raise OSError
 
         time.sleep(2)
 
     def stop_libretranslate_server(self) -> None:
+        """
+        Stops the translator library server.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.process.kill()
         self.process.wait()

@@ -25,6 +25,15 @@ class MyHandler(BaseHTTPRequestHandler):
 
     @classmethod
     def set_libport(self, libport:int ) -> None:
+        """
+        Sets the libport for the handler. This is used to let the user change the port on which the library will run on.
+
+        Args:
+            libport (int): The port to run the translator library on.
+
+        Returns: 
+            None
+        """
         self.libport = libport
 
     def do_POST(self) -> None :
@@ -33,7 +42,7 @@ class MyHandler(BaseHTTPRequestHandler):
         For /audio it will transcript and translate the audio into the desired languages.
 
         Args:
-            self
+            None
 
         Returns:
             None

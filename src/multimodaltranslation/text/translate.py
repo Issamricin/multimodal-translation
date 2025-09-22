@@ -13,7 +13,9 @@ LANGUAGE = [
 
 def translate_text(text:str, lang:str, targets:list, libport:int = 5000) -> list:
     """
-    Translates the text sent to it into the desired languages (targets).
+    Turns the translating library server on each time it is called.
+    After translating it stops the server.
+    Translates the text provided into the desired languages (targets).
 
     Args:
         - text (str): The text you want to translate.
@@ -22,13 +24,16 @@ def translate_text(text:str, lang:str, targets:list, libport:int = 5000) -> list
 
     Returns:
         list: List of translated texts with their target languages.
+
+    Raises:
+        OSError: Port of translating library in use.
     """
     try:
         lib_server = Libretranslate_Server()
         lib_server.start_libretranslate_server(libport=libport)
-    except Exception:
+    except OSError:
         lib_server.stop_libretranslate_server()
-        return [f"-{libport} Port might be taken!"]
+        return [f"Error: Ports are in use. You can change the ports using the -lp and -ap flags. (-h for more help) -{libport}"]
 
     translation = send_text(text, lang, targets, libport)
 
@@ -36,6 +41,22 @@ def translate_text(text:str, lang:str, targets:list, libport:int = 5000) -> list
     return translation
 
 def send_text(text:str, lang:str, targets:list, libport:int ) -> list:
+            """
+            Sends the text to the translating library for translation.
+            It doesn't turn the library server on itself, rather the server should be on already.
+
+            Args:
+                text (str): The text to be sent to the translating server.
+                lang (str): The language of the original text.
+                targets (list): The list of target languages to translate to.
+                libport (int): The port of the translating library.
+
+            Returns:
+                list: List of translated texts with their target languages.
+
+            Raises:
+                Exception: If the connection to the translating library failed for any reason.
+            """
 
             responses:list = []
 

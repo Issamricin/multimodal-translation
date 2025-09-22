@@ -98,7 +98,7 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
 
 def translate_audio(audio_bytes:bytes, lang:str, targets:list, libport:int = 5000) -> list:
     """
-    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the translate_text() method.
+    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the senf_text() method.
 
     Args:
         - audio_bytes (bytes): The bytes of the audio file.

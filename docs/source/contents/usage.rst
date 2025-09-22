@@ -104,6 +104,17 @@ Available languages for now:
 - es "spanish"
 - zh "chinese"
 
+The ports that the library runs on by default might be in use. 
+That's why there are flags for this library and for the translating library to change the ports on which the servers run on.
+
+.. code-block:: shell
+
+    translator -s Y -lp 4000 -ap 5000
+  
+
+-lp flag is for the translating library port.
+-ap flag is for the application port.
+  
 --------------
 Running PyTest
 --------------

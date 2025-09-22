@@ -66,7 +66,7 @@ dependencies = [
 
 ## optional dependency for test or other purpose 
 ## Install in edit mode with the test dependencies 
-## $ pip install -e . rfcentral[test]
+## $ pip install -e . multimodal-translation[test]
 [project.optional-dependencies]
 test = [
   "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",

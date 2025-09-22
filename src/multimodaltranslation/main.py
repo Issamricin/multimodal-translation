@@ -12,6 +12,19 @@ from multimodaltranslation.version import __version__
 
 
 def main() -> None:
+    """
+    Entry point for the multimodal translator cli.
+
+    Parses the command line arguments:
+        - If the -s Y was provided then the server will start.
+        - Else it will performe a translation on the provided text or audio.
+
+    Args: 
+        None
+
+    Returns:
+        None
+    """
     parser = ArgumentParser(
         description=(
             "Multimodal Translator\n"
@@ -108,6 +121,20 @@ def main() -> None:
         cli_translate(args.o, args.t, args.txt, args.f, args.lp)
 
 def cli_translate(original:str, target:list, text:str, file:str, port:int =5000) -> None:
+    """
+    Translates the provided text or audio file given through the cli. 
+    You can only provide one and the other would be None.
+
+    Args:
+        original (str): The language code of the original text (e.g. en, es)
+        target (list): List of language codes to translate the text to.
+        text (str): The text to translate.
+        file (str): Path of the audio file (would be None when text provided).
+        port (int): The port on which the translator library would run on. [Default: 5000]
+
+    Returns:
+        None
+    """
 
     process = subprocess.Popen(
         [ "libretranslate", "--port", f"{port}"],  # disable api keys so that libretranslate does not creats sessions for the api databases.
@@ -155,6 +182,16 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
     print(translated)
 
 def start_server(port:int =8000, libport:int =5000) -> None:
+    """
+    Starts the server. The server to accept api calls.
+
+    Args:
+        port (int): The port to start the server on. [Default: 8000]
+        libport (int): The port to start the translating library on. [Default: 5000]
+
+    Returns:
+        None    
+    """
     # Start the LibreTranslate server
     print("starting server ... ")
     try:
