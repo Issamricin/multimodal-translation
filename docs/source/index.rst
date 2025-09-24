@@ -39,6 +39,12 @@ COMMUNITY VERSION
    contents/about
 
 
+Coverage Report
+---------------
+
+`View Coverage Report <_static/coverage_html_report/index.html>`_
+
+
 Indices and tables
 ==================
 
