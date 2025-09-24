@@ -62,7 +62,7 @@ def send_text(text:str, lang:str, targets:list, libport:int ) -> list:
 
             if lang not in LANGUAGE:
                 if not isinstance(lang, str):
-                    responses.append({"Error": f"{lang} should be string not {type(lang)}"})
+                    responses.append({"Error": f"Language should be string not {type(lang)}"})
                 else:
                     responses.append({"Error": f"This language is not available, {lang}"})
 
@@ -78,7 +78,7 @@ def send_text(text:str, lang:str, targets:list, libport:int ) -> list:
 
                 if target not in LANGUAGE:
                     if not isinstance(target, str):
-                        responses.append({"Error": f"{target} should be string not {type(target)}"})
+                        responses.append({"Error": f"Target language should be string not {type(target)}"})
                     else:
                         responses.append({"Error": f"This language is not available, {target}"})
 

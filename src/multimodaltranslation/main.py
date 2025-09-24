@@ -118,9 +118,9 @@ def main() -> None:
     if args.s == "Y":
         start_server(args.ap, args.lp)
     else:
-        cli_translate(args.o, args.t, args.txt, args.f, args.lp)
+        print(cli_translate(args.o, args.t, args.txt, args.f, args.lp))
 
-def cli_translate(original:str, target:list, text:str, file:str, port:int =5000) -> None:
+def cli_translate(original:str, target:list, text:str, file:str, port:int =5000) -> list:
     """
     Translates the provided text or audio file given through the cli. 
     You can only provide one and the other would be None.
@@ -133,7 +133,7 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
         port (int): The port on which the translator library would run on. [Default: 5000]
 
     Returns:
-        None
+        list: List of translated text with their targeted language.
     """
 
     process = subprocess.Popen(
@@ -141,7 +141,7 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-    time.sleep(3)
+    time.sleep(4)
     o = original
     t = target
     txt = text
@@ -168,7 +168,7 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
         except FileNotFoundError:    
             process.kill()
             process.wait()
-            return print("FileNotFoundError: Make sure you provide the correct path.")
+            return ["FileNotFoundError: Make sure you provide the correct path."]
 
         translated = translate_audio(cont_bytes, o, t, port)
         process.kill()
@@ -179,7 +179,7 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
         process.kill()
         process.wait()
 
-    print(translated)
+    return translated
 
 def start_server(port:int =8000, libport:int =5000) -> None:
     """
@@ -219,5 +219,5 @@ def start_server(port:int =8000, libport:int =5000) -> None:
 
 
 
-if __name__ == "__main__":  # this is important so that it does not run from pytest
+if __name__ == "__main__":
     main()
