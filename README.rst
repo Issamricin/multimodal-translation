@@ -1,8 +1,8 @@
-|logo|
-
 | |build| |release_version| |wheel| 
 | |docs| |pylint| |supported_versions|
 | |ruff| |gh-lic| |commits_since_specific_tag_on_main|
+
+|logo|
 
 |translator_gif|
 
