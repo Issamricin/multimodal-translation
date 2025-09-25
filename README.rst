@@ -72,7 +72,7 @@
 .. |logo| image:: media/muiltimodal-translation-small.jpg
                 :alt: multimodal translator
 
-.. |translator_gif| image:: ../media/translator.gif
+.. |translator_gif| image:: media/translator.gif
    :alt: Demo Preview
    :width: 800
    :height: 400
