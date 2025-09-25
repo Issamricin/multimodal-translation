@@ -75,4 +75,4 @@
 .. |translator_gif| image:: media/translator.gif
    :alt: Demo Preview
    :width: 800
-   :height: 400
+   :height: 300
