@@ -4,7 +4,7 @@
 | |docs| |pylint| |supported_versions|
 | |ruff| |gh-lic| |commits_since_specific_tag_on_main|
 
-
+|translator_gif|
 
 `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
 
