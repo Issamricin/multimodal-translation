@@ -25,3 +25,17 @@ Note:
     - In total you will need three terminal to test this locally.
     - Also when you install **libretranslate** only french and english are available.
     - Install the langauges needed and edit the language list in the server to contain only the installed language models so it doesn't crash.
+
+
+
+
+
+In order to add the coverage report to readthedocs:
+===================================================
+
+First, pytest --cov=src --cov-report=html
+and make sure you install: pip install pytest-cov coverage
+
+This will create the coverage html page. You need to move the whole folder into the _static folder in the readthedocs folder.
+
+Then mention this folder in the index.rst like so: View Coverage Report <_static/coverage_html_report/index.html>`_
