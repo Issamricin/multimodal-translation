@@ -80,5 +80,5 @@
 
 .. |translator_gif_2| image:: media/translator_audio.gif
    :alt: Demo Preview
-   :width: 700
-   :height: 300
+   :width: 800
+   :height: 280
