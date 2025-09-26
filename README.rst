@@ -5,6 +5,7 @@
 |logo|
 
 |translator_gif|
+|translator_gif_2|
 
 `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
 
@@ -76,3 +77,8 @@
    :alt: Demo Preview
    :width: 800
    :height: 300
+
+.. |translator_gif_2| image:: media/translator_audio.gif
+   :alt: Demo Preview
+   :width: 800
+   :height: 280
