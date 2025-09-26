@@ -48,11 +48,11 @@ Limitations:
 Improvements:
 -------------
 
-| As mentioned above, audio to audio will be implemented in the future. Other media types can also be implemented like videos and images.
+* As mentioned above, audio to audio will be implemented in the future. Other media types can also be implemented like videos and images.
 
 
 
-| `Technical Specification <./TechnicalSpec.rst>`_
+`Technical Specification <./TechnicalSpec.rst>`_
 
 
 
