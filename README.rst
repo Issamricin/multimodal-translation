@@ -50,6 +50,11 @@ Improvements:
 
 * As mentioned above, audio to audio will be implemented in the future. Other media types can also be implemented like videos and images.
 
+References:
+-----------
+
+* `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
+* `What is Multimodal Translation <https://www.educative.io/answers/what-is-multimodal-translation>`_
 
 
 `Technical Specification <./TechnicalSpec.rst>`_
