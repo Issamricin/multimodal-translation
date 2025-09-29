@@ -57,10 +57,6 @@ References:
 * `What is Multimodal Translation <https://www.educative.io/answers/what-is-multimodal-translation>`_
 
 
-`Technical Specification <./TechnicalSpec.rst>`_
-
-
-
 .. |build| image:: https://github.com/alanmehio/multimodal-translation/actions/workflows/ci_cd.yaml/badge.svg
     :alt: GitHub Workflow Status (branch)
     :target: https://github.com/alanmehio/multimodal-translation/actions/
