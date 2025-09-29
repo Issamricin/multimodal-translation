@@ -79,7 +79,8 @@ extensions = [
     'sphinx.ext.extlinks',  # External Links Configuration: Dynamic Urls
     'sphinx.ext.napoleon',  # Allow parsing of docstrings using Google format
     'sphinx.ext.todo', # Support for todo items see  https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
-    'sphinx.ext.duration'
+    'sphinx.ext.duration',
+    'myst_parser'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

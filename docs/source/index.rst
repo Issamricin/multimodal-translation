@@ -28,9 +28,11 @@ COMMUNITY VERSION
    :maxdepth: 2
    :caption: Development:
 
-   contents/development
+   contents/developer_guide
+   contents/contribution
    contents/changelog
    contents/code_of_conduct
+   contents/tech_debt
 
 .. toctree::
    :maxdepth: 2
@@ -38,11 +40,11 @@ COMMUNITY VERSION
 
    contents/about
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Reports:
 
-Coverage Report
----------------
-
-`View Coverage Report <_static/coverage_html_report/index.html>`_
+   contents/reports/coverage
 
 
 Indices and tables
