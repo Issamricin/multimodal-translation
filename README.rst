@@ -63,16 +63,16 @@ Technical Debt
 
 Change Log
 ==========
-`Change Log <../CHANGELOG.rst>`_.
+`Change Log <CHANGELOG.rst>`_.
 
 
 Developer Guide
 ===============
-`Development <../docs/source/contents/developer_guide.rst>`_
+`Development <docs/source/contents/developer_guide.rst>`_
 
 Quickstart
 ==========
-`Usage <../docs/source/contents/usage.rst>`_
+`Usage <docs/source/contents/usage.rst>`_
 
 
 License
