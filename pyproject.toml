@@ -123,7 +123,6 @@ exclude = [
 
 
 #https://python-poetry.org/docs/pyproject/#scripts
-# we will have the rfcentral script installed which will execute the main function in the console module in the rfcentral package.
 [project.scripts]
 translator = 'multimodaltranslation.main:main'
  
