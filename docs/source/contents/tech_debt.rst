@@ -1,1 +1,1 @@
-.. include:: ../../../technical_debt.rst
+.. include:: ../../../TECHNICALDEBT.rst

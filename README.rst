@@ -57,6 +57,36 @@ References:
 * `What is Multimodal Translation <https://www.educative.io/answers/what-is-multimodal-translation>`_
 
 
+Technical Debt
+==============
+`Technical Debt <../TECHNICALDEBT.rst>`_
+
+Change Log
+==========
+`Change Log <../CHANGELOG.rst>`_.
+
+
+Developer Guide
+===============
+`Development <../docs/source/contents/developer_guide.rst>`_
+
+Quickstart
+==========
+`Usage <../docs/source/contents/usage.rst>`_
+
+
+License
+=======
+`GNU Affero General Public License v3.0`_
+
+
+
+.. LINKS
+
+.. _GNU Affero General Public License v3.0: https://github.com/Issamricin/multimodal-translation/blob/main/LICENSE
+
+ 
+
 .. |build| image:: https://github.com/alanmehio/multimodal-translation/actions/workflows/ci_cd.yaml/badge.svg
     :alt: GitHub Workflow Status (branch)
     :target: https://github.com/alanmehio/multimodal-translation/actions/
