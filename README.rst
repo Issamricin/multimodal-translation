@@ -59,7 +59,7 @@ References:
 
 Technical Debt
 ==============
-`Technical Debt <../TECHNICALDEBT.rst>`_
+`Technical Debt <TECHNICALDEBT.rst>`_
 
 Change Log
 ==========
