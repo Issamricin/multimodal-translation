@@ -1,6 +1,7 @@
 | |build| |release_version| |wheel| 
 | |docs| |pylint| |supported_versions|
 | |ruff| |gh-lic| |commits_since_specific_tag_on_main|
+| |coverage_badge|
 
 |logo|
 
@@ -148,3 +149,7 @@ License
    :alt: Demo Preview
    :width: 800
    :height: 280
+
+.. |coverage_badge| image:: https://coveralls.io/repos/github/Issamricin/multimodal-translation/badge.svg?branch=main
+   :target: https://coveralls.io/github/Issamricin/multimodal-translation?branch=main
+   :alt: Coverage Status
