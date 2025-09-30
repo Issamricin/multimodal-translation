@@ -16,8 +16,8 @@ maintainers = [{name="Iso"}, {name="Alan"}] # must be an object
 license = "AGPL-3.0-only"
 readme = {file = "README.rst", content-type = "text/x-rst"}
 
-homepage = "https://github.com/alanmehio/multimodal-translation"
-repository = "https://github.com/alanmehio/multimodal-translation"
+homepage = "https://github.com/Issamricin/multimodal-translation"
+repository = "https://github.com/Issamricin/multimodal-translation"
 documentation = "https://multimodal-translation.readthedocs.io/"
 
 keywords = [
@@ -48,11 +48,11 @@ classifiers = [
 
 
 # PyPi url links, that appear in 'Project Links' section
-urls."Bug Tracker" = "https://github.com/alanmehio/multimodal-translation/issues"
-urls."CI: Github Actions" = "https://github.com/alanmehio/multimodal-translation/actions"
+urls."Bug Tracker" = "https://github.com/Issamricin/multimodal-translation/issues"
+urls."CI: Github Actions" = "https://github.com/Issamricin/multimodal-translation/actions"
 urls.Documentation = "https://multimodal-translation.readthedocs.io/"
-urls."Source Code" = "https://github.com/alanmehio/multimodal-translation"
-urls.Changelog = "https://github.com/alanmehio/multimodal-translation/blob/master/CHANGELOG.rst"
+urls."Source Code" = "https://github.com/Issamricin/multimodal-translation"
+urls.Changelog = "https://github.com/Issamricin/multimodal-translation/blob/main/CHANGELOG.rst"
 
 
 
@@ -123,7 +123,6 @@ exclude = [
 
 
 #https://python-poetry.org/docs/pyproject/#scripts
-# we will have the rfcentral script installed which will execute the main function in the console module in the rfcentral package.
 [project.scripts]
 translator = 'multimodaltranslation.main:main'
  
