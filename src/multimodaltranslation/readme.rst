@@ -15,3 +15,9 @@ then you can create report coverage page:
 # 
 #     <iframe src="../../_static/coverage_html_report/index.html" width="100%" height="800"></iframe>
 # 
+
+
+To install more languages for the libretranslate:
+=================================================
+
+Use the script in the lab/text/installing_langModels.py

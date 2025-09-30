@@ -87,9 +87,9 @@ License
 
  
 
-.. |build| image:: https://github.com/alanmehio/multimodal-translation/actions/workflows/ci_cd.yaml/badge.svg
+.. |build| image:: https://github.com/Issamricin/multimodal-translation/actions/workflows/ci_cd.yaml/badge.svg
     :alt: GitHub Workflow Status (branch)
-    :target: https://github.com/alanmehio/multimodal-translation/actions/
+    :target: https://github.com/Issamricin/multimodal-translation/actions/
 
 
 .. Documentation
@@ -117,16 +117,16 @@ License
 
 .. Github Releases & Tags
 
-.. |commits_since_specific_tag_on_main| image:: https://img.shields.io/github/commits-since/alanmehio/multimodal-translation/v0.0.1/main?color=blue&logo=github
+.. |commits_since_specific_tag_on_main| image:: https://img.shields.io/github/commits-since/Issamricin/multimodal-translation/v0.0.1/main?color=blue&logo=github
     :alt: GitHub commits since tagged version (branch)
-    :target: https://github.com/alanmehio/multimodal-translation/compare/v0.0.1..main
+    :target: https://github.com/Issamricin/multimodal-translation/compare/v0.0.1..main
 
 .. LICENSE (eg AGPL, MIT)
 .. Github License
 
 .. |gh-lic| image:: https://img.shields.io/badge/license-GNU_Affero-orange
     :alt: GitHub
-    :target: https://github.com/alanmehio/multimodal-translation/blob/main/LICENSE
+    :target: https://github.com/Issamricin/multimodal-translation/blob/main/LICENSE
 
 
 .. Ruff linter for Fast Python Linting
