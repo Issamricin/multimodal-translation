@@ -150,6 +150,6 @@ License
    :width: 800
    :height: 280
 
-.. |coverage_badge| image:: https://coveralls.io/repos/github/Issamricin/multimodal-translation/badge.svg?branch=main
-   :target: https://coveralls.io/github/Issamricin/multimodal-translation?branch=main
+.. |coverage_badge| image:: https://coveralls.io/repos/github/Issamricin/multimodal-translation/badge.svg?branch=issue-21
+   :target: https://coveralls.io/github/Issamricin/multimodal-translation?branch=issue-21
    :alt: Coverage Status
