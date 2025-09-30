@@ -24,7 +24,7 @@ class MyHandler(BaseHTTPRequestHandler):
     libport = 5000
 
     @classmethod
-    def set_libport(self, libport:int ) -> None:
+    def set_libport(cls, libport:int ) -> None:
         """
         Sets the libport for the handler. This is used to let the user change the port on which the library will run on.
 
@@ -34,7 +34,7 @@ class MyHandler(BaseHTTPRequestHandler):
         Returns: 
             None
         """
-        self.libport = libport
+        cls.libport = libport
 
     def do_POST(self) -> None :
         """
