@@ -20,8 +20,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install poetry 
-          poetry install
+          pip install -e .
           pip install pytest pytest-cov coveralls
 
       - name: Run tests with coverage

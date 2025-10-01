@@ -72,7 +72,8 @@ test = [
   "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",
   "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
   "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'",
-  "vosk >= 0.3.45"
+  "vosk >= 0.3.45",
+  "coveralls"
 ]
 docs =[
    "Sphinx (<=8.2.3);  python_version >='3.11' and python_version <='3.14'",
