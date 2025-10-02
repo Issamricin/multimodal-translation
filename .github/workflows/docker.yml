@@ -1,0 +1,175 @@
+############################################
+## Docker Build & Docker Push (Dockerhub) ##
+##       Reusable Workflow                ##
+############################################
+
+# Build Docker image, authenticate with Dockerhub,
+# and push image to Dockerhub public Registry.
+
+## AUTONOMOUS DOCKER JOB ##
+# Features:
+# Configurable Behaviour, using Policies (see input.acceptance_policy):
+
+#  0. Never run Docker build and publish to Dockerhub
+#  aka: 'NO Docker', Docker Shutdown, 'No Admitance'
+#  aka: guarantee that nothing is published
+
+#  1. Always build and publish to Dockerhub
+#   aka: Force Publish, Always Docker, 'Admit All'
+#   aka: 'Free Admitance', 'No Entry Barrier', 'Free Entrance'
+
+#  2. Run Docker build and publish to Dockerhub only if Tests passed (and ran!)
+#   aka: Continous Integration / Continuous Deployment (CI/C Dpl)
+#   aka: guranteed quality, everything published is tested
+#   aka: 'required succesful evaluation', 'accept only a Pass'
+
+#  3. Run Docker build and publish to Dockerhub, if Tests ran and passed, but also if Tests were skipped
+#   aka: Continous Integration / Continuous Delivery (CI/C Dlv)
+#   aka: CI/CD with Bypass Option
+#   aka: 'accepted_when_Test_OFF', 'accept a Pass or a Skip'
+#   aka: 'admit when test is off'
+
+
+# Build from Dockerfile in repo root directory
+
+# Authenticates to Dockerhub, using credentials stored in Github Secrets
+
+# Logout from Dockerhub, regardless of whether the push succeeded or failed
+
+# Steps:
+#  1. Docker Build
+#  2. Login to Dockerhub
+#  3. Push to Dockerhub, noting success
+#  4. Logout from Dockerhub
+#  5. Finish Job, if Push succeded, else Fail Job
+
+### Workflow INPUTS ###
+# 1. Docker Image Slug
+# 2. Docker Policy (number)
+# 3. Docker Username
+# 4. Docker Password (Secret)
+
+
+on:
+  # Trigger when called from another workflow
+  # Aka parent/caller workflow calls the child/"called" workflow
+  workflow_call:
+    inputs:
+      DOCKER_USER:
+        required: true
+        type: string
+      image_slug:
+        required: true
+        type: string
+      tests_pass:
+        required: false
+        type: boolean
+      # Defaults to CI/CD if unknown policy or not given
+      acceptance_policy:
+        required: false
+        type: string
+      target_stage:
+        required: false
+        type: string
+      image_tag:
+        required: false
+        type: string
+    secrets:
+      DOCKER_PASSWORD:
+        required: true
+    # Map the workflow outputs to job outputs
+    outputs:
+      IMAGE_REF:
+        description: "Docker Image reference"
+        value: ${{ jobs.docker_build.outputs.IMAGE_REF }}
+
+jobs:
+  ## AUTONOMOUS DOCKER BUILD and PUBLISH ON DOCKERHUB ##
+  docker_build:
+    outputs:
+      IMAGE_REF: ${{ steps.build_docker_image.outputs.IMAGE_REF }}
+
+    ## Policy Logic ##
+    # 2 bit state machine
+    # 0 0 = 0: Never build, aka No Admitance, guarantee NO Dockerhub publish
+    # 0 1 = 1: Always build and publish, aka Admit All, Force Docker
+    # 1 0 = 2: CI/CD pure mode, aka Admit only if Pass, Require Pass, guarantee quality
+    # 1 1 = 3: CI/CD with Bypass Opt, aka Admit Tested and when Test is OFF, Admit when Test OFF
+
+    if: always() && inputs.acceptance_policy != 0 &&  (inputs.acceptance_policy == 1 || inputs.tests_pass  || (inputs.acceptance_policy == 3 && inputs.tests_pass == false ))
+
+     
+
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_SLUG: ${{ inputs.image_slug }}
+      TARGET_STAGE: ${{ inputs.target_stage }}
+      DOCKER_USER: ${{ inputs.DOCKER_USER }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+    # DEBUG
+      - run: echo ${{ inputs.acceptance_policy }}
+      - name: "REQ to RUN: Policy is NOT 00 AND"
+        run: echo ${{ inputs.acceptance_policy != 0 }}
+      - name: "ONE OF: Policy IS 01"
+        run: echo ${{ inputs.acceptance_policy == 1 }}
+      - name: "Check needs SUCCESS 1"
+        run: echo ${{ contains(needs.*.result, 'success') }}
+      - name: "Check needs SUCCESS 2"
+        run: echo ${{ needs.*.result == 'success' }}
+
+      - run: echo ${{ !contains(needs.*.result, 'failure') }}
+      - run: echo ${{ !contains(needs.*.result, 'cancelled') }}
+
+      - name: "ONE OF: needs SUCCESS and NOT Skipped and NOT Cancelled"
+        run: echo ${{ contains(needs.*.result, 'success') && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+
+      - run: echo ${{ inputs.acceptance_policy == 3 }}
+      - run: echo ${{ !contains(needs.*.result, 'failure') }}
+      - run: echo ${{ contains(needs.*.result, 'skipped') }}
+      - run: echo ${{ contains(needs.*.result, 'cancelled') }}
+
+      - name: "ONE OF: Pol is 3 and NOT Failure and (SKIPPED OR Cancelled)"
+        run: echo ${{ inputs.acceptance_policy == 3 && !contains(needs.*.result, 'failure') && ( contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled') ) }}
+
+
+      ##
+      - run: 'echo "POLICY: ${{ inputs.acceptance_policy }}"'
+      - run: 'echo "IMAGE (repo/name): ${{ inputs.image_slug }}"'
+      - run: 'echo "TARGET_STAGE: ${{ inputs.target_stage }}"'
+      - run: |
+          echo "=== ENV VARS ==="
+          echo "Docker Username: ${DOCKER_USER}"
+          echo "Image Slug ${IMAGE_SLUG}"
+          echo "Target Stage: ${TARGET_STAGE}"
+          echo === INPUTS ===
+          echo ${{ inputs.DOCKER_USER }}
+          echo ${{ inputs.image_slug }}
+          echo ${{ inputs.acceptance_policy }}
+          echo ${{ inputs.target_stage }}
+          echo ${{ inputs.image_tag }}
+          echo === SECRETS ===
+          echo ${DOCKER_PASSWORD}
+
+      - name: Check out code
+        uses: actions/checkout@v4.2.2
+        
+
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ github.ref_name }}
+      - run: echo "IMAGE_TAG=${{ inputs.image_tag || github.ref_name }}" >> $GITHUB_ENV
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
