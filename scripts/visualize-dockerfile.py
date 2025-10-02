@@ -58,9 +58,9 @@ def parse_dockerfile(dockerfile_path):
 
 
 def generate_mermaid_flow_chart(dockerfile_dag):
-    stages: t.Dict[str, t.List[str]] = dockerfile_dag[0]
+    stages: dict[str, list[str]] = dockerfile_dag[0]
     thick_line_with_arrow = "-->"
-    copies: t.Dick[str, t.List[t.Tuple[str, str]]] = dockerfile_dag[1]
+    copies: dict[str, list[tuple[str, str]]] = dockerfile_dag[1]
     dotted_arrow_with_text = '-. "{text}" .->'
 
     chart = "graph TB;\n"
@@ -119,7 +119,7 @@ def generate_rst(dockerfile_path):
     return rst
 
 
-def parse_cli_args() -> t.Tuple[Path, t.Optional[str]]:
+def parse_cli_args() -> tuple[Path, t.Optional[str]]:
     parser = argparse.ArgumentParser(description="Process Dockerfile paths.")
 
     parser.add_argument(

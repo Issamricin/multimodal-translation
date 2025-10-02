@@ -1,12 +1,10 @@
-RF Surveillance Central
+Multimodal translation
 =======================
 
 COMMUNITY VERSION
 -----------------
 
-| Welcome to the RF Surveillance Central one of four inter-related application suite
-| RF Central is AI RF model to extra Radio Frequency Meta Data and to find identify radio frequency fingers print. RF Central works in a plug
-  and play which means unlimited nodes  can be sent RF data over a given range and a given payload for analysis in real time
+| Welcome to the documentation of the Multimodal translation application. This application translate your text into several languages of your desire.
 
 .. tutorial: https://www.sphinx-doc.org/en/master/tutorial/getting-started.html
 .. extension autodoc: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
@@ -22,7 +20,7 @@ COMMUNITY VERSION
    :maxdepth: 2
    :caption: API:
 
-   api/rfcentral
+   api/multimodaltranslation
 
 
 
@@ -30,15 +28,23 @@ COMMUNITY VERSION
    :maxdepth: 2
    :caption: Development:
 
-   contents/development
+   contents/developer_guide
+   contents/contribution
    contents/changelog
    contents/code_of_conduct
+   contents/tech_debt
 
 .. toctree::
    :maxdepth: 2
    :caption: About:
 
    contents/about
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reports:
+
+   contents/reports/coverage
 
 
 Indices and tables

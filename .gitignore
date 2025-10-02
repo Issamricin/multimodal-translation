@@ -24,6 +24,8 @@ test-results/
 uml-diagrams/
 pydoer-graphs/
 
+db/
+
 # LOGS
 *.log
 # LOCK files

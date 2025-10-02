@@ -37,13 +37,13 @@ def get_templated_vars():
         'TemplatedVariables',
         (),
         dict(
-            project_slug='multimedia-translator',
-            package_name='rfcentral',
+            project_slug='multimodal-translator',
+            package_name='multimodaltranslation',
             author_name='Alan',
             year='2025',
             version='1.0.0',
             github_username='alanmehio',
-            repo_name='rf-surveillance-node',
+            repo_name='multimodal-translation',
         ),
     )
 
@@ -79,7 +79,8 @@ extensions = [
     'sphinx.ext.extlinks',  # External Links Configuration: Dynamic Urls
     'sphinx.ext.napoleon',  # Allow parsing of docstrings using Google format
     'sphinx.ext.todo', # Support for todo items see  https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
-    'sphinx.ext.duration'
+    'sphinx.ext.duration',
+    'myst_parser'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -22,13 +22,13 @@ JobName = t.NewType("JobName", str)
 # JobNeedsType = t.Union[JobName, t.List[JobName], None]
 # JobNeeds = t.NewType('JobNeeds', JobNeedsType)
 # # OPT 1
-JobNeeds = t.Union[JobName, t.List[JobName], None]
+JobNeeds = t.Union[JobName, list[JobName], None]
 
 
-ParsedYaml = t.Dict[str, t.Any]
+ParsedYaml = dict[str, t.Any]
 
 # TYPES of Data Model
-JobsNeedsValue = t.List[JobName]
+JobsNeedsValue = list[JobName]
 
 
 # Parse the GitHub Actions YAML file
@@ -42,12 +42,12 @@ def parse_actions_config(filename: t.Union[str, Path]) -> t.Union[ParsedYaml, No
 
 
 # Extract job names and their 'needs' sections
-def extract_job_dependencies(config: ParsedYaml) -> t.Dict[str, JobsNeedsValue]:
+def extract_job_dependencies(config: ParsedYaml) -> dict[str, JobsNeedsValue]:
     """Understand DAG of all Jobs"""
     # DAG representation
 
     # mapping of job names to their dependencies (previous steps in the dependency DAG)
-    job_dependencies: t.Dict[str, JobsNeedsValue] = {}
+    job_dependencies: dict[str, JobsNeedsValue] = {}
 
     if "jobs" not in config:
         print("[WARNGING] No 'jobs' section found in config file")
@@ -70,7 +70,7 @@ def extract_job_dependencies(config: ParsedYaml) -> t.Dict[str, JobsNeedsValue]:
 
 
 # Generate Mermaid markdown from job dependencies
-def generate_mermaid(job_dependencies: t.Dict[str, t.List[str]]) -> str:
+def generate_mermaid(job_dependencies: dict[str, list[str]]) -> str:
     mermaid_code = "graph LR;\n"
     for job_name, needs in job_dependencies.items():
         for need in needs:
@@ -83,7 +83,7 @@ def mermaid_from_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
     if config is None:
         print(f"[ERROR] Could not parse YAML file: {filename}")
         sys.exit(1)
-    job_dependencies: t.Dict[str, JobsNeedsValue] = extract_job_dependencies(config)
+    job_dependencies: dict[str, JobsNeedsValue] = extract_job_dependencies(config)
     mermaid_code: str = generate_mermaid(job_dependencies)
 
     TAB = 3 * " "

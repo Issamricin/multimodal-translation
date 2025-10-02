@@ -1,6 +1,6 @@
 # Security Policy
 
-RF surveillance application security policy is based on updating the third parties dependencies
+Multimodal translator application security policy is based on updating the third parties dependencies
 tested to be secure free for any malicious code, also known as malware code.
 
 ## Supported Versions

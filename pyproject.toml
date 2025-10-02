@@ -16,12 +16,12 @@ maintainers = [{name="Iso"}, {name="Alan"}] # must be an object
 license = "AGPL-3.0-only"
 readme = {file = "README.rst", content-type = "text/x-rst"}
 
-homepage = "https://github.com/alanmehio/multimedia-translator"
-repository = "https://github.com/alanmehio/multimedia-translator"
-documentation = "https://multimedia-translator.readthedocs.io/"
+homepage = "https://github.com/Issamricin/multimodal-translation"
+repository = "https://github.com/Issamricin/multimodal-translation"
+documentation = "https://multimodal-translation.readthedocs.io/"
 
 keywords = [
-    "Multimedia Translator", "AI Translation", "Central"
+    "Multimodal Translator", "AI Translation"
 ]
 
 requires-python = ">=3.9,<4.0"
@@ -48,34 +48,32 @@ classifiers = [
 
 
 # PyPi url links, that appear in 'Project Links' section
-urls."Bug Tracker" = "https://github.com/alanmehio/multimedia-translator/issues"
-urls."CI: Github Actions" = "https://github.com/alanmehio/multimedia-translator/actions"
-urls.Documentation = "https://multimedia-translator.readthedocs.io/"
-urls."Source Code" = "https://github.com/alanmehio/multimedia-translator"
-urls.Changelog = "https://github.com/alanmehio/multimedia-translator/blob/master/CHANGELOG.rst"
+urls."Bug Tracker" = "https://github.com/Issamricin/multimodal-translation/issues"
+urls."CI: Github Actions" = "https://github.com/Issamricin/multimodal-translation/actions"
+urls.Documentation = "https://multimodal-translation.readthedocs.io/"
+urls."Source Code" = "https://github.com/Issamricin/multimodal-translation"
+urls.Changelog = "https://github.com/Issamricin/multimodal-translation/blob/main/CHANGELOG.rst"
 
 
 
 ### Dependency Constraints, aka Requirements ###
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
- "googletrans==4.0.2", # note reliable person usage and lab 
- "libretranslate==1.7.2",  # https://docs.libretranslate.com/ does not work on window only Linux 
- "SpeechRecognition==3.14.3",
+ "libretranslate==1.7.3",  # https://docs.libretranslate.com/ does not work on window only Linux 
  "pocketsphinx==5.0.4",
- "playsound3==3.2.6",
- "gTTs==2.5.4", # Google Text to Speech
-  "gTTS-token==1.1.4" # Calculate a token to run Google Translation
+ "vosk >= 0.3.45",
 ]
 
 ## optional dependency for test or other purpose 
 ## Install in edit mode with the test dependencies 
-## $ pip install -e . rfcentral[test]
+## $ pip install -e . multimodal-translation[test]
 [project.optional-dependencies]
 test = [
   "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",
   "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
-  "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'"
+  "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'",
+  "vosk >= 0.3.45",
+  "coveralls"
 ]
 docs =[
    "Sphinx (<=8.2.3);  python_version >='3.11' and python_version <='3.14'",
@@ -91,7 +89,7 @@ docs =[
 # Information required for building (sdist/wheel)
 [tool.poetry]
 packages = [
-    { include = "multimedia_translator", from = "src" },
+    { include = "multimodaltranslation", from = "src" },
 ]
 
 include = [
@@ -126,9 +124,8 @@ exclude = [
 
 
 #https://python-poetry.org/docs/pyproject/#scripts
-# we will have the rfcentral script installed which will execute the main function in the console module in the rfcentral package.
 [project.scripts]
-translator = 'multimedia_translator.main:main'
+translator = 'multimodaltranslation.main:main'
  
 
 ##############
@@ -186,4 +183,4 @@ ignore = [
 # see scripts/parse_version.py 
 # we need to update in toml file above  and below also
 [tool.software-release]
-version_variable = "src/multimedia_translator/__init__.py:__version__"
+version_variable = "src/multimodaltranslationr/__init__.py:__version__"
