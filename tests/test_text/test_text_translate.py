@@ -1,6 +1,5 @@
-import pytest
-
 from multimodaltranslation.text.translate import translate_text
+
 
 def test_send_text_valid():
     answer = translate_text("Hello", "en", ["es"])

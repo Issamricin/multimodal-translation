@@ -73,6 +73,7 @@ test = [
   "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
   "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'",
   "vosk >= 0.3.45",
+  "argostranslate == 1.9.6",
   "coveralls"
 ]
 docs =[

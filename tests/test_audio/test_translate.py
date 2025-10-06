@@ -1,13 +1,12 @@
 import os
+import warnings
 from pathlib import Path
-
-import pytest
 
 from multimodaltranslation.audio.translate import (
     audio_to_text,
     translate_audio,
 )
-import warnings
+
 
 def test_audio_to_text():
     script_dir = Path(__file__).resolve()

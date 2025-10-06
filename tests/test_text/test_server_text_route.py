@@ -1,11 +1,11 @@
 import threading
+import warnings
 from http.server import HTTPServer
 
 import pytest
 import requests
 
 from multimodaltranslation.server import MyHandler
-import warnings
 
 
 @pytest.fixture(scope="module", autouse=True)

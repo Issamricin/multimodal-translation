@@ -1,8 +1,7 @@
 import sys
+import warnings
 
 from multimodaltranslation.main import cli_translate, main
-
-import warnings
 
 
 def test_main_translation(monkeypatch, capsys):
@@ -38,12 +37,12 @@ def test_cli_translate_NoTarget(monkeypatch):
     warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
     monkeypatch.setattr("builtins.input", lambda _: "es fr")
     answer = cli_translate('en', None, text = ["Hello"], file=None)
-    
+
     assert answer == [{'lang': 'es', 'text': 'Hola.'},{'lang': 'fr', 'text': 'Bonjour.'}]
 
 
 def test_cli_translate_file():
     warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
     answer = cli_translate('en', ['es'], text = None, file="audio_files/sample1/english.wav")
-    
+
     assert answer == [{'lang': 'es', 'text': 'uno dos tres'}]

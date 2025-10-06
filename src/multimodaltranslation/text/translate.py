@@ -1,6 +1,7 @@
+import warnings
+
 from argostranslate import translate
 
-import warnings
 warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
 
 
@@ -25,7 +26,7 @@ def translate_text(text:str, lang:str, targets:list) -> list:
         except AttributeError:
             responses.append({"Error": f"Either of the languages may not be available, {lang, target}"})
             continue
-        
+
         responses.append({"text": translation, "lang": target})
 
     return responses

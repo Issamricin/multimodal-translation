@@ -1,8 +1,8 @@
-from argostranslate import package, translate
-
 from argparse import ArgumentParser, RawTextHelpFormatter
 from http.server import HTTPServer
 from pathlib import Path
+
+from argostranslate import package, translate
 
 from multimodaltranslation.audio.translate import translate_audio
 from multimodaltranslation.server import MyHandler
@@ -114,20 +114,20 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    if args.i != None:
+    if args.i is not None:
         install_language(args.i)
     elif args.s == "Y" or args.s == "y":
         start_server(args.ap)
     else:
         print(cli_translate(args.o, args.t, args.txt, args.f))
-    
+
 def install_language(path: str) -> None:
     """
     Installs the language needed by providing the model.zip file.
 
     Args:
         path (str): The path to the zipped argos model.
-    
+
     Returns:
         None.
     """
