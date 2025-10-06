@@ -121,7 +121,16 @@ def main() -> None:
     else:
         print(cli_translate(args.o, args.t, args.txt, args.f))
     
-def install_language(path):
+def install_language(path: str) -> None:
+    """
+    Installs the language needed by providing the model.zip file.
+
+    Args:
+        path (str): The path to the zipped argos model.
+    
+    Returns:
+        None.
+    """
     print("Installing language ...")
     try:
         package.install_from_path(path)
@@ -143,7 +152,6 @@ def cli_translate(original:str, target:list, text:str, file:str) -> list:
         target (list): List of language codes to translate the text to.
         text (str): The text to translate.
         file (str): Path of the audio file (would be None when text provided).
-        port (int): The port on which the translator library would run on. [Default: 5000]
 
     Returns:
         list: List of translated text with their targeted language.
@@ -188,12 +196,10 @@ def start_server(port:int =8000) -> None:
 
     Args:
         port (int): The port to start the server on. [Default: 8000]
-        libport (int): The port to start the translating library on. [Default: 5000]
 
     Returns:
         None    
     """
-    # Start the LibreTranslate server
     print("starting server ... ")
 
     try:
@@ -203,7 +209,7 @@ def start_server(port:int =8000) -> None:
         return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")    
 
     try:
-        print(f"server started on localhost port: {port}")
+        print(f"Server started on localhost port: {port}")
         server.serve_forever()
 
     except KeyboardInterrupt:    

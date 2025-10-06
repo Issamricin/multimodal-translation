@@ -6,20 +6,15 @@ warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.
 
 def translate_text(text:str, lang:str, targets:list) -> list:
     """
-    Turns the translating library server on each time it is called.
-    After translating it stops the server.
     Translates the text provided into the desired languages (targets).
 
     Args:
         - text (str): The text you want to translate.
-        - lang (str): The original lanuage of the text.
-        - targets (list): List of lanuages you want to translate to.
+        - lang (str): The original language of the text.
+        - targets (list): List of languages you want to translate to.
 
     Returns:
         list: List of translated texts with their target languages.
-
-    Raises:
-        OSError: Port of translating library in use.
     """
     responses:list = []
 
