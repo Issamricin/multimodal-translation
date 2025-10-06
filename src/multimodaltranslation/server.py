@@ -2,7 +2,7 @@ import json
 from http.server import BaseHTTPRequestHandler
 
 from multimodaltranslation.audio.translate import translate_audio
-from multimodaltranslation.text.translate import send_text
+from multimodaltranslation.text.translate import translate_text
 
 LANGUAGE = [
      "en",
@@ -21,20 +21,6 @@ class MyHandler(BaseHTTPRequestHandler):
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
         >>> server.serve_forever()
     """
-    libport = 5000
-
-    @classmethod
-    def set_libport(cls, libport:int ) -> None:
-        """
-        Sets the libport for the handler. This is used to let the user change the port on which the library will run on.
-
-        Args:
-            libport (int): The port to run the translator library on.
-
-        Returns: 
-            None
-        """
-        cls.libport = libport
 
     def do_POST(self) -> None :
         """
@@ -81,7 +67,7 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.wfile.write(b'{"Error": "Invalid keys", "keys": "text, lang, targets"}')
                 return
 
-            responses = send_text( text, lang, targets, self.libport)
+            responses = translate_text( text, lang, targets)
 
             responses_bytes = json.dumps(responses).encode("utf-8")
 
@@ -117,7 +103,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
             audio_bytes = bytes.fromhex(audio)
 
-            responses = translate_audio(audio_bytes,  lang, targets, self.libport)
+            responses = translate_audio(audio_bytes,  lang, targets)
 
             responses_bytes = json.dumps(responses, ensure_ascii=False).encode("utf-8")
 
