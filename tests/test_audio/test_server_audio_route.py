@@ -38,6 +38,7 @@ def test_audio_translate_valid():
     assert respone.status_code == 200
     data = respone.json()
     assert isinstance(data,list)
+    print(data[0])
     assert data[0]["text"] == "uno dos tres"
 
 
