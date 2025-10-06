@@ -59,7 +59,7 @@ urls.Changelog = "https://github.com/Issamricin/multimodal-translation/blob/main
 ### Dependency Constraints, aka Requirements ###
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
- "libretranslate==1.7.3",  # https://docs.libretranslate.com/ does not work on window only Linux 
+ "argostranslate==1.9.6",
  "pocketsphinx==5.0.4",
  "vosk >= 0.3.45",
 ]

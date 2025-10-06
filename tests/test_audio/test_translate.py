@@ -1,6 +1,4 @@
 import os
-import threading
-from http.server import HTTPServer
 from pathlib import Path
 
 import pytest
@@ -9,23 +7,7 @@ from multimodaltranslation.audio.translate import (
     audio_to_text,
     translate_audio,
 )
-from multimodaltranslation.libretranslate_server import Libretranslate_Server
-from multimodaltranslation.server import MyHandler
-
-
-@pytest.fixture(scope="module", autouse=True)
-def start_server():
-    lib_server = Libretranslate_Server()
-    lib_server.start_libretranslate_server(libport=5000)
-
-    server = HTTPServer(("localhost", 8000), MyHandler)
-    thread = threading.Thread(target=server.serve_forever)
-    thread.daemon=True #So python can still shutdown the server cleanly if we forgot to.
-    thread.start()
-    yield # means do the tests and finish them then come back and continue after the yield.
-    lib_server.stop_libretranslate_server()
-    server.shutdown()
-    thread.join()
+import warnings
 
 def test_audio_to_text():
     script_dir = Path(__file__).resolve()
@@ -45,6 +27,7 @@ def test_audio_to_text():
 
 
 def test_en_translate_audio():
+    warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
     script_dir = Path(__file__).resolve()
 
     model_path = str(script_dir.parent.parent.parent)
@@ -61,6 +44,7 @@ def test_en_translate_audio():
     assert translation[0]['text'] == "un deux trois"
 
 def test_zh_translate_audio():
+    warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
     script_dir = Path(__file__).resolve()
 
     model_path = str(script_dir.parent.parent.parent)
@@ -74,7 +58,7 @@ def test_zh_translate_audio():
 
     translation = translate_audio(audio_bytes, "zh", ["fr"])
 
-    assert translation[0]['text'] == "Nos propres pieds"
+    assert translation[0]['text'] == "Nos propres pieds."
 
 def test_invalidAudio_translate_audio():
     script_dir = Path(__file__).resolve()
