@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2].joinpath("src")))
 
 
 def get_version()->str:
-    file_path =  str(Path(__file__).resolve().parents[2].joinpath("Scripts")) + os.path.sep + 'parse_version.py'
+    file_path =  str(Path(__file__).resolve().parents[2].joinpath("scripts")) + os.path.sep + 'parse_version.py'
     version = run([sys.executable, file_path])
     return str(version)
 

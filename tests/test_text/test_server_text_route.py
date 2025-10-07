@@ -1,24 +1,21 @@
 import threading
+import warnings
 from http.server import HTTPServer
 
 import pytest
 import requests
 
-from multimodaltranslation.libretranslate_server import Libretranslate_Server
 from multimodaltranslation.server import MyHandler
 
 
 @pytest.fixture(scope="module", autouse=True)
 def start_server():
-    lib_server = Libretranslate_Server()
-    lib_server.start_libretranslate_server(libport=5000)
-
+    warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
     server = HTTPServer(("localhost", 8000), MyHandler)
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon=True #So python can still shutdown the server cleanly if we forgot to.
     thread.start()
     yield # means do the tests and finish them then come back and continue after the yield.
-    lib_server.stop_libretranslate_server()
     server.shutdown()
     thread.join()
 
@@ -31,7 +28,7 @@ def test_text_translate_valid():
     assert respone.status_code == 200
     data = respone.json()
     assert isinstance(data,list)
-    assert data[0]["text"] == "Hola"
+    assert data[0]["text"] == "Hola."
 
 
 def test_text_translate_invalid_type():
@@ -74,7 +71,7 @@ def test_text_invalid_lang():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "This language is not available, no language"
+    assert data[0]['Error'] == "Either of the languages may not be available, ('no language', 'es')"
 
 
 def test_text_invalid_target():
@@ -85,7 +82,7 @@ def test_text_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "This language is not available, bbc"
+    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc')"
 
 
 def test_wrong_path():

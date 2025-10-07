@@ -7,7 +7,7 @@ from pathlib import Path
 
 from vosk import KaldiRecognizer, Model, SetLogLevel
 
-from multimodaltranslation.text.translate import send_text
+from multimodaltranslation.text.translate import translate_text
 
 SetLogLevel(-1)
 
@@ -96,9 +96,9 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
     return result
 
 
-def translate_audio(audio_bytes:bytes, lang:str, targets:list, libport:int = 5000) -> list:
+def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     """
-    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the senf_text() method.
+    Calls the audio_to_text to convert the audio into a trancsiped text. Then translates it into desired langs using the translate_text() method.
 
     Args:
         - audio_bytes (bytes): The bytes of the audio file.
@@ -129,5 +129,5 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list, libport:int = 500
     except RuntimeError as e:
         return [{"Error":str(e)}]
 
-    translated_text = send_text(text, lang, targets, libport)
+    translated_text = translate_text(text, lang, targets)
     return translated_text
