@@ -2,6 +2,7 @@ import os
 import threading
 from http.server import HTTPServer
 from pathlib import Path
+from argostranslate import package
 
 import pytest
 import requests
@@ -18,6 +19,10 @@ def start_server():
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon=True #So python can still shutdown the server cleanly if we forgot to.
     thread.start()
+    script_dir = Path(__file__).resolve()
+    model_path = str(script_dir.parent.parent.parent)
+    path = os.path.join(model_path,"models","translate-en_el-1_9.argosmodel")
+    package.install_from_path(path)
     yield # means do the tests and finish them then come back and continue after the yield.
     server.shutdown()
     thread.join()
