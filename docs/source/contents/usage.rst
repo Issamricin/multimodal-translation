@@ -105,16 +105,30 @@ Available languages for now:
 - zh "chinese"
 
 The ports that the library runs on by default might be in use. 
-That's why there are flags for this library and for the translating library to change the ports on which the servers run on.
+That's why there are flags for this library to change the ports on which the servers run on.
 
 .. code-block:: shell
 
-    translator -s Y -lp 4000 -ap 5000
+    translator -s Y -ap 5000
   
-
--lp flag is for the translating library port.
 -ap flag is for the application port.
-  
+
+--------------------
+installing languages
+--------------------
+
+To install more languages for translation, go to this link: https://www.argosopentech.com/argospm/index/
+Choose the language you need and install it.
+
+After installing the zipped file. Use the -i flag to install it into the application for usage.
+
+.. code-block:: shell
+
+    translator -i path_to_file/translate-en_el-1_9.argosmodel 
+
+Note:
+If you want to translate from english to german, you need its model. And from german to english you have to install that model too.
+
 --------------
 Running PyTest
 --------------

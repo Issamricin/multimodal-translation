@@ -15,7 +15,7 @@ Marshal the json into modules
 Mocking the test case server
 ----------------------------
 
-| In your test you don't need to have a server (libretranslate server) up since you can mock the server and product the network error etc..
+| In your test you don't need to have a server up since you can mock the server and product the network error etc..
 | Currently it is starting a server, doing tests, and then closing the server.
 
 

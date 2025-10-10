@@ -1,13 +1,12 @@
-import subprocess
-import time
 from argparse import ArgumentParser, RawTextHelpFormatter
 from http.server import HTTPServer
 from pathlib import Path
 
+from argostranslate import package, translate
+
 from multimodaltranslation.audio.translate import translate_audio
-from multimodaltranslation.libretranslate_server import Libretranslate_Server
 from multimodaltranslation.server import MyHandler
-from multimodaltranslation.text.translate import send_text
+from multimodaltranslation.text.translate import translate_text
 from multimodaltranslation.version import __version__
 
 
@@ -38,6 +37,11 @@ def main() -> None:
             "  es - Spanish\n"
             "  fr - French\n"
             "  zh - Chinese\n"
+            "  ru - Russian\n"
+            "  de - Germany\n"
+            "  pt - Portuguese\n"
+            "  tr - Turkish\n"
+            "  ar - Arabic\n"
         ),
         formatter_class=RawTextHelpFormatter
     )
@@ -46,6 +50,14 @@ def main() -> None:
         "--version",
         action="version",
         version=f"Multimodal Translator {__version__}"
+    )
+
+    parser.add_argument(
+        "-i",
+        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ install the zip and then use the flag on it to install.",
+        type=Path,
+        default=None,
+        metavar="INSTALL",
     )
 
     # --- Server options ---
@@ -65,14 +77,6 @@ def main() -> None:
         nargs="?",
         default=8000,
         metavar="APP_PORT",
-    )
-    server_group.add_argument(
-        "-lp",
-        help="Library server port [default: 5000]",
-        type=int,
-        nargs="?",
-        default=5000,
-        metavar="LIB_PORT",
     )
 
     # --- Translation options ---
@@ -115,12 +119,35 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    if args.s == "Y":
-        start_server(args.ap, args.lp)
+    if args.i is not None:
+        install_language(args.i)
+    elif args.s == "Y" or args.s == "y":
+        start_server(args.ap)
     else:
-        print(cli_translate(args.o, args.t, args.txt, args.f, args.lp))
+        print(cli_translate(args.o, args.t, args.txt, args.f))
 
-def cli_translate(original:str, target:list, text:str, file:str, port:int =5000) -> list:
+def install_language(path: str) -> None:
+    """
+    Installs the language needed by providing the model.zip file.
+
+    Args:
+        path (str): The path to the zipped argos model.
+
+    Returns:
+        None.
+    """
+    print("Installing language ...")
+    try:
+        package.install_from_path(path)
+    except Exception:
+        print("Error: Not a valid argos model (must be zip archive)\n" \
+        "Visit https://www.argosopentech.com/argospm/index/ to install models")
+        return
+
+    installed_languages = translate.get_installed_languages()
+    print("Installed languages: ", [str(lang) for lang in installed_languages])
+
+def cli_translate(original:str, target:list, text:str, file:str) -> list:
     """
     Translates the provided text or audio file given through the cli. 
     You can only provide one and the other would be None.
@@ -130,18 +157,11 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
         target (list): List of language codes to translate the text to.
         text (str): The text to translate.
         file (str): Path of the audio file (would be None when text provided).
-        port (int): The port on which the translator library would run on. [Default: 5000]
 
     Returns:
         list: List of translated text with their targeted language.
     """
 
-    process = subprocess.Popen(
-        [ "libretranslate", "--port", f"{port}"],  # disable api keys so that libretranslate does not creats sessions for the api databases.
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    time.sleep(4)
     o = original
     t = target
     txt = text
@@ -156,9 +176,7 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
 
     if txt is not None:
         cont = " ".join(txt)
-        translated = send_text(cont, o, t, port)
-        process.kill()
-        process.wait()
+        translated = translate_text(cont, o, t)
     elif file is not None:
         cont = f
 
@@ -166,54 +184,40 @@ def cli_translate(original:str, target:list, text:str, file:str, port:int =5000)
             with open(cont,"rb") as r:
                 cont_bytes = r.read()
         except FileNotFoundError:    
-            process.kill()
-            process.wait()
             return ["FileNotFoundError: Make sure you provide the correct path."]
 
-        translated = translate_audio(cont_bytes, o, t, port)
-        process.kill()
-        process.wait()
+        translated = translate_audio(cont_bytes, o, t)
+
     else:
         cont = input("Enter the text you want to translate: ")
-        translated = send_text(cont, o, t, port)
-        process.kill()
-        process.wait()
+        translated = translate_text(cont, o, t)
+
 
     return translated
 
-def start_server(port:int =8000, libport:int =5000) -> None:
+def start_server(port:int =8000) -> None:
     """
     Starts the server. The server to accept api calls.
 
     Args:
         port (int): The port to start the server on. [Default: 8000]
-        libport (int): The port to start the translating library on. [Default: 5000]
 
     Returns:
         None    
     """
-    # Start the LibreTranslate server
     print("starting server ... ")
-    try:
-        lib_server = Libretranslate_Server()
-        lib_server.start_libretranslate_server(libport=libport)
-    except Exception:
-        lib_server.stop_libretranslate_server()
-        return print([f"-{libport} Port might be taken!"])
 
-    MyHandler.set_libport(libport)
     try:
         server = HTTPServer(("localhost", port), MyHandler)
 
     except OSError:
-        return print("Error: Ports are in use. You can change the ports using the -lp and -ap flags. (-h for more help)")    
+        return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")    
 
     try:
-        print(f"server started on localhost port: {port}")
+        print(f"Server started on localhost port: {port}")
         server.serve_forever()
 
-    except KeyboardInterrupt:  
-        lib_server.stop_libretranslate_server()      
+    except KeyboardInterrupt:    
         return print("\nClosing server...")
 
 

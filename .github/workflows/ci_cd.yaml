@@ -152,7 +152,9 @@ jobs:
       - name: Do Type Checking
         run: tox -e type -v -s false  # do not skip missing interpreters don't install (config default)
 
-      ###### TEST SUITE RUN against Edit and Sdist ######
+      - name: Install FFmpeg
+        run: sudo apt update && sudo apt install ffmpeg -y
+
       - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
         run: |
           set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
