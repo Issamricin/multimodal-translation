@@ -5,8 +5,10 @@ import subprocess
 import wave
 from pathlib import Path
 
+from appdirs import user_data_dir
 from vosk import KaldiRecognizer, Model, SetLogLevel
 
+from multimodaltranslation.audio.install_models import install_model
 from multimodaltranslation.text.translate import translate_text
 
 SetLogLevel(-1)
@@ -95,6 +97,50 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
     result = str(results[0]["text"])
     return result
 
+def get_model(lang: str) -> str:
+    """
+    Returns the path to the Vosk model for the given language.
+    Downloads it if not already installed.
+
+    Args:
+        lang (str): The language of the model.
+
+    Returns:
+        str: Path to the model folder as a string.
+
+    Raises:
+        Exception: Language model not available.
+    """
+    # Base directory for user models
+    base_dir = Path(user_data_dir("multimodaltranslator")) / "models"
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    # Map language code to Vosk model names
+    model_names = {
+        "en": "vosk-model-small-en-us-0.15",
+        "zh": "vosk-model-small-cn-0.22",
+        "fr": "vosk-model-small-fr-0.22",
+        "ru": "vosk-model-small-ru-0.22",
+        "de": "vosk-model-small-de-0.15",
+        "es": "vosk-model-small-es-0.42",
+        "pt": "vosk-model-small-pt-0.3",
+        "tr": "vosk-model-small-tr-0.3",
+        "it": "vosk-model-small-it-0.22",
+        "ar": "vosk-model-ar-mgb2-0.4"
+        # Add more default mappings if needed
+    }
+
+    if lang not in model_names:
+        raise Exception(f"language '{lang}' is not available")
+
+    model_name = model_names[lang]
+    model_dir = base_dir / model_name
+
+    if not model_dir.exists():
+        install_model(model_name)
+
+    return str(model_dir)
+
 
 def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     """
@@ -108,21 +154,11 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     Returns:
         list : List of translated texts with the target language.
 
-    Raises:
-        RuntimeError: If the conversion of the audio file to wav type failed.
-
     """
-    script_dir = Path(__file__).resolve()
-    model_path = str(script_dir.parent.parent.parent.parent)
-
-    if lang == "en": #could be match: case: but the tox is failling since match was introduced in python 3.10, tox is testing on 3.9
-        model_path = os.path.join(model_path,"models","vosk-model-small-en-us-0.15")
-    elif lang == "zh":
-        model_path = os.path.join(model_path,"models","vosk-model-small-cn-0.22")
-    elif lang == "fr":
-        model_path = os.path.join(model_path,"models","vosk-model-small-fr-0.22")
-    else:
-        return [{"Error": f"The language {lang} is not available"}]
+    try:
+        model_path = get_model(lang)
+    except Exception as e:
+        return [{"Error": str(e)}]
 
     try:
         text = audio_to_text(audio_bytes, model_path)

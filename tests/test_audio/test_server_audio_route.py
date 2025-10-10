@@ -2,10 +2,10 @@ import os
 import threading
 from http.server import HTTPServer
 from pathlib import Path
-from argostranslate import package
 
 import pytest
 import requests
+from argostranslate import package
 
 from multimodaltranslation.server import MyHandler
 

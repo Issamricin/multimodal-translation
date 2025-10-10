@@ -40,12 +40,6 @@ COMMUNITY VERSION
 
    contents/about
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Reports:
-
-   contents/reports/coverage
-
 
 Indices and tables
 ==================

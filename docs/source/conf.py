@@ -18,12 +18,14 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here
 
+import os
+import sys
+from pathlib import Path
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here.
 from subprocess import run
-import sys
-import os
-from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[2].joinpath("src")))
 
 

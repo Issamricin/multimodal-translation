@@ -37,6 +37,11 @@ def main() -> None:
             "  es - Spanish\n"
             "  fr - French\n"
             "  zh - Chinese\n"
+            "  ru - Russian\n"
+            "  de - Germany\n"
+            "  pt - Portuguese\n"
+            "  tr - Turkish\n"
+            "  ar - Arabic\n"
         ),
         formatter_class=RawTextHelpFormatter
     )
@@ -49,7 +54,7 @@ def main() -> None:
 
     parser.add_argument(
         "-i",
-        help="Install translation language",
+        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ install the zip and then use the flag on it to install.",
         type=Path,
         default=None,
         metavar="INSTALL",
@@ -61,7 +66,7 @@ def main() -> None:
         "-s",
         help="Start server? (Y/N) [default: N]",
         type=str,
-        nargs="1",
+        nargs="?",
         default="N",
         metavar="Y|N",
     )
