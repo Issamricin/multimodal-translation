@@ -119,13 +119,6 @@ Testing, Documentation Building, Scripts, CI/CD, Static Code Analysis for this p
    e. **Lint** *Check* and `Apply` commands, using the fast `Ruff`_ linter, along with `isort`_ and `black`_
 
 
-Libretranslate:
----------------
-
-| The API usage  https://docs.libretranslate.com/guides/api_usage/
-| There is a package src/libretranslate/api.py which shows the usage for http calls or rest calls
-
-
 Project Detials:
 ----------------
 
