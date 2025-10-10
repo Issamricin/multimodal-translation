@@ -5,7 +5,6 @@ from pathlib import Path
 
 import pytest
 import requests
-from argostranslate import package
 
 from multimodaltranslation.server import MyHandler
 
