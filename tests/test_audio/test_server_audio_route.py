@@ -19,10 +19,6 @@ def start_server():
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon=True #So python can still shutdown the server cleanly if we forgot to.
     thread.start()
-    script_dir = Path(__file__).resolve()
-    model_path = str(script_dir.parent.parent.parent)
-    path = os.path.join(model_path,"models","translate-en_el-1_9.argosmodel")
-    package.install_from_path(path)
     yield # means do the tests and finish them then come back and continue after the yield.
     server.shutdown()
     thread.join()
@@ -100,7 +96,7 @@ def test_audio_invalid_lang():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "The language edd is not available"
+    assert data[0]['Error'] == "language 'edd' is not available"
 
 
 def test_audio_invalid_target():
@@ -119,5 +115,5 @@ def test_audio_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc')"
+    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc'). Install the argos text-to-text translating language not only the vosk model."
 
