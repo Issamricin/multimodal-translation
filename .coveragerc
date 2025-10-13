@@ -1,8 +1,6 @@
 # https://coverage.readthedocs.io/en/7.6.1/config.html
 [run]
-include =
-  src/*
-  tests/*
+source= src/multimodaltranslation
 parallel = True
 # branch is the if else statement 
 branch = True
@@ -11,7 +9,7 @@ branch = True
 skip_covered = False
 show_missing = True
 precision = 2
-omit = *migrations*
+omit = src/multimodaltranslation/__main__.py
 exclude_lines =
     raise NotImplementedError
     raise NotImplemented
