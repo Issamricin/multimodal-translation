@@ -8,6 +8,15 @@ from appdirs import user_data_dir
 APP_NAME = "multimodaltranslator"
 
 def install_model(model_name: str) -> None:
+    """
+    Installs the model for the vosk audio to text trascribing.
+
+    Args:
+        model_name (str): The name of the model you want to install.
+
+    Returns:
+        None
+    """
     base_url = "https://alphacephei.com/vosk/models/"
     model_url = f"{base_url}{model_name}.zip"
 
