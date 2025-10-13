@@ -26,13 +26,13 @@ build:
     post_install:
       - python -m pip install -e .
       - python -m pip install pyyaml
-    pre_build:
-      - |
-        for file in .github/workflows/*.yaml; do
-          python ./scripts/visualize-ga-workflow.py "$file" > "./docs/$(basename "$file" .yaml)_mermaid.md"
-        done
-      - python ./scripts/visualize-dockerfile.py > ./docs/dockerfile_mermaid.md
-
+    #pre_build:
+    #  - |
+    #    for file in .github/workflows/*.yaml; do
+    #      python ./scripts/visualize-ga-workflow.py "$file" > "./docs/$(basename "$file" .yaml)_mermaid.md"
+    #    done
+    #  - python ./scripts/visualize-dockerfile.py > ./docs/dockerfile_mermaid.md
+#
 
 
 # Build documentation in the docs/ directory with Sphinx
