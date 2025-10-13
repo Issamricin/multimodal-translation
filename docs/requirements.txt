@@ -4,3 +4,4 @@ sphinx_rtd_theme== 3.0.2
 sphinx-notfound-page==1.1.0
 sphinxcontrib-spelling==8.0.1
 myst-parser==4.0.1
+sentencepiece>=0.1.99
