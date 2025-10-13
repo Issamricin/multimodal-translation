@@ -1,13 +1,13 @@
 import sys
 import warnings
+from unittest.mock import MagicMock, patch
 
-from unittest.mock import patch, MagicMock
-
-from multimodaltranslation.main import install_language  # replace with actual import path
-
-from multimodaltranslation.main import cli_translate, main
-from multimodaltranslation.main import start_server
-
+from multimodaltranslation.main import (
+    cli_translate,
+    install_language,
+    main,
+    start_server,
+)
 
 
 def test_main_translation(monkeypatch, capsys):
