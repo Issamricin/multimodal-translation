@@ -41,10 +41,10 @@ def get_templated_vars():
         dict(
             project_slug='multimodal-translator',
             package_name='multimodaltranslation',
-            author_name='Alan',
+            author_name='Holm Consulting',
             year='2025',
             version='1.0.0',
-            github_username='alanmehio',
+            github_username='Issamricin',
             repo_name='multimodal-translation',
         ),
     )
