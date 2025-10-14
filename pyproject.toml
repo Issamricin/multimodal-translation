@@ -62,6 +62,7 @@ dependencies = [
  "argostranslate==1.9.6",
  "pocketsphinx==5.0.4",
  "vosk >= 0.3.45",
+ "appdirs == 1.4.4",
 ]
 
 ## optional dependency for test or other purpose 
