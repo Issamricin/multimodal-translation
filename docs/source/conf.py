@@ -134,3 +134,4 @@ source_suffix = {
     '.rst': 'restructuredtext'
 }
 
+autodoc_mock_imports = ["vosk", "appdirs"]
