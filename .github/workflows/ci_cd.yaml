@@ -159,7 +159,7 @@ jobs:
         run: |
           set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
                           
-          tox -v -s false | tee test_output.log
+          tox -v | tee test_output.log
         env:
           PLATFORM: ${{ matrix.platform }}
           BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
