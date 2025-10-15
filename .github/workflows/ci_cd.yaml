@@ -153,7 +153,7 @@ jobs:
         run: tox -e type -v -s false  # do not skip missing interpreters don't install (config default)
 
       - name: Install FFmpeg
-        run: sudo apt update && sudo apt install ffmpeg -yzz
+        run: sudo apt update && sudo apt install ffmpeg -y
 
       - name: Install Argos models
         run: python scripts/install_argosmodels.py
