@@ -155,9 +155,6 @@ jobs:
       - name: Install FFmpeg
         run: sudo apt update && sudo apt install ffmpeg -y
 
-      - name: Install Argos models
-        run: python scripts/install_argosmodels.py
-
       - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
         run: |
           set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
