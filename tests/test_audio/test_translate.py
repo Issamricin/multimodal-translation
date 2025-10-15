@@ -50,9 +50,9 @@ def test_zh_translate_audio():
     with open(audio_path, "rb") as f:
         audio_bytes = f.read() 
 
-    translation = translate_audio(audio_bytes, "zh", ["fr"])
+    translation = translate_audio(audio_bytes, "zh", ["en"])
 
-    assert translation[0]['text'] == "Nos propres pieds."
+    assert translation[0]['text'] == "Our own feet."
 
 def test_invalidAudio_translate_audio():
     script_dir = Path(__file__).resolve()
