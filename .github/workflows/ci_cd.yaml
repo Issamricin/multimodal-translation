@@ -157,7 +157,6 @@ jobs:
       
       - name: Install argos-translate models
         run: |
-          pip install argos-translate
 
           argos-translate --from-lang en --to-lang es
           argos-translate --from-lang en --to-lang fr
