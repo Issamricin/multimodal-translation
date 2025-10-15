@@ -154,6 +154,14 @@ jobs:
 
       - name: Install FFmpeg
         run: sudo apt update && sudo apt install ffmpeg -y
+      
+      - name: Install argos-translate models
+        run: |
+          pip install argos-translate
+
+          argos-translate --from-lang en --to-lang es
+          argos-translate --from-lang en --to-lang fr
+          argos-translate --from-lang zh --to-lang fr
 
       - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
         run: |
