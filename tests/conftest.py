@@ -8,7 +8,7 @@ def install_argos_models():
     installed = translate.get_installed_languages()
     installed_codes = [(l.code,) for l in installed]
 
-    pairs = [("en", "es"), ("en", "fr"), ("en", "zh"), ("fr", "en"),]
+    pairs = [("en", "es"), ("en", "fr"), ("en", "zh"), ("zh", "en"),]
 
     for from_code, to_code in pairs:
         if (from_code, to_code) in installed_codes:
