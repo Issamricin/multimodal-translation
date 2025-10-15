@@ -1,16 +1,18 @@
 import pytest
 from argostranslate import package, translate
 
+
 @pytest.fixture(scope="session", autouse=True)
 def install_argos_models():
 
     installed = translate.get_installed_languages()
     installed_codes = [(l.code,) for l in installed]
 
-    pairs = [("en", "es"), ("en", "fr"), ("en", "zh"), ("fr", "zh")]
+    pairs = [("en", "es"), ("en", "fr"), ("en", "zh"), ("fr", "en"),]
 
     for from_code, to_code in pairs:
         if (from_code, to_code) in installed_codes:
+            print(f"Already installed: {from_code} → {to_code}")
             continue
         available_packages = package.get_available_packages()
         for p in available_packages:

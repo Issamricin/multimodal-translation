@@ -1,5 +1,5 @@
 from multimodaltranslation.text.translate import translate_text
-from argostranslate import package
+
 
 def test_send_text_valid():
     answer = translate_text("Hello", "en", ["es"])
