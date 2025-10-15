@@ -59,6 +59,7 @@ urls.Changelog = "https://github.com/Issamricin/multimodal-translation/blob/main
 ### Dependency Constraints, aka Requirements ###
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
+ "torch==2.5.0+cpu",
  "argostranslate==1.9.6",
  "pocketsphinx==5.0.4",
  "vosk >= 0.3.45",
@@ -186,3 +187,9 @@ ignore = [
 # we need to update in toml file above  and below also
 [tool.software-release]
 version_variable = "src/multimodaltranslationr/__init__.py:__version__"
+
+
+[tool.poetry.source]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/torch_stable.html"
+priority = "explicit"
