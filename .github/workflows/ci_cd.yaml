@@ -153,14 +153,10 @@ jobs:
         run: tox -e type -v -s false  # do not skip missing interpreters don't install (config default)
 
       - name: Install FFmpeg
-        run: sudo apt update && sudo apt install ffmpeg -y
-      
-      - name: Install argos-translate models
-        run: |
+        run: sudo apt update && sudo apt install ffmpeg -yzz
 
-          argos-translate --from-lang en --to-lang es
-          argos-translate --from-lang en --to-lang fr
-          argos-translate --from-lang zh --to-lang fr
+      - name: Install Argos models
+        run: python scripts/install_argosmodels.py
 
       - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
         run: |
