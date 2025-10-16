@@ -6,7 +6,7 @@ from argostranslate import package, translate
 def install_argos_models():
 
     installed = translate.get_installed_languages()
-    installed_codes = [(l.code,) for l in installed]
+    installed_codes = [(lan.code,) for lan in installed]
 
     pairs = [("en", "es"), ("en", "fr"), ("en", "zh"), ("zh", "en"),]
 
