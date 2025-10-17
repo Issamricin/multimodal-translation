@@ -22,10 +22,10 @@ Why is multimodality important?
 
 |  When translating information that is in different formats and media types, it's hard to effectively grasp the context,
 |  and truly understand the meaning behind them. 
-|
+
 |  That's where multimodal translation comes in handy. It helps in understanding the context correctly and translate them accurately
 |  by using multiple modals like text, audio, video, etc... This technology is very important in systems where context awareness is required.
-|
+
 Types of multimodal translation:
 --------------------------------
 
