@@ -60,20 +60,20 @@ References:
 
 Technical Debt
 ==============
-`Technical Debt <TECHNICALDEBT.rst>`_
+`Technical Debt <https://github.com/Issamricin/multimodal-translation/blob/main/TECHNICALDEBT.rst>`_
 
 Change Log
 ==========
-`Change Log <CHANGELOG.rst>`_.
+`Change Log <https://github.com/Issamricin/multimodal-translation/blob/main/CHANGELOG.rst>`_.
 
 
 Developer Guide
 ===============
-`Development <docs/source/contents/developer_guide.rst>`_
+`Development <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/developer_guide.rst>`_
 
 Quickstart
 ==========
-`Usage <docs/source/contents/usage.rst>`_
+`Usage <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/usage.rst>`_
 
 
 License
@@ -137,15 +137,15 @@ License
     :target: https://docs.astral.sh/ruff/
 
 
-.. |logo| image:: media/muiltimodal-translation-small.jpg
+.. |logo| image:: https://raw.githubusercontent.com/Issamricin/multimodal-translation/main/media/muiltimodal-translation-small.jpg
                 :alt: multimodal translator
 
-.. |translator_gif| image:: media/translator.gif
+.. |translator_gif| image:: https://raw.githubusercontent.com/Issamricin/multimodal-translation/main/media/translator.gif
    :alt: Demo Preview
    :width: 800
    :height: 300
 
-.. |translator_gif_2| image:: media/translator_audio.gif
+.. |translator_gif_2| image:: https://raw.githubusercontent.com/Issamricin/multimodal-translation/main/media/translator_audio.gif
    :alt: Demo Preview
    :width: 800
    :height: 280
