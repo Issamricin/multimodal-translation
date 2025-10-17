@@ -1,12 +1,5 @@
-import os
 import warnings
 
-os.environ["CUDA_VISIBLE_DEVICES"] = ""  # Hide GPUs
-os.environ["STANZA_USE_GPU"] = "False"   # Force Stanza CPU
-           
-
-# Now import and use Argos Translate
-import argostranslate.translate
 from argostranslate import translate
 
 warnings.filterwarnings("ignore", category=FutureWarning, module="stanza.models.tokenize.trainer")
