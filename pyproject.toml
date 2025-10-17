@@ -9,7 +9,7 @@ name = "multimodal-translation" # package name same as project name
 version = "1.0.0"
 description = "AI based translation from one language to many "
 authors = [
-   {name="Iso"}, 
+   {name="Iso", email="iso.techdev@gmail.com"}, 
    {name="Alan"}
 ]
 maintainers = [{name="Iso"}, {name="Alan"}] # must be an object
@@ -29,7 +29,7 @@ requires-python = ">=3.9,<4.0"
 # Troves classifer see https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "Intended Audience ::Education",
+    "Intended Audience :: Education",
     "Intended Audience :: Other Audience",
     "License :: OSI Approved :: GNU Affero General Public License v3",
     "Natural Language :: English",
@@ -43,7 +43,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Topic ::  Multimedia"
+    "Topic :: Multimedia"
 ]
 
 
@@ -73,8 +73,6 @@ test = [
   "pytest (>=8.4.0); python_version >='3.9' and python_version <='3.14'",
   "pytest-cov (>=6); python_version >='3.9' and python_version <='3.13'",
   "pytest-mock (>=3.14.0); python_version >='3.9' and python_version <='3.14'",
-  "vosk >= 0.3.45",
-  "argostranslate == 1.9.6",
   "coveralls"
 ]
 docs =[

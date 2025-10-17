@@ -154,55 +154,54 @@ jobs:
 
       - name: Install FFmpeg
         run: sudo apt update && sudo apt install ffmpeg -y
-
-      - name: Install Argos models
-        run: python scripts/install_argosmodels.py
-
-      - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
-        run: |
-          set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
-                          
-          tox -v | tee test_output.log
-        env:
-          PLATFORM: ${{ matrix.platform }}
-          BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
-
-      - name: List Wheel(s) created for Distro and its Requirements
-        run: ls -l ${{ env.WHEELS_PIP_DIR }}
-
-      ### PARSE WHEEL File NAME ###
-      - name: Extract Wheel Name and Size
-        id: extract_wheel_info
-        shell: bash
-        run: |
-          WHEEL_INFO=$(grep -E "Created wheel for" test_output.log | sed -E "s/.*filename=([^ ]+) size=([^ ]+) .*/\1 \2/")
-
-          # extract file name
-          WHEEL_NAME=$(echo $WHEEL_INFO | cut -d ' ' -f 1)
-          echo "WHEEL_NAME=$WHEEL_NAME" >> $GITHUB_ENV
-
-          # extract file size
-          WHEEL_SIZE=$(echo $WHEEL_INFO | cut -d ' ' -f 2)
-          echo "WHEEL_SIZE=$WHEEL_SIZE" >> $GITHUB_ENV
-
-          # extract '0.3.2' from 'multimodaltranslation-0.3.2-py3-none-any.whl'
-          #echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/'
-          PEP_VERSION=$(echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/')
-          echo "PEP_VERSION=$PEP_VERSION"
-          echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_OUTPUT
-          echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_ENV
-
-      - run: 'echo "WHEEL_NAME: $WHEEL_NAME SIZE: $WHEEL_SIZE"'
-      - run: 'echo "PEP_VERSION: $PEP_VERSION"'
+############# Commented out for storage issues on github. The libraries installed while building the wheel are so large that there is no storage left.########
+    #  - name: Build and Test 'Edit' and 'Sdist' & Build Wheel(s)
+    #    run: |
+    #      set -o pipefail # see https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+    #                      
+    #      tox -v | tee test_output.log
+    #    env:
+    #      PLATFORM: ${{ matrix.platform }}
+    #      BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
+#
+    #  - name: List Wheel(s) created for Distro and its Requirements
+    #    run: ls -l ${{ env.WHEELS_PIP_DIR }}
+#
+    #  ### PARSE WHEEL File NAME ###
+    #  - name: Extract Wheel Name and Size
+    #    id: extract_wheel_info
+    #    shell: bash
+    #    run: |
+    #      WHEEL_INFO=$(grep -E "Created wheel for" test_output.log | sed -E "s/.*filename=([^ ]+) size=([^ ]+) .*/\1 \2/")
+#
+    #      # extract file name
+    #      WHEEL_NAME=$(echo $WHEEL_INFO | cut -d ' ' -f 1)
+    #      echo "WHEEL_NAME=$WHEEL_NAME" >> $GITHUB_ENV
+#
+    #      # extract file size
+    #      WHEEL_SIZE=$(echo $WHEEL_INFO | cut -d ' ' -f 2)
+    #      echo "WHEEL_SIZE=$WHEEL_SIZE" >> $GITHUB_ENV
+#
+    #      # extract '0.3.2' from 'multimodaltranslation-0.3.2-py3-none-any.whl'
+    #      #echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/'
+    #      PEP_VERSION=$(echo $WHEEL_NAME | sed -E 's/multimodaltranslation-([^ ]+)-py3-none-any.whl/\1/')
+    #      echo "PEP_VERSION=$PEP_VERSION"
+    #      echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_OUTPUT
+    #      echo "PEP_VERSION=$PEP_VERSION" >> $GITHUB_ENV
+#
+    #  - run: 'echo "WHEEL_NAME: $WHEEL_NAME SIZE: $WHEEL_SIZE"'
+    #  - run: 'echo "PEP_VERSION: $PEP_VERSION"'
 
       ###### TEST SUITE RUN against Wheel ######
-      - name: Run Test Suite Against Wheel
-        run: tox -e wheel-test -s false
-        env:
-          PLATFORM: ${{ matrix.platform }}
-          BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
-          WHEEL: ${{ env.WHEEL_NAME }}
-          PIP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION}}
+      ###### Commented out because of the big library sizes. And github has a limited size so when building the wheel it has to install all the large libraries, no space.
+      ###### You can still run the command locally and check the result.########
+    #  - name: Run Test Suite Against Wheel
+    #    run: tox -e wheel-test -s false
+    #    env:
+    #      PLATFORM: ${{ matrix.platform }}
+    #      BUILD_DEST: ${{ env.WHEELS_PIP_DIR }}
+    #      WHEEL: ${{ env.WHEEL_NAME }}
+    #      PIP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION}}
     
       ## Combine Coverage Data from Tests' Results ##
       - name: "Combine Coverage (dev, sdist, wheel) & make Reports"
@@ -223,27 +222,27 @@ jobs:
 
       - name: Check for compliance with Python Best Practices
         shell: bash
-        env:
-          PKG_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
-          WHEEL_PATH: ${{ env.WHEELS_PIP_DIR }}/${{ env.WHEEL_NAME }}
-        run: |
-          DIST_DIR=dist
-          echo "DIST_DIR=${DIST_DIR}" >> $GITHUB_ENV
-          mkdir ${DIST_DIR}
-          cp ".tox/${DIST_DIR}/multimodaltranslation-${PKG_VERSION}.tar.gz" "${DIST_DIR}"
-          cp "${{ env.WHEEL_PATH }}" "${DIST_DIR}"
-          tox -e check -v -s false
+      #  env:
+      #    PKG_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
+      #    WHEEL_PATH: ${{ env.WHEELS_PIP_DIR }}/${{ env.WHEEL_NAME }}
+        run: tox -e check -v -s false
+      #    DIST_DIR=dist
+      #    echo "DIST_DIR=${DIST_DIR}" >> $GITHUB_ENV
+      #    mkdir ${DIST_DIR}
+      #    cp ".tox/${DIST_DIR}/multimodaltranslation-${PKG_VERSION}.tar.gz" "${DIST_DIR}"
+      #    cp "${{ env.WHEEL_PATH }}" "${DIST_DIR}"
+      #    tox -e check -v -s false
 
       ## UPLOAD CI ARTIFACTS - Distro Build(s), 1 sdist and 1 or more wheels ##
-      - name: Upload Source & Wheel distributions as Artefacts
-        uses: actions/upload-artifact@v4.6.0
-        with:
-          name: dist-${{ matrix.platform }}-${{ matrix.python-version }}
-          path: ${{ env.DIST_DIR }}
-          if-no-files-found: error
-    outputs:
-      TEST_RESULT: ${{'success'}}
-      PEP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
+    #gi  - name: Upload Source & Wheel distributions as Artefacts
+    #    uses: actions/upload-artifact@v4.6.0
+    #    with:
+    #      name: dist-${{ matrix.platform }}-${{ matrix.python-version }}
+    #      path: ${{ env.DIST_DIR }}
+    #      if-no-files-found: error
+    #outputs:
+    #  TEST_RESULT: ${{'success'}}
+    #  PEP_VERSION: ${{ steps.extract_wheel_info.outputs.PEP_VERSION }}
       
 
 
