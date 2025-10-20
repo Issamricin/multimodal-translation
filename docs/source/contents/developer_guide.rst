@@ -183,13 +183,13 @@ Ready to contribute?
 --------------------
 
 | Make sure to read the usage to further understand this project.
-| `Usage <usage.html>`_
+| `Usage <https://multimodal-translation.readthedocs.io/en/latest/contents/usage.html>`_
 
 | Now that you have a general idea about the project, you are ready to start contributing and developing.
-| `Contribute! <contribution.html>`_
+| `Contribute! <https://multimodal-translation.readthedocs.io/en/latest/contents/contribution.html>`_
 
 | You can also check the technical debt for future development.
-| `Technical debt <tech_debt.html>`_
+| `Technical debt <https://multimodal-translation.readthedocs.io/en/latest/contents/tech_debt.html>`_
 
 API Documentation
 -----------------
