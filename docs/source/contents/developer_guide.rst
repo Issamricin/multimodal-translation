@@ -196,26 +196,16 @@ API Documentation
 We follow Google style documentation for packages, modules, classes, methods 
 
 .. LINKS
-
-| `Tox <https://tox.wiki/en/latest/>`__ 
-
-| `Pytest <https://docs.pytest.org/en/7.1.x/>`__ 
-
-| `Build <https://github.com/pypa/build>`__ 
-
-| `Docker <https://hub.docker.com/>`__ 
-
-| `pypi.org <https://pypi.org/>`__ 
-
-| `test.pypi.org <https://test.pypi.org/>`__ 
-
-| `mypy <https://mypy.readthedocs.io/en/stable/>`__ 
-
-| `Ruff <https://docs.astral.sh/ruff/>`__ 
-
-| `Isort <https://pycqa.github.io/isort/>`__ 
-
-| `Black <https://black.readthedocs.io/en/stable/>`__ 
-
-| `Google API docs <https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html>`__ 
+.. _Tox: https://tox.wiki/en/latest/
+.. _Pytest: https://docs.pytest.org/en/7.1.x/
+.. _Build: https://github.com/pypa/build
+.. _Docker: https://hub.docker.com/
+.. _pypi.org: https://pypi.org/
+.. _test.pypi.org: https://test.pypi.org/
+.. _mypy: https://mypy.readthedocs.io/en/stable/
+.. _Ruff: https://docs.astral.sh/ruff/
+.. _Isort: https://pycqa.github.io/isort/__ 
+.. _Black: https://black.readthedocs.io/en/stable/
+.. _Google API docs: https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html
+.. _Dockerhub: https://www.docker.com/products/docker-hub/
 
