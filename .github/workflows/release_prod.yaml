@@ -1,6 +1,8 @@
 name: Release to PROD PyPI
 on:
   push:
+    branches:
+      - main
     tags: ["release-*"] # test-1.0.0 trigger to deploy on test pypi while release-1.0.0 is on production pypi
 
 env:
