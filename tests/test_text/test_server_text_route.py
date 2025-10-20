@@ -71,7 +71,7 @@ def test_text_invalid_lang():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "Either of the languages may not be available, ('no language', 'es'). Install the argos text-to-text translating language not only the vosk model."
+    assert data[0]['Error'] == "Either of the languages may not be available, ('no language', 'es'). Install the argos text-to-text translating language."
 
 def test_text_invalid_target():
 
@@ -81,7 +81,7 @@ def test_text_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc'). Install the argos text-to-text translating language not only the vosk model."
+    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc'). Install the argos text-to-text translating language."
 
 
 def test_wrong_path():
