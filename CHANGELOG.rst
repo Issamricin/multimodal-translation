@@ -3,7 +3,7 @@ Changelog
 =========
 
 1.0.0 (2025-10-17)
-=======================================
+==================
 
 | This is the first ever release of the **Multimodal translation** Python Package.
 | The package is open source and is part of the **Multimodal-translation** Project.
