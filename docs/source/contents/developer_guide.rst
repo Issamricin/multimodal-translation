@@ -102,7 +102,7 @@ Testing, Documentation Building, Scripts, CI/CD, Static Code Analysis for this p
    
       `Production`
       
-         1. **Python Distristribution** to `pypi.org`_, on `tags` **v***, pushed to `main` branch
+         1. **Python Distristribution** to `pypi.org`_, on `tags` test-* and release-* (e.g. test-0.1.0 to release to test pypi), pushed to `main` branch
          2. **Docker Image** to `Dockerhub`_, on every push, with automatic `Image Tagging`
       
       `Staging`
