@@ -1,3 +1,4 @@
+"""parses the version."""
 #!/usr/bin/env python
 
 import os
@@ -7,14 +8,14 @@ import typing as t
 
 # TODO Improve: try using the semantic_version_checker package for semver regex
 
-ExceptionFactory = t.Callable[[str, str, str], Exception]
-ClientCallback = t.Callable[[str, str], tuple]
+EXCEPTIONFACTORY = t.Callable[[str, str, str], Exception]
+CLIENTCALLBACK = t.Callable[[str, str], tuple]
 
-MatchConverter = t.Callable[[t.Match], tuple]
-MatchData = t.Union[
-    tuple[t.Callable[[t.Match], tuple], str, list[t.Any]],
-    tuple[t.Callable[[t.Match], tuple], str],
-    tuple[t.Callable[[t.Match], tuple]],
+MATCHCONVERTER = t.Callable[[t.Match], tuple]
+MATCHDATA = t.Union[
+    tuple[t.Callable[[t.Match], tuple], str, list[t.Any]], # pylint: disable=unsubscriptable-object
+    tuple[t.Callable[[t.Match], tuple], str], # pylint: disable=unsubscriptable-object
+    tuple[t.Callable[[t.Match], tuple]], # pylint: disable=unsubscriptable-object
 ]
 # 1st item (Callable): takes a Match object and return a tuple of strings
 # 2nd item (str): 'method'/'callable attribute' of the 're' python module)
@@ -27,13 +28,15 @@ DEMO_SECTION: str = (
 TOML = 'pyproject.toml'
 
 
-def build_client_callback(data: MatchData, factory: ExceptionFactory) -> ClientCallback:
+def build_client_callback(data: MATCHDATA, factory: EXCEPTIONFACTORY) -> CLIENTCALLBACK:
+    """Builds the client's callback..."""
     if len(data) == 1:
         data = (data[0], 'search', [re.MULTILINE])
     elif len(data) == 2:
         data = (data[0], data[1], [re.MULTILINE])
 
     def client_callback(file_path: str, regex: str) -> tuple:
+        """client callback"""
         with open(file_path) as _file:
             contents = _file.read()
         match = getattr(re, data[1])(regex, contents, *data[2])
@@ -59,7 +62,7 @@ software_release_parser = build_client_callback(
 )
 
 
-version_file_parser = build_client_callback(
+VERSION_FILE_PARSER = build_client_callback(
     (lambda match: (match.group(1),),),
     lambda file_path, reg, string: AttributeError(
         f"Could not find a match for regex {reg} when applied to:\n{str} for the file path {file_path}"
@@ -101,11 +104,13 @@ def parse_version(software_release_cfg: str) -> str:
         )
 
     reg = f'^{version_variable_name}' + r'\s*=\s*[\'\"]([^\'\"]*)[\'\"]'
-    (version,) = version_file_parser(file_with_version_string, reg)
+    (version,) = VERSION_FILE_PARSER(file_with_version_string, reg)
     return version
 
 
 def get_arguments(sys_args: list[str]):
+    """Gets the arguments..."""
+
     project_dir:str = ''
     if len(sys_args) == 1:  # no input path was given by user, as console arg
         project_dir = os.getcwd()

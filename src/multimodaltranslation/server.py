@@ -4,18 +4,16 @@ from http.server import BaseHTTPRequestHandler
 from multimodaltranslation.audio.translate import translate_audio
 from multimodaltranslation.text.translate import translate_text
 
-LANGUAGE = [
-     "en",
-     "it",
-     "es",
-     "fr",
-     "zh"
-    ]
+LANGUAGE = ["en",
+            "it",
+            "es",
+            "fr",
+            "zh"]
 
 
 class MyHandler(BaseHTTPRequestHandler):
     """
-    Handles the calls for the server. You use this class to create a server on a specific port.        
+    Handles the calls for the server. You use this class to create a server on a specific port.
 
     Example:
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
@@ -103,7 +101,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
             audio_bytes = bytes.fromhex(audio)
 
-            responses = translate_audio(audio_bytes,  lang, targets)
+            responses = translate_audio(audio_bytes, lang, targets)
 
             responses_bytes = json.dumps(responses, ensure_ascii=False).encode("utf-8")
 

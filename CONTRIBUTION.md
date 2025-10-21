@@ -3,12 +3,11 @@
 Thank you for considering reading this guide!
 Contributions are welcome :)
 
-
-* [Types of Contributions](#Types-of-Contributions)
-* [Contributor Setup](#Setting-Up-the-Code-for-Local-Development)
-* [Contributor Guidelines](#Contributor-Guidelines)
-* [Contributor Testing](#Testing-with-tox)
-* [Core Committer Guide](#Core-Committer-Guide)
+* [Types of Contributions](#types-of-contributions)
+* [Contributor Setup](#setting-up-the-code-for-local-development)
+* [Contributor Guidelines](#contributor-guidelines)
+* [Contributor Testing](#testing-with-tox)
+* [Core Committer Guide](#core-committer-guide)
 
 
 ## Types of Contributions
@@ -29,7 +28,7 @@ Stambling upon a Bug means encountering different behaviour than the expected/ad
 
 ### Fix Bugs
 
-Look through the GitHub issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it. See [Contributor Setup](#Setting-Up-the-Code-for-Local-Development) to get started.
+Look through the GitHub issues for bugs. Anything tagged with "bug" is open to whoever wants to implement it. See [Contributor Setup](#setting-up-the-code-for-local-development) to get started.
 
 ### Implement Features
 
@@ -37,7 +36,7 @@ Look through the GitHub issues for features. Anything tagged with "enhancement" 
 
 Please do not combine multiple feature enhancements into a single pull request.
 
-See [Contributor Setup](#Setting-Up-the-Code-for-Local-Development) to get started.
+See [Contributor Setup](#setting-up-the-code-for-local-development) to get started.
 
 ### Write Documentation
 
@@ -51,7 +50,7 @@ tox -e live-html
 ```
 
 This will compile the documentation (into html) and start watching the files for changes, recompiling as you save.
-You can open it in your browser at http://127.0.0.1:8000 !
+You can open it in your browser at <http://127.0.0.1:8000>!
 
 ### Submit Feedback
 
@@ -107,11 +106,11 @@ If you want to produce a built tar.gz and wheel distributions:
 tox -e check && tox -e build
 ```
 
-1. Ensure that your feature or commit is fully covered by tests. Check the coverage report that should be visible on the console when you run tox
+2. Ensure that your feature or commit is fully covered by tests. Check the coverage report that should be visible on the console when you run tox
 
 You report will be placed to `htmlcov` directory. Please do not include this directory to your commits, accidentally.
 
-1. Commit your changes and push your branch to GitHub:
+3. Commit your changes and push your branch to GitHub:
 
 ```bash
 git add -p
@@ -119,7 +118,7 @@ git commit -m "Your detailed description of your changes."
 git push origin name-of-your-bugfix-or-feature
 ```
 
-8. Submit a pull request through the GitHub website.
+4. Submit a pull request through the GitHub website.
 
 ## Contributor Guidelines
 
@@ -218,9 +217,10 @@ How to prioritize pull requests, from most to least important:
 * Features.
 
 #### Pull Requests Review Guidelines
-- Think carefully about the long-term implications of the change. How will it affect existing projects that are dependent on this? If this is complicated, do we really want to maintain it forever?
-- Take the time to get things right, PRs almost always require additional improvements to meet the bar for quality. **Be very strict about quality.**
-- When you merge a pull request take care of closing/updating every related issue explaining how they were affected by those changes. Also, remember to add the author to `AUTHORS.md`.
+
+* Think carefully about the long-term implications of the change. How will it affect existing projects that are dependent on this? If this is complicated, do we really want to maintain it forever?
+* Take the time to get things right, PRs almost always require additional improvements to meet the bar for quality. **Be very strict about quality.**
+* When you merge a pull request take care of closing/updating every related issue explaining how they were affected by those changes. Also, remember to add the author to `AUTHORS.md`.
 
 ### Process: Issues
 
@@ -235,6 +235,6 @@ The roadmap(issues) located [here](https://github.com/Issamricin/multimodal-tran
 
 Due dates are flexible.
 
-### Process: Release:
+### Process: Release
 
 * Follow semantic versioning. Look at: [http://semver.org](http://semver.org)

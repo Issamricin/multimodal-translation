@@ -139,7 +139,7 @@ def install_language(path: str) -> None:
     print("Installing language ...")
     try:
         package.install_from_path(path)
-    except Exception:
+    except Exception: # pylint: disable=broad-exception-caught
         print("Error: Not a valid argos model (must be zip archive)\n" \
         "Visit https://www.argosopentech.com/argospm/index/ to install models")
         return
@@ -162,23 +162,24 @@ def cli_translate(original:str, target:list, text:str, file:str) -> list:
         list: List of translated text with their targeted language.
     """
 
-    o = original
-    t = target
+    ori = original
+    tar = target
     txt = text
-    f = file
+    fil = file
 
-    if o is None:
-        o = input("Enter the original language of the text: ")
+    if ori is None:
+        ori = input("Enter the original language of the text: ")
 
-    if t is None:
+    if tar is None:
         inp = input("Enter the target languages seperated by space: ")
-        t = inp.split(" ")
+        tar = inp.split(" ")
 
     if txt is not None:
         cont = " ".join(txt)
-        translated = translate_text(cont, o, t)
-    elif file is not None:
-        cont = f
+        translated = translate_text(cont, ori, tar)
+
+    elif fil is not None:
+        cont = fil
 
         try:
             with open(cont,"rb") as r:
@@ -186,11 +187,11 @@ def cli_translate(original:str, target:list, text:str, file:str) -> list:
         except FileNotFoundError:    
             return ["FileNotFoundError: Make sure you provide the correct path."]
 
-        translated = translate_audio(cont_bytes, o, t)
+        translated = translate_audio(cont_bytes, ori, tar)
 
     else:
         cont = input("Enter the text you want to translate: ")
-        translated = translate_text(cont, o, t)
+        translated = translate_text(cont, ori, tar)
 
 
     return translated

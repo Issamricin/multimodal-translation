@@ -24,4 +24,3 @@ lis = [payload,payload2,payload3]
 for i in lis:
     response = requests.post(url, data=i)
     print(response.json())
-

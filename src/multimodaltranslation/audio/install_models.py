@@ -21,7 +21,7 @@ def install_model(model_name: str) -> None:
     model_url = f"{base_url}{model_name}.zip"
 
     base_dir = Path(user_data_dir(APP_NAME))
-    models_dir = base_dir / "models"
+    models_dir: Path = base_dir / "models"
     models_dir.mkdir(parents=True, exist_ok=True)
 
 
@@ -53,4 +53,3 @@ def install_model(model_name: str) -> None:
         print("Failed to download model")
         if os.path.exists(zip_path):
             os.remove(zip_path)
-

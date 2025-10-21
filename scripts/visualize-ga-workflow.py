@@ -33,6 +33,7 @@ JobsNeedsValue = list[JobName]
 
 # Parse the GitHub Actions YAML file
 def parse_actions_config(filename: t.Union[str, Path]) -> t.Union[ParsedYaml, None]:
+    """parses the github actions yaml file"""
     with open(filename) as stream:
         try:
             return yaml.safe_load(stream)
@@ -71,6 +72,7 @@ def extract_job_dependencies(config: ParsedYaml) -> dict[str, JobsNeedsValue]:
 
 # Generate Mermaid markdown from job dependencies
 def generate_mermaid(job_dependencies: dict[str, list[str]]) -> str:
+    """generate the mermaid markdown from job dependencies."""
     mermaid_code = "graph LR;\n"
     for job_name, needs in job_dependencies.items():
         for need in needs:
@@ -79,6 +81,7 @@ def generate_mermaid(job_dependencies: dict[str, list[str]]) -> str:
 
 
 def mermaid_from_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
+    """mermaid from yaml."""
     config: ParsedYaml = parse_actions_config(filename)
     if config is None:
         print(f"[ERROR] Could not parse YAML file: {filename}")
@@ -114,20 +117,21 @@ def main():
     else:
         ci_config = Path(args.input)
 
-    md: str = mermaid_from_yaml(ci_config, format="rst" if args.rst else "md")
+    file_type: str = mermaid_from_yaml(ci_config, format="rst" if args.rst else "md")
 
     if args.output:
         # Handle the case of writing to an output file
         output_file = Path(args.output)
-        output_file.write_text(md)
+        output_file.write_text(file_type)
     else:
         # Handle the case of streaming output to stdout
-        sys.stdout.write(md)
+        sys.stdout.write(file_type)
         # print
 
 
 # CLI
 def arg_parse():
+    """Cli arguments"""
     parser = argparse.ArgumentParser(
         description="Command-line tool to handle input and output options."
     )

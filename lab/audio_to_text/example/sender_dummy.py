@@ -6,18 +6,18 @@ import requests
 url = "http://localhost:8000/audio"
 
 script_dir = Path(__file__).resolve()
-audio_path = str(script_dir.parent.parent.parent.parent)
-audio_path = os.path.join(audio_path,"audio_files","sample1","english.wav")
+AUDIO_PATH = str(script_dir.parent.parent.parent.parent)
+AUDIO_PATH = os.path.join(AUDIO_PATH,"audio_files","sample1","english.wav")
 
-with open(audio_path, "rb") as f:
-    audio_bytes = f.read()    
+with open(AUDIO_PATH, "rb") as f:
+    AUDIO_BYTES = f.read()    
 
-audio_str = audio_bytes.hex()
+audio_str = AUDIO_BYTES.hex()
 files = {
     "audio": audio_str,
     "lang":"en",
-    "targets": ["fr","es"]  
+    "targets": ["fr","es"]
 }
 
-response = requests.post(url, json=files)
-print(response.text)
+RESPONSE = requests.post(url, json=files)
+print(RESPONSE.text)

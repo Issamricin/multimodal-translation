@@ -92,22 +92,22 @@ def generate_mermaid_flow_chart(dockerfile_dag):
 
 
 ## Embed Mermaid to MARKDOWN ##
-def generate_markdown(dockerfile_path):
-    dockerfile_dag = parse_dockerfile(dockerfile_path)
+def generate_markdown(dockerfile_p):
+    dockerfile_dag = parse_dockerfile(dockerfile_p)
 
     flow_chart = generate_mermaid_flow_chart(dockerfile_dag)
 
     markdown = (
         "## Dockerfile Flow Chart\n\n"
-        f"**Dockerfile: {dockerfile_path}**\n\n"
+        f"**Dockerfile: {dockerfile_p}**\n\n"
         f"```mermaid\n{flow_chart}```\n"
     )
     return markdown
 
 
 ## Embed Mermaid to RST ##
-def generate_rst(dockerfile_path):
-    dockerfile_dag = parse_dockerfile(dockerfile_path)
+def generate_rst(dockerfile_p):
+    dockerfile_dag = parse_dockerfile(dockerfile_p)
 
     flow_chart = generate_mermaid_flow_chart(dockerfile_dag)
 
@@ -145,12 +145,12 @@ def parse_cli_args() -> tuple[Path, t.Optional[str]]:
 
 
 if __name__ == "__main__":
-    dockerfile_path, args = parse_cli_args()
+    DOCKERFILE_PATH, args = parse_cli_args()
     output_path = args.output
     if args.rst:
-        content: str = generate_rst(dockerfile_path)
+        content: str = generate_rst(DOCKERFILE_PATH)
     else:
-        content: str = generate_markdown(dockerfile_path)
+        content: str = generate_markdown(DOCKERFILE_PATH)
     if output_path is None:
         print(content)
         sys.exit(0)

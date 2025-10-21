@@ -1,3 +1,4 @@
+"""This is the configuration file for the documents on readthedocs."""
 # Configuration file for the Sphinx documentation builder.
 #
 # This file configures the readthedocs.org server that Continuously
@@ -38,15 +39,15 @@ def get_templated_vars():
     return type(
         'TemplatedVariables',
         (),
-        dict(
-            project_slug='multimodal-translator',
-            package_name='multimodaltranslation',
-            author_name='Holm Consulting',
-            year='2025',
-            version='1.0.0',
-            github_username='Issamricin',
-            repo_name='multimodal-translation',
-        ),
+        {
+            "project_slug":'multimodal-translator',
+            "package_name":'multimodaltranslation',
+            "author_name":'Holm Consulting',
+            "year":'2025',
+            "version":'1.0.0',
+            "github_username":'Issamricin',
+            "repo_name":'multimodal-translation',
+        },
     )
 
 
@@ -57,22 +58,19 @@ variables = get_templated_vars()
 
 # -- Project information -----------------------------------------------------
 
-project = variables.project_slug
-copyright = '{year}, {name}'.format(
-    year=variables.year,
-    name=variables.author_name,
-)
-author = variables.author_name
+PROJECT = variables.project_slug
+COPY_RIGHT = f'{variables.year}, {variables.author_name}'
+AUTHOR = variables.author_name
 
 # The full version, including alpha/beta/rc tags
-release = get_version()
+RELEASE = get_version()
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
+EXTENTIONS = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
@@ -80,25 +78,25 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.extlinks',  # External Links Configuration: Dynamic Urls
     'sphinx.ext.napoleon',  # Allow parsing of docstrings using Google format
-    'sphinx.ext.todo', # Support for todo items see  https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
+    'sphinx.ext.todo', # Support for todo items 
     'sphinx.ext.duration',
     'myst_parser'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+TEMPLATE_PATH = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+EXCLUDE_PATTERNS = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+HTML_THEME = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

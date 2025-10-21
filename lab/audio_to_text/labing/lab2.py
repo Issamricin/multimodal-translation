@@ -9,16 +9,16 @@ import speech_recognition as sr
 
 def extract_text_from_audio(file:str) -> str:
     audio = sr.AudioData.from_file(file)
-    r = sr.Recognizer()
+    recognizer = sr.Recognizer()
 
     try:
-        text = r.recognize_google(audio,"zh-CN")
+        text = recognizer.recognize_google(audio,"zh-CN")
         print("Sphinx thinks you said " + text)
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")
         return 
-    except sr.RequestError as e:
-        print(f"Sphinx error; {e}")
+    except sr.RequestError as err:
+        print(f"Sphinx error; {err}")
         return
 
     return text

@@ -39,8 +39,9 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
         "-ar", "16000",     # resample 16kHz
         "-ac", "1",         # mono
         "-f", "wav",        # output format WAV
-        "pipe:1"            # write to stdout instead of file, This way we don't create unnecessary files.
-    ]
+        "pipe:1"]           # write to stdout instead of file
+                            #This way we don't create unnecessary files.
+
 
     try:
         proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True) # Run the command and catch the stdout
