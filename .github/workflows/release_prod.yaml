@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - name: Ensure tag is from main branch
         run: |
-          if ! git merge-base --is-ancestor main $GITHUB_SHA; then
+          if ! git merge-base --is-ancestor origin/main $GITHUB_SHA; then
             echo "Tag commit is not on main branch. Skipping release."
             exit 1
           fi
