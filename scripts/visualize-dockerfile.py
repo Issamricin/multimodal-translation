@@ -111,11 +111,11 @@ def generate_rst(dockerfile_p):
 
     flow_chart = generate_mermaid_flow_chart(dockerfile_dag)
 
-    TAB = 3 * " "
+    tab = 3 * " "
     # "Dockerfile Flow Chart\n"
     # f"====================\n\n"
     # f"Dockerfile: {dockerfile_path}\n\n"
-    rst = ".. mermaid::\n\n" + "\n".join([TAB + x for x in flow_chart.split("\n")])
+    rst = ".. mermaid::\n\n" + "\n".join([tab + x for x in flow_chart.split("\n")])
     return rst
 
 
