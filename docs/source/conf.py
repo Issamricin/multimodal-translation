@@ -80,7 +80,7 @@ EXTENTIONS = [
     'sphinx.ext.napoleon',  # Allow parsing of docstrings using Google format
     'sphinx.ext.todo', # Support for todo items 
     'sphinx.ext.duration',
-    'myst_parser'
+    'myst_parser',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

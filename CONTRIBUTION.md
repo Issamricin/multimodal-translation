@@ -136,7 +136,6 @@ Before you submit a pull request, check that it meets these guidelines:
 * Modularity
 * Composition over Inheritance
 
-
 ## Testing with tox
 
 Tox uses pytest under the hood, hence it supports the same syntax for selecting tests.
