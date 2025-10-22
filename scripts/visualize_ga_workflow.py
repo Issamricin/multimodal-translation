@@ -80,7 +80,7 @@ def generate_mermaid(job_dependencies: dict[str, list[str]]) -> str:
     return mermaid_code
 
 
-def yaml_mermaid(filename: t.Union[str, Path], format: str = "md") -> str:
+def mermaiding_yaml_file(filename: t.Union[str, Path], format: str = "md") -> str:
     """mermaid from yaml."""
     config: ParsedYaml = parse_actions_config(filename)
     if config is None:
@@ -118,7 +118,7 @@ def main():
     else:
         ci_config = Path(args.input)
 
-    file_type: str = yaml_mermaid(ci_config, format="rst" if args.rst else "md")
+    file_type: str = mermaiding_yaml_file(ci_config, format="rst" if args.rst else "md")
 
     if args.output:
         # Handle the case of writing to an output file
