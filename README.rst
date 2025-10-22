@@ -153,3 +153,7 @@ License
 .. |coverage_badge| image:: https://coveralls.io/repos/github/Issamricin/multimodal-translation/badge.svg?branch=main
    :target: https://coveralls.io/github/Issamricin/multimodal-translation?branch=main
    :alt: Coverage Status
+
+.. image:: https://api.codacy.com/project/badge/Grade/7b8dd3aad5a940f0b5995f7e028eea98
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/gh/Issamricin/multimodal-translation?utm_source=github.com&utm_medium=referral&utm_content=Issamricin/multimodal-translation&utm_campaign=Badge_Grade
