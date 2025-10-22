@@ -1,7 +1,7 @@
 | |build| |release_version| |wheel| 
 | |docs| |pylint| |supported_versions|
 | |ruff| |gh-lic| |commits_since_specific_tag_on_main|
-| |coverage_badge|
+| |coverage_badge| |codacy|
 
 |logo|
 
@@ -135,6 +135,10 @@ License
 .. |ruff| image:: https://img.shields.io/badge/codestyle-ruff-000000.svg
     :alt: Ruff
     :target: https://docs.astral.sh/ruff/
+
+.. |codacy| image:: https://app.codacy.com/project/badge/Grade/04edc13d49214d2f9a27cf6a91c0185b
+    :alt: codacy
+    :target: https://app.codacy.com/gh/Issamricin/multimodal-translation/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
 
 
 .. |logo| image:: https://raw.githubusercontent.com/Issamricin/multimodal-translation/main/media/muiltimodal-translation-small.jpg

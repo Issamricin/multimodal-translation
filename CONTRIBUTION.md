@@ -142,7 +142,6 @@ Tox uses pytest under the hood, hence it supports the same syntax for selecting 
 
 For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
 
-
 To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
 
 ```bash
@@ -160,7 +159,6 @@ To only run test cases matching the string 'smoke_test', using python 3.8:
 ```bash
 tox -e py38 -- -k 'smoke_test'
 ```
-
 
 ## Core Committer Guide
 
@@ -190,7 +188,6 @@ Multimodal translation is designed to do one thing, and do that one thing very w
 
 * Cover the important use cases and as little as possible beyond that :)
 
-
 #### Inclusive
 
 * Cross-platform and cross-version support
@@ -200,7 +197,6 @@ Multimodal translation is designed to do one thing, and do that one thing very w
 * Aim for high test coverage and covering corner cases
 * No pull requests will be accepted that drop test coverage on any platform
 * Stable APIs that tool builders can rely on
-
 
 ### Process: Pull Requests
 
