@@ -1,14 +1,14 @@
+"""lab to install different argos languages."""
 # This is how to install different langs. Taken from google
 
 import argostranslate.package
-import argostranslate.translate
 
 # Update available packages
 argostranslate.package.update_package_index()
-available_packages = argostranslate.package.get_available_packages()
+AVAIALABLE_PACKAGES = argostranslate.package.get_available_packages()
 
 # Pick English → Italian (example)
-package = next(p for p in available_packages if p.from_code == "it" and p.to_code == "en")
+package = next(p for p in AVAIALABLE_PACKAGES if p.from_code == "it" and p.to_code == "en")
 
 # Download and install
 path = package.download()

@@ -10,7 +10,7 @@ from googletrans import Translator
 from gtts import gTTS
 from playsound3 import playsound
 
-flag = 0
+FLAG = 0
 
 # A tuple containing all the language and
 # codes of the language will be detcted
@@ -57,7 +57,7 @@ dic = ('afrikaans', 'af', 'albanian', 'sq',
        'sv', 'tajik', 'tg', 'tamil', 'ta', 'telugu',
        'te', 'thai', 'th', 'turkish',
        'tr', 'ukrainian', 'uk', 'urdu', 'ur', 'uyghur',
-       'ug', 'uzbek',  'uz',
+       'ug', 'uzbek', 'uz',
        'vietnamese', 'vi', 'welsh', 'cy', 'xhosa', 'xh',
        'yiddish', 'yi', 'yoruba',
        'yo', 'zulu', 'zu')
@@ -66,28 +66,31 @@ dic = ('afrikaans', 'af', 'albanian', 'sq',
 # Capture Voice
 # takes command through microphone
 def takecommand() -> optional[str]:
-    r = sr.Recognizer()
-    AUDIO_FILE = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + os.path.sep + 'sample1' + os.path.sep + "english.wav"
-    audio = sr.AudioData.from_file(AUDIO_FILE)
+    """takes command through microphone"""
+    recognizer = sr.Recognizer()
+    audio_file = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + \
+                                os.path.sep + 'sample1' + os.path.sep + "english.wav"
+
+    audio = sr.AudioData.from_file(audio_file)
 
     try:
         print("Recognizing.....")
-        query = r.recognize_google(audio, language='en-in')
-        print(f"The User said {query}\n")
+        que = recognizer.recognize_google(audio, language='en-in')
+        print(f"The User said {que}\n")
     except Exception:
         print("say that again please.....")
         return "None"
-    return query
-
+    return que
 
 # Input from user
 # Make input to lowercase
 query = takecommand()
-while (query == "None"):
+while query == "None" :
     query = takecommand()
 
 
 def destination_language() -> str:
+    """Destination language..."""
     print("Enter the language in which you\
     want to convert : Ex. Hindi , English , etc.")
     print()
@@ -101,23 +104,23 @@ def destination_language() -> str:
     #return to_lang
     return "arabic"
 
-to_lang = destination_language()
+TO_LANG = destination_language()
 
 # Mapping it with the code
-while (to_lang not in dic):
+while TO_LANG not in dic:
     print("Language in which you are trying\
     to convert is currently not available ,\
     please input some other language")
     print()
-    to_lang = destination_language()
+    TO_LANG = destination_language()
 
-to_lang = dic[dic.index(to_lang)+1]
+TO_LANG = dic[dic.index(TO_LANG)+1]
 
 
-async def translate_text(query:str,dest:str =to_lang) -> optional[str]:
-     async with Translator() as translator:
-       result = await  translator.translate(query, dest=to_lang)
-       return result
+async def translate_text(que:str, dest:str =TO_LANG) -> optional[str]:
+    async with Translator() as translator:
+        result = await  translator.translate(que, dest)
+        return result
 
 
 # invoking Translator
@@ -125,7 +128,7 @@ async def translate_text(query:str,dest:str =to_lang) -> optional[str]:
 
 
 # Translating from src to dest
-text_to_translate = asyncio.run(translate_text(query=query, dest=to_lang))
+text_to_translate = asyncio.run(translate_text(que=query, dest=TO_LANG))
 
 text = text_to_translate.text
 
@@ -134,7 +137,7 @@ text = text_to_translate.text
 # destination language which is stored in to_lang.
 # Also, we have given 3rd argument as False because
 # by default it speaks very slowly
-speak = gTTS(text=text, lang=to_lang, slow=False)
+speak = gTTS(text=text, lang=TO_LANG, slow=False) # noqa: N806 pylint: disable=invalid-name
 
 # Using save() method to save the translated
 # speech in capture_voice.mp3

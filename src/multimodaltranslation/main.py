@@ -54,7 +54,8 @@ def main() -> None:
 
     parser.add_argument(
         "-i",
-        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ install the zip and then use the flag on it to install.",
+        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ " \
+        "install the zip and then use the flag on it to install.",
         type=Path,
         default=None,
         metavar="INSTALL",
@@ -121,7 +122,7 @@ def main() -> None:
 
     if args.i is not None:
         install_language(args.i)
-    elif args.s == "Y" or args.s == "y":
+    elif args.s in ("Y", "y"):
         start_server(args.ap)
     else:
         print(cli_translate(args.o, args.t, args.txt, args.f))
@@ -139,7 +140,7 @@ def install_language(path: str) -> None:
     print("Installing language ...")
     try:
         package.install_from_path(path)
-    except Exception:
+    except Exception: # pylint: disable=broad-exception-caught
         print("Error: Not a valid argos model (must be zip archive)\n" \
         "Visit https://www.argosopentech.com/argospm/index/ to install models")
         return
@@ -162,35 +163,36 @@ def cli_translate(original:str, target:list, text:str, file:str) -> list:
         list: List of translated text with their targeted language.
     """
 
-    o = original
-    t = target
+    ori = original
+    tar = target
     txt = text
-    f = file
+    fil = file
 
-    if o is None:
-        o = input("Enter the original language of the text: ")
+    if ori is None:
+        ori = input("Enter the original language of the text: ")
 
-    if t is None:
+    if tar is None:
         inp = input("Enter the target languages seperated by space: ")
-        t = inp.split(" ")
+        tar = inp.split(" ")
 
     if txt is not None:
         cont = " ".join(txt)
-        translated = translate_text(cont, o, t)
-    elif file is not None:
-        cont = f
+        translated = translate_text(cont, ori, tar)
+
+    elif fil is not None:
+        cont = fil
 
         try:
             with open(cont,"rb") as r:
                 cont_bytes = r.read()
-        except FileNotFoundError:    
+        except FileNotFoundError:
             return ["FileNotFoundError: Make sure you provide the correct path."]
 
-        translated = translate_audio(cont_bytes, o, t)
+        translated = translate_audio(cont_bytes, ori, tar)
 
     else:
         cont = input("Enter the text you want to translate: ")
-        translated = translate_text(cont, o, t)
+        translated = translate_text(cont, ori, tar)
 
 
     return translated
@@ -211,13 +213,13 @@ def start_server(port:int =8000) -> None:
         server = HTTPServer(("localhost", port), MyHandler)
 
     except OSError:
-        return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")    
+        return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")
 
     try:
         print(f"Server started on localhost port: {port}")
         server.serve_forever()
 
-    except KeyboardInterrupt:    
+    except KeyboardInterrupt:
         return print("\nClosing server...")
 
 

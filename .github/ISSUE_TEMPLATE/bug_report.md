@@ -17,11 +17,13 @@ A clear and concise description of what the bug is.
 Specify the action version
 
 **Platform:**
+
 - [ ] Ubuntu
 - [ ] macOS
 - [ ] Windows
 
 **Runner type:**
+
 - [ ] Hosted
 - [ ] Self-hosted
 

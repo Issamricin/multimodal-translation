@@ -1,6 +1,6 @@
 import requests
 
-url = "http://localhost:5000/translate"  # or the hosted server
+URL = "http://localhost:5000/translate"  # or the hosted server
 payload = {
     "q": "Hello, this is testing.",
     "source": "en",
@@ -22,6 +22,5 @@ payload3 = {
 lis = [payload,payload2,payload3]
 
 for i in lis:
-    response = requests.post(url, data=i)
+    response = requests.post(URL, data=i, timeout=10)
     print(response.json())
-

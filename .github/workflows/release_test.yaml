@@ -14,8 +14,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Ensure tag is from main branch
+        run: |
+          if ! git merge-base --is-ancestor origin/main $GITHUB_SHA; then
+            echo "Tag commit is not on main branch. Skipping release."
+            exit 1
+          fi
       - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v6.4.3 # https://github.com/marketplace/actions/astral-sh-setup-uv
+        uses: astral-sh/setup-uv@2ddd2b9cb38ad8efd50337e8ab201519a34c9f24 #@v7
+        # https://github.com/astral-sh/setup-uv/tags
         with:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
@@ -36,7 +43,7 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/multimodaltranslation  # Replace <package-name> with your PyPI project name; see https://test.pypi.org/manage/account/publishing
+      url: https://test.pypi.org/p/multimodaltranslation  # see https://test.pypi.org/manage/account/publishing
 
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
@@ -48,7 +55,7 @@ jobs:
         name: python-package-distributions
         path: dist/
     - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+      uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # release/v1
       with:
         verbose: true
         repository-url: https://test.pypi.org/legacy/

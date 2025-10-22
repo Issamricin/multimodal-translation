@@ -102,7 +102,7 @@ Testing, Documentation Building, Scripts, CI/CD, Static Code Analysis for this p
    
       `Production`
       
-         1. **Python Distristribution** to `pypi.org`_, on `tags` **v***, pushed to `main` branch
+         1. **Python Distristribution** to `pypi.org`_, on `tags` test-* and release-* (e.g. test-0.1.0 to release to test pypi), pushed to `main` branch
          2. **Docker Image** to `Dockerhub`_, on every push, with automatic `Image Tagging`
       
       `Staging`
@@ -183,39 +183,29 @@ Ready to contribute?
 --------------------
 
 | Make sure to read the usage to further understand this project.
-| `Usage <usage.html>`_
+| `Usage <https://multimodal-translation.readthedocs.io/en/latest/contents/usage.html>`_
 
 | Now that you have a general idea about the project, you are ready to start contributing and developing.
-| `Contribute! <contribution.html>`_
+| `Contribute! <https://multimodal-translation.readthedocs.io/en/latest/contents/contribution.html>`_
 
 | You can also check the technical debt for future development.
-| `Technical debt <tech_debt.html>`_
+| `Technical debt <https://multimodal-translation.readthedocs.io/en/latest/contents/tech_debt.html>`_
 
 API Documentation
 -----------------
 We follow Google style documentation for packages, modules, classes, methods 
 
 .. LINKS
-
-| `Tox <https://tox.wiki/en/latest/>`__ 
-
-| `Pytest <https://docs.pytest.org/en/7.1.x/>`__ 
-
-| `Build <https://github.com/pypa/build>`__ 
-
-| `Docker <https://hub.docker.com/>`__ 
-
-| `pypi.org <https://pypi.org/>`__ 
-
-| `test.pypi.org <https://test.pypi.org/>`__ 
-
-| `mypy <https://mypy.readthedocs.io/en/stable/>`__ 
-
-| `Ruff <https://docs.astral.sh/ruff/>`__ 
-
-| `Isort <https://pycqa.github.io/isort/>`__ 
-
-| `Black <https://black.readthedocs.io/en/stable/>`__ 
-
-| `Google API docs <https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html>`__ 
+.. _Tox: https://tox.wiki/en/latest/
+.. _Pytest: https://docs.pytest.org/en/7.1.x/
+.. _Build: https://github.com/pypa/build
+.. _Docker: https://hub.docker.com/
+.. _pypi.org: https://pypi.org/
+.. _test.pypi.org: https://test.pypi.org/
+.. _mypy: https://mypy.readthedocs.io/en/stable/
+.. _Ruff: https://docs.astral.sh/ruff/
+.. _Isort: https://pycqa.github.io/isort/__ 
+.. _Black: https://black.readthedocs.io/en/stable/
+.. _Google API docs: https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html
+.. _Dockerhub: https://www.docker.com/products/docker-hub/
 

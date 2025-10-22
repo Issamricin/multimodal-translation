@@ -4,27 +4,20 @@ Technical Debt
 | We will check the debt which is done by a |done| 
  
 
-Marshal the json into modules
+Mocking the test case server:
 -----------------------------
-
-| The call wil come as a json string object and you need to marshal it into the model. The enum class LANGUAGES is the one which protect and does validation.
-| Always work in virtual env. so when you put the project on edit mode, it will bring your the dependencies
-| Nothing is perfect  so limitation will be imposed and we can revisit and improve later ( iterative or evolution approach)
-
-
-Mocking the test case server
-----------------------------
 
 | In your test you don't need to have a server up since you can mock the server and product the network error etc..
 | Currently it is starting a server, doing tests, and then closing the server.
 
 
+New Features:
+-------------
 
-One Audio language  to Many languages Audios Translation:
----------------------------------------------------------
-
-| See the lab/audio_to_audio  which uses googletrans and google api for text to speech we can look at the limitation and try to find another
-  one source one as we did with text to text
+1- Audio to many Audios translations
+2- Video to many many text translations ( pure text)
+3- Video to man Video translations
+4- Video to text translated on the videos
 
 
 Audio Search for a given language words(optional):

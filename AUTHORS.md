@@ -1,2 +1,3 @@
 # Authors
-**Holm Consulting**
+
+Holm Consulting
