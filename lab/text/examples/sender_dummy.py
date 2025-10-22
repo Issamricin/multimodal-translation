@@ -9,7 +9,8 @@ import requests
 
 
 def translate_text(my_obj:dict) -> None:
-    response = requests.post("http://localhost:8000/text", json=my_obj, headers={"Content-Type": "application/json"}, timeout=10)
+    response = requests.post("http://localhost:8000/text", json=my_obj, \
+                headers={"Content-Type": "application/json"}, timeout=10)
     pprint.pprint(response.json())
 
 

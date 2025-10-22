@@ -19,7 +19,6 @@ Report bugs at [https://github.com/Issamricin/multimodal-translation/issues](htt
 
 Stambling upon a Bug means encountering different behaviour than the expected/advertised one. When you are reporting a bug, please include the following infromation by filling in [the template](https://github.com/Issamricin/multimodal-translation/blob/main/.github/ISSUE_TEMPLATE/bug_report.md).
 
-
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
 * If you can, provide detailed steps to reproduce the bug.
@@ -72,7 +71,7 @@ Here's how to set up `multimodal-translation` for local development.
 git clone git@github.com:Issamricin/multimodal-translation.git
 ```
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenv installed, this is how you set up your fork for local development:
+Install your local copy into a virtualenv. Assuming you have virtualenv installed, this is how you set up your fork for local development:
 
 ```bash
 cd multimodal-translation
@@ -81,13 +80,13 @@ source env/bin/activate
 pip install -e .
 ```
 
-4. Create a branch for local development:
+Create a branch for local development:
 
 ```bash
 git checkout -b name-of-your-bugfix-or-feature
 ```
 
-### Now you can make your changes locally.
+### Now you can make your changes locally
 
 1. When you're done making changes, check that your changes pass the tests locally:
 
@@ -105,11 +104,11 @@ If you want to produce a built tar.gz and wheel distributions:
 tox -e check && tox -e build
 ```
 
-2. Ensure that your feature or commit is fully covered by tests. Check the coverage report that should be visible on the console when you run tox
+1. Ensure that your feature or commit is fully covered by tests. Check the coverage report that should be visible on the console when you run tox
 
 You report will be placed to `htmlcov` directory. Please do not include this directory to your commits, accidentally.
 
-3. Commit your changes and push your branch to GitHub:
+1. Commit your changes and push your branch to GitHub:
 
 ```bash
 git add -p
@@ -117,7 +116,7 @@ git commit -m "Your detailed description of your changes."
 git push origin name-of-your-bugfix-or-feature
 ```
 
-4. Submit a pull request through the GitHub website.
+1. Submit a pull request through the GitHub website.
 
 ## Contributor Guidelines
 

@@ -40,10 +40,10 @@ def translate_to_text(file, source="en", targets=None):
 
 def main() -> None:
 
-    Audio_File = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + os.sep + \
+    audio_file = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + os.sep + \
     'sample1' + os.sep + "english.wav"
-    
-    translate_to_text(Audio_File)
+
+    translate_to_text(audio_file)
 
 
 if __name__ == "__main__":

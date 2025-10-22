@@ -8,11 +8,11 @@ import typing as t
 
 # TODO Improve: try using the semantic_version_checker package for semver regex
 
-EXCEPTION_FACTORY = t.Callable[[str, str, str], Exception]
-CLIENT_CALL_BACK = t.Callable[[str, str], tuple]
+ExceptionFactory = t.Callable[[str, str, str], Exception]
+ClientCallBack = t.Callable[[str, str], tuple]
 
-MATCH_CONVERTER = t.Callable[[t.Match], tuple]
-MATCH_DATA = t.Union[
+MatchConverter = t.Callable[[t.Match], tuple]
+MatchData = t.Union[
     tuple[t.Callable[[t.Match], tuple], str, list[t.Any]], # pylint: disable=unsubscriptable-object
     tuple[t.Callable[[t.Match], tuple], str], # pylint: disable=unsubscriptable-object
     tuple[t.Callable[[t.Match], tuple]], # pylint: disable=unsubscriptable-object
@@ -28,7 +28,7 @@ DEMO_SECTION: str = (
 TOML = 'pyproject.toml'
 
 
-def build_client_callback(data: MATCH_DATA, factory: EXCEPTION_FACTORY) -> CLIENT_CALL_BACK:
+def build_client_callback(data: MatchData, factory: ExceptionFactory) -> ClientCallBack:
     """Builds the client's callback..."""
     if len(data) == 1:
         data = (data[0], 'search', [re.MULTILINE])

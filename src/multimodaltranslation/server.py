@@ -76,7 +76,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.wfile.write(responses_bytes)
 
         elif self.path == "/audio":
-            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
+            content_length = int(self.headers.get('Content-Length', 0)) # we have to give a default value
             content = self.rfile.read(content_length)
 
             try:

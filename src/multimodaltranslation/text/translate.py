@@ -26,7 +26,8 @@ def translate_text(text:str, lang:str, targets:list) -> list:
             translation = translate.translate(text, lang, target)
         except AttributeError:
             responses.append({"Error": \
-            f"Either of the languages may not be available, {lang, target}. Install the argos text-to-text translating language."})
+            f"Either of the languages may not be available,\
+            {lang, target}. Install the argos text-to-text translating language."})
 
             continue
 

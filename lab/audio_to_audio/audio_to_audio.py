@@ -68,10 +68,10 @@ dic = ('afrikaans', 'af', 'albanian', 'sq',
 def takecommand() -> optional[str]:
     """takes command through microphone"""
     recognizer = sr.Recognizer()
-    AUDIO_FILE = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + \
+    audio_file = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + \
                                 os.path.sep + 'sample1' + os.path.sep + "english.wav"
-    
-    audio = sr.AudioData.from_file(AUDIO_FILE)
+
+    audio = sr.AudioData.from_file(audio_file)
 
     try:
         print("Recognizing.....")
@@ -128,7 +128,7 @@ async def translate_text(que:str, dest:str =TO_LANG) -> optional[str]:
 
 
 # Translating from src to dest
-text_to_translate = asyncio.run(translate_text(query=query, dest=TO_LANG))
+text_to_translate = asyncio.run(translate_text(que=query, dest=TO_LANG))
 
 text = text_to_translate.text
 
