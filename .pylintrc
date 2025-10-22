@@ -6,6 +6,8 @@
 # run arbitrary code.
 extension-pkg-allow-list=
 
+py-version=3.12
+
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
 # run arbitrary code. (This is an alternative name to extension-pkg-allow-list
@@ -446,7 +448,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=95
+max-line-length=120
 
 # Maximum number of lines in a module.
 max-module-lines=1000
@@ -593,7 +595,7 @@ max-public-methods=20
 max-returns=6
 
 # Maximum number of statements in function / method body.
-max-statements=50
+max-statements=110
 
 # Minimum number of public methods for a class (see R0903).
 min-public-methods=0

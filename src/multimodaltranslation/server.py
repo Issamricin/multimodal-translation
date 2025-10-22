@@ -4,25 +4,23 @@ from http.server import BaseHTTPRequestHandler
 from multimodaltranslation.audio.translate import translate_audio
 from multimodaltranslation.text.translate import translate_text
 
-LANGUAGE = [
-     "en",
-     "it",
-     "es",
-     "fr",
-     "zh"
-    ]
+LANGUAGE = ["en",
+            "it",
+            "es",
+            "fr",
+            "zh"]
 
 
 class MyHandler(BaseHTTPRequestHandler):
     """
-    Handles the calls for the server. You use this class to create a server on a specific port.        
+    Handles the calls for the server. You use this class to create a server on a specific port.
 
     Example:
         >>> server = HTTPServer(("localhost", 8000), MyHandler)
         >>> server.serve_forever()
     """
 
-    def do_POST(self) -> None :
+    def do_POST(self) -> None : # pylint: disable=invalid-name
         """
         Handles the different routes. For /text it will translate the text into the desired languages. 
         For /audio it will transcript and translate the audio into the desired languages.
@@ -44,7 +42,7 @@ class MyHandler(BaseHTTPRequestHandler):
             return
 
         if self.path == "/text": # route
-            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
+            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so give a default value
             content = self.rfile.read(content_length)
 
             try:
@@ -78,7 +76,7 @@ class MyHandler(BaseHTTPRequestHandler):
             self.wfile.write(responses_bytes)
 
         elif self.path == "/audio":
-            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
+            content_length = int(self.headers.get('Content-Length', 0)) # we have to give a default value
             content = self.rfile.read(content_length)
 
             try:
@@ -103,7 +101,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
             audio_bytes = bytes.fromhex(audio)
 
-            responses = translate_audio(audio_bytes,  lang, targets)
+            responses = translate_audio(audio_bytes, lang, targets)
 
             responses_bytes = json.dumps(responses, ensure_ascii=False).encode("utf-8")
 

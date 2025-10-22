@@ -1,7 +1,9 @@
 '''
 Package for **Text Translation**
 
-You send the text you want to translate, along side the original language of the text, and the targets languages you want to translate to.
+You send the text you want to translate, along side the original language of the text;\n
+and the targets languages you want to translate to.
+
 This module will then translate the text into the desired languages.
 
 example:

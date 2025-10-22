@@ -1,6 +1,7 @@
 """
 
-| **Multimodal Translator**, a *Python Package*  which deals with different media translation from text and audio; one language to many languages
+| **Multimodal Translator**, a *Python Package*  which deals with different media translation
+ from text and audio; one language to many languages
 
 """
 

@@ -3,7 +3,9 @@ from argostranslate import package, translate
 
 def install_lang_pair(from_code, to_code):
     installed = translate.get_installed_languages()
-    if any(lan.code == from_code for lan in installed) and any(lan.code == to_code for lan in installed):
+    if any(lan.code == from_code for lan in installed) and \
+                any(lan.code == to_code for lan in installed):
+
         print(f"{from_code} → {to_code} already installed, skipping")
         return
     available = package.get_available_packages()

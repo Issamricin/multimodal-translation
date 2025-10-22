@@ -21,7 +21,7 @@ def install_model(model_name: str) -> None:
     model_url = f"{base_url}{model_name}.zip"
 
     base_dir = Path(user_data_dir(APP_NAME))
-    models_dir = base_dir / "models"
+    models_dir: Path = base_dir / "models"
     models_dir.mkdir(parents=True, exist_ok=True)
 
 
@@ -36,7 +36,7 @@ def install_model(model_name: str) -> None:
     print(f"Downloading {model_name}...")
 
     try:
-        with requests.get(model_url, stream=True) as r:
+        with requests.get(model_url, stream=True, timeout=10) as r:
             r.raise_for_status()
             with open(zip_path, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
@@ -53,4 +53,3 @@ def install_model(model_name: str) -> None:
         print("Failed to download model")
         if os.path.exists(zip_path):
             os.remove(zip_path)
-

@@ -1,3 +1,4 @@
+"""This is the configuration file for the documents on readthedocs."""
 # Configuration file for the Sphinx documentation builder.
 #
 # This file configures the readthedocs.org server that Continuously
@@ -24,45 +25,42 @@ from pathlib import Path
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here.
-from subprocess import run
+import subprocess
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2].joinpath("src")))
 
 
 def get_version()->str:
     file_path =  str(Path(__file__).resolve().parents[2].joinpath("scripts")) + os.path.sep + 'parse_version.py'
-    version = run([sys.executable, file_path])
+    version = subprocess.run([sys.executable, file_path], check=False)
     return str(version)
 
 def get_templated_vars():
     return type(
         'TemplatedVariables',
         (),
-        dict(
-            project_slug='multimodal-translator',
-            package_name='multimodaltranslation',
-            author_name='Holm Consulting',
-            year='2025',
-            version='1.0.0',
-            github_username='Issamricin',
-            repo_name='multimodal-translation',
-        ),
+        {
+            "project_slug":'multimodal-translator',
+            "package_name":'multimodaltranslation',
+            "author_name":'Holm Consulting',
+            "year":'2025',
+            "version":'1.0.0',
+            "github_username":'Issamricin',
+            "repo_name":'multimodal-translation',
+        },
     )
 
 
-variables = get_templated_vars()
+Variables = get_templated_vars()
 
 
 
 
 # -- Project information -----------------------------------------------------
 
-project = variables.project_slug
-copyright = '{year}, {name}'.format(
-    year=variables.year,
-    name=variables.author_name,
-)
-author = variables.author_name
+project = Variables.project_slug
+copy_righ = f'{Variables.year}, {Variables.author_name}'
+author = Variables.author_name
 
 # The full version, including alpha/beta/rc tags
 release = get_version()
@@ -80,13 +78,13 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.extlinks',  # External Links Configuration: Dynamic Urls
     'sphinx.ext.napoleon',  # Allow parsing of docstrings using Google format
-    'sphinx.ext.todo', # Support for todo items see  https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
+    'sphinx.ext.todo', # Support for todo items 
     'sphinx.ext.duration',
-    'myst_parser'
+    'myst_parser',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+template_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -120,10 +118,7 @@ html_theme = 'sphinx_rtd_theme'
 # You can add retries here, according to your use case(s).
 extlinks = {
     'issue': (
-        'https://github.com/{username}/{repository}/issues/'.format(
-            username=variables.github_username,
-            repository=variables.repo_name,
-        )
+        f'https://github.com/{Variables.github_username}/{Variables.repo_name}/issues/'
         + '%s',
         'issue ',
     ),

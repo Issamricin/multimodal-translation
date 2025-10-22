@@ -23,7 +23,7 @@ def parse_dockerfile(dockerfile_path):
         + r"(?P<path>[\w\.\-:/_\${}]+)\s+"
     )
 
-    with open(dockerfile_path) as f:
+    with open(dockerfile_path, encoding="utf-8") as f:
         lines = f.readlines()
 
         for line in lines:
@@ -92,30 +92,30 @@ def generate_mermaid_flow_chart(dockerfile_dag):
 
 
 ## Embed Mermaid to MARKDOWN ##
-def generate_markdown(dockerfile_path):
-    dockerfile_dag = parse_dockerfile(dockerfile_path)
+def generate_markdown(dockerfile_p):
+    dockerfile_dag = parse_dockerfile(dockerfile_p)
 
     flow_chart = generate_mermaid_flow_chart(dockerfile_dag)
 
     markdown = (
         "## Dockerfile Flow Chart\n\n"
-        f"**Dockerfile: {dockerfile_path}**\n\n"
+        f"**Dockerfile: {dockerfile_p}**\n\n"
         f"```mermaid\n{flow_chart}```\n"
     )
     return markdown
 
 
 ## Embed Mermaid to RST ##
-def generate_rst(dockerfile_path):
-    dockerfile_dag = parse_dockerfile(dockerfile_path)
+def generate_rst(dockerfile_p):
+    dockerfile_dag = parse_dockerfile(dockerfile_p)
 
     flow_chart = generate_mermaid_flow_chart(dockerfile_dag)
 
-    TAB = 3 * " "
+    tab = 3 * " "
     # "Dockerfile Flow Chart\n"
     # f"====================\n\n"
     # f"Dockerfile: {dockerfile_path}\n\n"
-    rst = ".. mermaid::\n\n" + "\n".join([TAB + x for x in flow_chart.split("\n")])
+    rst = ".. mermaid::\n\n" + "\n".join([tab + x for x in flow_chart.split("\n")])
     return rst
 
 
@@ -145,17 +145,17 @@ def parse_cli_args() -> tuple[Path, t.Optional[str]]:
 
 
 if __name__ == "__main__":
-    dockerfile_path, args = parse_cli_args()
+    DOCKERFILE_PATH, args = parse_cli_args()
     output_path = args.output
     if args.rst:
-        content: str = generate_rst(dockerfile_path)
+        content: str = generate_rst(DOCKERFILE_PATH)
     else:
-        content: str = generate_markdown(dockerfile_path)
+        content: str = generate_markdown(DOCKERFILE_PATH)
     if output_path is None:
         print(content)
         sys.exit(0)
 
-    with open(output_path, "w") as f:
-        f.write(content)
+    with open(output_path, "w", encoding="utf-8") as file:
+        file.write(content)
 
     print(f"{'RST' if args.rst else 'MARKDOWN'} generated and saved to {output_path}")

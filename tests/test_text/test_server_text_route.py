@@ -23,7 +23,7 @@ def test_text_translate_valid():
 
     #This is testing the /text path with valid input
     payload = {"text":"Hello", "lang":"en", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/text",json=payload)
+    respone = requests.post("http://localhost:8000/text",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
@@ -35,7 +35,7 @@ def test_text_translate_invalid_type():
 
     #This is testing the /text path for invalid content type
     payload = {"text":"Hello", "lang":"en", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/text",data=payload, headers={"Content-Type":"text/plain"},)
+    respone = requests.post("http://localhost:8000/text",data=payload, headers={"Content-Type":"text/plain"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -45,7 +45,7 @@ def test_text_translate_invalid_type():
 def test_text_invalid_json():
 
     #This is testing the /text path for invalid json
-    respone = requests.post("http://localhost:8000/text",data="{bad json", headers={"Content-Type":"application/json"},)
+    respone = requests.post("http://localhost:8000/text",data="{bad json", headers={"Content-Type":"application/json"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -55,7 +55,7 @@ def test_text_invalid_json():
 # Test for invalid keys in the json data (payload)
 def test_text_invalid_keys():
 
-    respone = requests.post("http://localhost:8000/text",json={"texts":"Hello", "langs":"en", "targets":["es"]}, headers={"Content-Type":"application/json"},)
+    respone = requests.post("http://localhost:8000/text",json={"texts":"Hello", "langs":"en", "targets":["es"]}, headers={"Content-Type":"application/json"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -67,7 +67,7 @@ def test_text_invalid_lang():
 
     #This is testing the /text path for unavailable source langauge
     payload = {"text":"Hello", "lang":"no language", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/text",json=payload)
+    respone = requests.post("http://localhost:8000/text",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
@@ -77,7 +77,7 @@ def test_text_invalid_target():
 
     #This is testing the /text path for unavailable target langauge
     payload = {"text":"Hello", "lang":"en", "targets":["bbc"]}
-    respone = requests.post("http://localhost:8000/text",json=payload)
+    respone = requests.post("http://localhost:8000/text",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
@@ -88,7 +88,7 @@ def test_wrong_path():
 
     #This is testing wrong path given
     payload = {"text":"Hello", "lang":"en", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/wrong",json=payload)
+    respone = requests.post("http://localhost:8000/wrong",json=payload, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
