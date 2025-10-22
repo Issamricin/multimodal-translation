@@ -58,19 +58,19 @@ Variables = get_templated_vars()
 
 # -- Project information -----------------------------------------------------
 
-PROJECT = Variables.project_slug
-COPY_RIGHT = f'{Variables.year}, {Variables.author_name}'
-AUTHOR = Variables.author_name
+project = Variables.project_slug
+copy_righ = f'{Variables.year}, {Variables.author_name}'
+author = Variables.author_name
 
 # The full version, including alpha/beta/rc tags
-RELEASE = get_version()
+release = get_version()
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-EXTENTIONS = [
+extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
@@ -84,19 +84,19 @@ EXTENTIONS = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-TEMPLATE_PATH = ['_templates']
+template_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-EXCLUDE_PATTERNS = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-HTML_THEME = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
