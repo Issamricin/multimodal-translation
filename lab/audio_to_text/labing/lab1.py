@@ -18,7 +18,7 @@ def extract_text_from_audio(file:str) -> str:
         print("Sphinx thinks you said " + text)
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")
-        return 
+        return
     except sr.RequestError as e:
         print(f"Sphinx error; {e}")
         return
@@ -28,18 +28,21 @@ def extract_text_from_audio(file:str) -> str:
 def translate_to_text(file, source="en", targets=None):
     if targets is None:
         targets = ["it","es"]
-        
+
     text = extract_text_from_audio(file)
 
     my_object = {"title": text, "lang": source, "targets": targets}
 
-    response = requests.post("http://localhost:8000/title", json=my_object, headers={"Content-Type": "application/json"})
+    response = requests.post("http://localhost:8000/title", json=my_object, \
+                             headers={"Content-Type": "application/json"}, timeout=10)
     pprint.pprint(response.json())
 
 
 def main() -> None:
 
-    Audio_File = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + os.sep + 'sample1' + os.sep + "english.wav"
+    Audio_File = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + os.sep + \
+    'sample1' + os.sep + "english.wav"
+    
     translate_to_text(Audio_File)
 
 

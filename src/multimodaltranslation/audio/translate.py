@@ -43,11 +43,11 @@ def convert_to_wav_bytes(audio_bytes:bytes)-> io.BytesIO:
                             #This way we don't create unnecessary files.
 
 
-    try:
-        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True) # Run the command and catch the stdout
-    except subprocess.CalledProcessError :
+    try: # Run the command and catch the stdout
+        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True)
+    except subprocess.CalledProcessError as exc:
         os.remove(input_file)
-        raise RuntimeError("ffmpeg conversion failed")
+        raise RuntimeError("ffmpeg conversion failed") from exc
 
      # Delete the temporary file.
     os.remove(input_file)
@@ -74,7 +74,7 @@ def audio_to_text(audio_bytes:bytes, model:str) -> str:
     try:
         wav_buffer = convert_to_wav_bytes(audio_bytes)
     except RuntimeError as e:
-        raise RuntimeError(e)
+        raise RuntimeError(e) from e
 
 
     wf = wave.open(wav_buffer, "rb")
@@ -145,7 +145,7 @@ def get_model(lang: str) -> str:
 
 def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
     """
-    Calls the audio_to_text to convert the audio into a trancsiped text.
+    Calls the audio_to_text to convert the audio into a trancsiped text.\n
     Then translates it into desired langs using the translate_text() method.
 
     Args:

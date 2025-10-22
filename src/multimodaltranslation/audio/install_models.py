@@ -36,7 +36,7 @@ def install_model(model_name: str) -> None:
     print(f"Downloading {model_name}...")
 
     try:
-        with requests.get(model_url, stream=True) as r:
+        with requests.get(model_url, stream=True, timeout=10) as r:
             r.raise_for_status()
             with open(zip_path, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):

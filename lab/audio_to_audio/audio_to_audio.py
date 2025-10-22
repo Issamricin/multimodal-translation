@@ -10,7 +10,7 @@ from googletrans import Translator
 from gtts import gTTS
 from playsound3 import playsound
 
-flag = 0
+FLAG = 0
 
 # A tuple containing all the language and
 # codes of the language will be detcted
@@ -67,19 +67,20 @@ dic = ('afrikaans', 'af', 'albanian', 'sq',
 # takes command through microphone
 def takecommand() -> optional[str]:
     """takes command through microphone"""
-    RECOGNIZER = sr.Recognizer()
-    AUDIO_FILE = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + os.path.sep + 'sample1' + os.path.sep + "english.wav"
+    recognizer = sr.Recognizer()
+    AUDIO_FILE = str(Path(__file__).resolve().parents[3].joinpath("audio_files")) + \
+                                os.path.sep + 'sample1' + os.path.sep + "english.wav"
+    
     audio = sr.AudioData.from_file(AUDIO_FILE)
 
     try:
         print("Recognizing.....")
-        query = RECOGNIZER.recognize_google(audio, language='en-in')
-        print(f"The User said {query}\n")
+        que = recognizer.recognize_google(audio, language='en-in')
+        print(f"The User said {que}\n")
     except Exception:
         print("say that again please.....")
         return "None"
-    return query
-
+    return que
 
 # Input from user
 # Make input to lowercase
@@ -106,19 +107,19 @@ def destination_language() -> str:
 TO_LANG = destination_language()
 
 # Mapping it with the code
-while (TO_LANG not in dic):
+while TO_LANG not in dic:
     print("Language in which you are trying\
     to convert is currently not available ,\
     please input some other language")
     print()
-    to_lang = destination_language()
+    TO_LANG = destination_language()
 
-TO_LANG = dic[dic.index(to_lang)+1]
+TO_LANG = dic[dic.index(TO_LANG)+1]
 
 
-async def translate_text(query:str, dest:str =TO_LANG) -> optional[str]:
+async def translate_text(que:str, dest:str =TO_LANG) -> optional[str]:
     async with Translator() as translator:
-        result = await  translator.translate(query, dest)
+        result = await  translator.translate(que, dest)
         return result
 
 
@@ -127,7 +128,7 @@ async def translate_text(query:str, dest:str =TO_LANG) -> optional[str]:
 
 
 # Translating from src to dest
-text_to_translate = asyncio.run(translate_text(query=query, dest=to_lang))
+text_to_translate = asyncio.run(translate_text(query=query, dest=TO_LANG))
 
 text = text_to_translate.text
 

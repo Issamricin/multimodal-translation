@@ -54,7 +54,8 @@ def main() -> None:
 
     parser.add_argument(
         "-i",
-        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ install the zip and then use the flag on it to install.",
+        help="Install translation language, Visit https://www.argosopentech.com/argospm/index/ " \
+        "install the zip and then use the flag on it to install.",
         type=Path,
         default=None,
         metavar="INSTALL",
@@ -121,7 +122,7 @@ def main() -> None:
 
     if args.i is not None:
         install_language(args.i)
-    elif args.s == "Y" or args.s == "y":
+    elif args.s in ("Y", "y"):
         start_server(args.ap)
     else:
         print(cli_translate(args.o, args.t, args.txt, args.f))
@@ -184,7 +185,7 @@ def cli_translate(original:str, target:list, text:str, file:str) -> list:
         try:
             with open(cont,"rb") as r:
                 cont_bytes = r.read()
-        except FileNotFoundError:    
+        except FileNotFoundError:
             return ["FileNotFoundError: Make sure you provide the correct path."]
 
         translated = translate_audio(cont_bytes, ori, tar)
@@ -212,13 +213,13 @@ def start_server(port:int =8000) -> None:
         server = HTTPServer(("localhost", port), MyHandler)
 
     except OSError:
-        return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")    
+        return print("Error: Ports are in use. You can change the ports using the -ap flag. (-h for more help)")
 
     try:
         print(f"Server started on localhost port: {port}")
         server.serve_forever()
 
-    except KeyboardInterrupt:    
+    except KeyboardInterrupt:
         return print("\nClosing server...")
 
 

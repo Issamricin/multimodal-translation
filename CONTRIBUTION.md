@@ -9,7 +9,6 @@ Contributions are welcome :)
 * [Contributor Testing](#testing-with-tox)
 * [Core Committer Guide](#core-committer-guide)
 
-
 ## Types of Contributions
 
 You can contribute in many ways:
@@ -88,7 +87,7 @@ pip install -e .
 git checkout -b name-of-your-bugfix-or-feature
 ```
 
-Now you can make your changes locally.
+### Now you can make your changes locally.
 
 1. When you're done making changes, check that your changes pass the tests locally:
 

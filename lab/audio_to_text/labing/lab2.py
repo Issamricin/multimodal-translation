@@ -16,7 +16,7 @@ def extract_text_from_audio(file:str) -> str:
         print("Sphinx thinks you said " + text)
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")
-        return 
+        return
     except sr.RequestError as err:
         print(f"Sphinx error; {err}")
         return
@@ -25,8 +25,9 @@ def extract_text_from_audio(file:str) -> str:
 
 def main() -> None:
 
-    AUDIO_FILE = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + os.sep + 'sample1' + os.sep + "chinese.flac"
-    print(extract_text_from_audio(AUDIO_FILE))
+    audio_file = str(Path(__file__).resolve().parents[2].joinpath("audio_files")) + \
+        os.sep + 'sample1' + os.sep + "chinese.flac"
+    print(extract_text_from_audio(audio_file))
 
 
 if __name__ == "__main__":

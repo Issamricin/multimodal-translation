@@ -34,7 +34,7 @@ JobsNeedsValue = list[JobName]
 # Parse the GitHub Actions YAML file
 def parse_actions_config(filename: t.Union[str, Path]) -> t.Union[ParsedYaml, None]:
     """parses the github actions yaml file"""
-    with open(filename) as stream:
+    with open(filename, encoding="utf-8") as stream:
         try:
             return yaml.safe_load(stream)
         except yaml.YAMLError as exc:
@@ -80,7 +80,7 @@ def generate_mermaid(job_dependencies: dict[str, list[str]]) -> str:
     return mermaid_code
 
 
-def mermaid_from_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
+def mermaid_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
     """mermaid from yaml."""
     config: ParsedYaml = parse_actions_config(filename)
     if config is None:
@@ -89,9 +89,10 @@ def mermaid_from_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
     job_dependencies: dict[str, JobsNeedsValue] = extract_job_dependencies(config)
     mermaid_code: str = generate_mermaid(job_dependencies)
 
-    TAB = 3 * " "
+    tab = 3 * " "
 
     ## Embed Mermaid to MARKDOWN ##
+    embeded_mermaid = ""
     if format == "md":
         embeded_mermaid: str = (
             # "## CI/CD Pipeline\n\n"
@@ -101,7 +102,7 @@ def mermaid_from_yaml(filename: t.Union[str, Path], format: str = "md") -> str:
     ## Embed Mermaid to RST ##
     elif format == "rst":
         embeded_mermaid: str = ".. mermaid::\n\n" + "\n".join(
-            [TAB + x for x in mermaid_code.split("\n")]
+            [tab + x for x in mermaid_code.split("\n")]
         )
     return embeded_mermaid
 
@@ -117,12 +118,12 @@ def main():
     else:
         ci_config = Path(args.input)
 
-    file_type: str = mermaid_from_yaml(ci_config, format="rst" if args.rst else "md")
+    file_type: str = mermaid_yaml(ci_config, format="rst" if args.rst else "md")
 
     if args.output:
         # Handle the case of writing to an output file
         output_file = Path(args.output)
-        output_file.write_text(file_type)
+        output_file.write_text(file_type, encoding="utf-8")
     else:
         # Handle the case of streaming output to stdout
         sys.stdout.write(file_type)

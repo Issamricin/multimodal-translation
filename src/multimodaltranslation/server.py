@@ -20,7 +20,7 @@ class MyHandler(BaseHTTPRequestHandler):
         >>> server.serve_forever()
     """
 
-    def do_POST(self) -> None :
+    def do_POST(self) -> None : # pylint: disable=invalid-name
         """
         Handles the different routes. For /text it will translate the text into the desired languages. 
         For /audio it will transcript and translate the audio into the desired languages.
@@ -42,7 +42,7 @@ class MyHandler(BaseHTTPRequestHandler):
             return
 
         if self.path == "/text": # route
-            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so we have to give a default value
+            content_length = int(self.headers.get('Content-Length', 0)) #Could be none so give a default value
             content = self.rfile.read(content_length)
 
             try:

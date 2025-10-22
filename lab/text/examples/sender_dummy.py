@@ -8,8 +8,8 @@ import pprint
 import requests
 
 
-def translate_text(my_object:dict) -> None:
-    response = requests.post("http://localhost:8000/text", json=my_object, headers={"Content-Type": "application/json"})
+def translate_text(my_obj:dict) -> None:
+    response = requests.post("http://localhost:8000/text", json=my_obj, headers={"Content-Type": "application/json"}, timeout=10)
     pprint.pprint(response.json())
 
 

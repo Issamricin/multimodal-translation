@@ -4,6 +4,7 @@ from googletrans import Translator
 
 
 async def translate_text():
+    """Translate the texts using google and asyncio"""
     async with Translator() as translator:
         result = await translator.translate('안녕하세요.')
         print(result)  # <Translated src=ko dest=en text=Good evening. pronunciation=Good evening.>

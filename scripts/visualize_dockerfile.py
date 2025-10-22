@@ -23,7 +23,7 @@ def parse_dockerfile(dockerfile_path):
         + r"(?P<path>[\w\.\-:/_\${}]+)\s+"
     )
 
-    with open(dockerfile_path) as f:
+    with open(dockerfile_path, encoding="utf-8") as f:
         lines = f.readlines()
 
         for line in lines:
@@ -155,7 +155,7 @@ if __name__ == "__main__":
         print(content)
         sys.exit(0)
 
-    with open(output_path, "w") as f:
-        f.write(content)
+    with open(output_path, "w", encoding="utf-8") as file:
+        file.write(content)
 
     print(f"{'RST' if args.rst else 'MARKDOWN'} generated and saved to {output_path}")

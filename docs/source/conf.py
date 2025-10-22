@@ -25,14 +25,14 @@ from pathlib import Path
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here.
-from subprocess import run
+import subprocess
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2].joinpath("src")))
 
 
 def get_version()->str:
     file_path =  str(Path(__file__).resolve().parents[2].joinpath("scripts")) + os.path.sep + 'parse_version.py'
-    version = run([sys.executable, file_path])
+    version = subprocess.run([sys.executable, file_path], check=False)
     return str(version)
 
 def get_templated_vars():
@@ -51,16 +51,16 @@ def get_templated_vars():
     )
 
 
-variables = get_templated_vars()
+Variables = get_templated_vars()
 
 
 
 
 # -- Project information -----------------------------------------------------
 
-PROJECT = variables.project_slug
-COPY_RIGHT = f'{variables.year}, {variables.author_name}'
-AUTHOR = variables.author_name
+PROJECT = Variables.project_slug
+COPY_RIGHT = f'{Variables.year}, {Variables.author_name}'
+AUTHOR = Variables.author_name
 
 # The full version, including alpha/beta/rc tags
 RELEASE = get_version()
@@ -118,10 +118,7 @@ HTML_THEME = 'sphinx_rtd_theme'
 # You can add retries here, according to your use case(s).
 extlinks = {
     'issue': (
-        'https://github.com/{username}/{repository}/issues/'.format(
-            username=variables.github_username,
-            repository=variables.repo_name,
-        )
+        f'https://github.com/{Variables.github_username}/{Variables.repo_name}/issues/'
         + '%s',
         'issue ',
     ),

@@ -33,7 +33,7 @@ def test_audio_translate_valid():
     audio_str = audio_bytes.hex()
 
     payload = {"audio":audio_str, "lang":"en", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/audio",json=payload)
+    respone = requests.post("http://localhost:8000/audio",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
@@ -52,7 +52,7 @@ def test_audio_translate_invalid_type():
     audio_str = audio_bytes.hex()
 
     payload = {"audio":audio_str, "lang":"en", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/audio",data=payload, headers={"Content-Type":"text/plain"},)
+    respone = requests.post("http://localhost:8000/audio",data=payload, headers={"Content-Type":"text/plain"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -61,7 +61,7 @@ def test_audio_translate_invalid_type():
 
 def test_audio_invalid_json():
 
-    respone = requests.post("http://localhost:8000/audio",data="{bad json", headers={"Content-Type":"application/json"},)
+    respone = requests.post("http://localhost:8000/audio",data="{bad json", headers={"Content-Type":"application/json"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -71,7 +71,7 @@ def test_audio_invalid_json():
 # Test for invalid keys in the json data (payload)
 def test_audio_invalid_keys():
 
-    respone = requests.post("http://localhost:8000/audio",json={"wrong":"Hello", "langs":"en", "targets":["es"]}, headers={"Content-Type":"application/json"})
+    respone = requests.post("http://localhost:8000/audio",json={"wrong":"Hello", "langs":"en", "targets":["es"]}, headers={"Content-Type":"application/json"}, timeout=10)
 
     assert respone.status_code == 400
     data = respone.json()
@@ -90,7 +90,7 @@ def test_audio_invalid_lang():
     audio_str = audio_bytes.hex()
 
     payload = {"audio":audio_str, "lang":"edd", "targets":["es"]}
-    respone = requests.post("http://localhost:8000/audio",json=payload)
+    respone = requests.post("http://localhost:8000/audio",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
@@ -109,7 +109,7 @@ def test_audio_invalid_target():
     audio_str = audio_bytes.hex()
 
     payload = {"audio":audio_str, "lang":"en", "targets":["bbc"]}
-    respone = requests.post("http://localhost:8000/audio",json=payload)
+    respone = requests.post("http://localhost:8000/audio",json=payload, timeout=10)
 
     assert respone.status_code == 200
     data = respone.json()
