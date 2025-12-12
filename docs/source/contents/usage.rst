@@ -113,6 +113,37 @@ That's why there are flags for this library to change the ports on which the ser
   
 -ap flag is for the application port.
 
+You can also use it in your python scripts (e.g. interactive mode):
+
+Text to text translation
+
+.. code-block:: shell
+  
+  >>> from src.multimodaltranslation.text.translate import translate_text
+  >>> text = "Hi there"
+  >>> results = translate_text(text=text, lang="en", targets= ["fr"] )
+  >>> print(results)
+  [{'text': 'Bonjour.', 'lang': 'fr'}]
+  >>>
+  >>> results = translate_text(text=text, lang="en", targets= ["fr","it"] )
+  >>> print(results)
+  [{'text': 'Ciao.', 'lang': 'it'}, {'text': 'Bonjour.', 'lang': 'fr'}]
+
+Audio to text translation
+
+.. code-block:: shell
+
+  >>> from multimodaltranslation.audio.translate import translate_audio
+  >>> 
+  >>> AUDIO_PATH = "audio_files/sample1/english.wav"
+  >>> with open(AUDIO_PATH, "rb") as f:
+  ...     AUDIO_BYTES = f.read()
+  ... 
+  >>> audio_str = AUDIO_BYTES.hex()
+  >>> translation = translate_audio(AUDIO_BYTES, "en", ["fr", "it"])
+  >>> print(translation)
+  [{'text': 'un deux trois', 'lang': 'fr'}, {'text': 'Uno e due', 'lang': 'it'}]
+
 --------------------
 installing languages
 --------------------
