@@ -29,7 +29,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
         for target in targets:
             result = executor.submit(_do_translate,text, lang, target)
-            responses.append( result) 
+            responses.append(result) 
         data = concurrent.futures.as_completed(responses)
         results:list[dict[str,str]] = []
         for _ in concurrent.futures.as_completed(data):
