@@ -57,6 +57,13 @@ References:
 * `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
 * `What is Multimodal Translation <https://www.educative.io/answers/what-is-multimodal-translation>`_
 
+Quickstart
+==========
+`Usage <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/usage.rst>`_
+
+Developer Guide
+===============
+`Development <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/developer_guide.rst>`_
 
 Technical Debt
 ==============
@@ -65,16 +72,6 @@ Technical Debt
 Change Log
 ==========
 `Change Log <https://github.com/Issamricin/multimodal-translation/blob/main/CHANGELOG.rst>`_.
-
-
-Developer Guide
-===============
-`Development <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/developer_guide.rst>`_
-
-Quickstart
-==========
-`Usage <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/usage.rst>`_
-
 
 License
 =======
