@@ -29,12 +29,26 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
     responses:list[Future] = [] # This is a list of future job
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor: # with statement allows us to use executor as a context manager also to shutdown do cleaning after the last worker thread is done
         for target in targets:
+            # in the submit, we send callable (the method) and its arguments to be executed in a seperate thread
+            # it will return a future which the worker thread will execute (future job to be executed in a seperate thread)
             future_result = executor.submit(_do_translate,text, lang, target) # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
             responses.append(future_result) # building the future list
-        data = concurrent.futures.as_completed(responses) # An iterator over the given futures that yields each as it completes. it means it goes through
+        data = concurrent.futures.as_completed(responses)
+        for d in data:
+            print(d.running())
+            print(d.done())
+            
         results:list[dict[str,str]] = []
+        #for d in data:
+        #    print(d.running())
+
+        # we loop through the futures and check the one which is complete to take it 
+        # if you put a break point at the "for" loop you can see how 
+        # it tries to find the completed future to get it from the iterator (responses)
         for _ in concurrent.futures.as_completed(data):
-            results.append(_.result())
+            print(f' is the future done {_.done()}')
+            print(f' is the future is still running {_.running()}')
+            results.append(_.result()) # obtain the result from the future
 
         t2 = time.perf_counter()
         delta = str(t2-t1)
@@ -42,7 +56,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
         return results
 
 
-
+# This is the result of the future execution 
 def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
 
       try:
