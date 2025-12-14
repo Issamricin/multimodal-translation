@@ -4,6 +4,7 @@ from argostranslate import translate
 import logging
 import time
 import concurrent.futures
+from concurrent.futures import Future
 
 logger = logging.getLogger(__name__)
 
@@ -25,24 +26,25 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
               In case the language is not found , it will return empty text
     """
     t1 = time.perf_counter()
-    responses:list[dict[str,str]] = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
+    responses:list[Future] = [] # This is a list of future job
+    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor: # with statement allows us to use executor as a context manager also to shutdown do cleaning after the last worker thread is done
         for target in targets:
-            result = executor.submit(_do_translate,text, lang, target)
-            responses.append(result) 
-        data = concurrent.futures.as_completed(responses)
+            future_result = executor.submit(_do_translate,text, lang, target) # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
+            responses.append(future_result) # building the future list
+        data = concurrent.futures.as_completed(responses) # An iterator over the given futures that yields each as it completes. it means it goes through
         results:list[dict[str,str]] = []
         for _ in concurrent.futures.as_completed(data):
             results.append(_.result())
+
         t2 = time.perf_counter()
         delta = str(t2-t1)
-        logger.info(f'Transalation from {lang} to {targets} took {delta} seconds')
+        logger.info(f'Translation from {lang} to {targets} took {delta} seconds')
         return results
-       
+
 
 
 def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
-      
+
       try:
         translated_text = translate.translate(text, lang, target)
         return {"text": translated_text, "lang":target}
@@ -50,8 +52,8 @@ def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
         logger.warning( f"Either of the languages may not be available, {lang, target}." \
          " Install the argos text-to-text translating language.")
         return ({"text": "", "lang" : target})
-           
-      
+
+
 
 if __name__ == "__main__":
     lang = "en"
@@ -60,4 +62,3 @@ if __name__ == "__main__":
     results = translate_text(text=text, lang=lang, targets=targets)
     for result in results:
         print(f"{result['text']}  {result['lang']}")
-    
