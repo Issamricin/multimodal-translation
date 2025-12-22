@@ -33,7 +33,6 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
             # it will return a future which the worker thread will execute (future job to be executed in a seperate thread)
             future_result = executor.submit(_do_translate,text, lang, target) # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
             responses.append(future_result) # building the future list
-        data = concurrent.futures.as_completed(responses)
             
         results:list[dict[str,str]] = []
         #for d in data:
