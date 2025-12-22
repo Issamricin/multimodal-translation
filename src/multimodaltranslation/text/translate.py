@@ -34,9 +34,6 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
             future_result = executor.submit(_do_translate,text, lang, target) # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
             responses.append(future_result) # building the future list
         data = concurrent.futures.as_completed(responses)
-        for d in data:
-            print(d.running())
-            print(d.done())
             
         results:list[dict[str,str]] = []
         #for d in data:
@@ -45,9 +42,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
         # we loop through the futures and check the one which is complete to take it 
         # if you put a break point at the "for" loop you can see how 
         # it tries to find the completed future to get it from the iterator (responses)
-        for _ in concurrent.futures.as_completed(data):
-            print(f' is the future done {_.done()}')
-            print(f' is the future is still running {_.running()}')
+        for _ in concurrent.futures.as_completed(responses):
             results.append(_.result()) # obtain the result from the future
 
         t2 = time.perf_counter()
@@ -70,9 +65,15 @@ def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
 
 
 if __name__ == "__main__":
+    
+    t1 = time.perf_counter()
     lang = "en"
-    targets = ["dk","se", "ar", "ku"]
+    targets = ["it", "fr", "en", "ar"]
     text = "Hi there"
     results = translate_text(text=text, lang=lang, targets=targets)
     for result in results:
         print(f"{result['text']}  {result['lang']}")
+    
+    t2 = time.perf_counter()
+    delta = str(t2-t1)
+    print(f"The program took {delta} seconds.")
