@@ -3,22 +3,17 @@ Technical Debt
 | The list below represent our technical debt which we will be addressed in the coming future
 | We will check the debt which is done by a |done| 
  
-
-Mocking the test case server:
------------------------------
-
-| In your test you don't need to have a server up since you can mock the server and product the network error etc..
-| Currently it is starting a server, doing tests, and then closing the server.
-
-
 New Features:
 -------------
 
 1- Audio to many Audios translations
-2- Video to many many text translations ( pure text)
-3- Video to man Video translations
+2- Video to many text translations (pure text)
+3- Video to many Video translations (live)
 4- Video to text translated on the videos
 
+All the above need to be implemented from one to many languages.
+For example an english video should be translated into french, italian, etc... as a text. 
+Or kept as a video (different language) or translated live.
 
 Audio Search for a given language words(optional):
 --------------------------------------------------
