@@ -11,6 +11,8 @@ from vosk import KaldiRecognizer, Model, SetLogLevel
 from multimodaltranslation.audio.install_models import install_model
 from multimodaltranslation.text.translate import translate_text
 
+import time
+
 SetLogLevel(-1)
 
 
@@ -169,3 +171,24 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
 
     translated_text = translate_text(text, lang, targets)
     return translated_text
+
+
+if __name__ == "__main__":
+    t1 = time.perf_counter()
+    lang = "en"
+    targets = ["it","fr", "ar", "en"]
+    script_dir = Path(__file__).resolve()
+    AUDIO_PATH = str(script_dir.parent.parent.parent.parent)
+    AUDIO_PATH = os.path.join(AUDIO_PATH,"audio_files","sample1","english.wav")
+
+    with open(AUDIO_PATH, "rb") as f:
+        AUDIO_BYTES = f.read()
+
+    results = translate_audio(  AUDIO_BYTES, lang=lang, targets=targets)
+
+    for result in results:
+        print(result)
+
+    t2 = time.perf_counter()
+    delta = str(t2-t1)
+    print(f"The program took {delta} seconds.")
