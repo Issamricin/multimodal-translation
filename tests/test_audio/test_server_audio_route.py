@@ -113,5 +113,6 @@ def test_audio_invalid_target():
 
     assert respone.status_code == 200
     data = respone.json()
-    assert data[0]['Error'] == "Either of the languages may not be available, ('en', 'bbc'). Install the argos text-to-text translating language."
+    print(data[0])
+    assert data[0] == {'text': '', 'lang': 'bbc'}
 

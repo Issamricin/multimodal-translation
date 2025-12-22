@@ -2,6 +2,7 @@ import io
 import json
 import os
 import subprocess
+import time
 import wave
 from pathlib import Path
 
@@ -10,8 +11,6 @@ from vosk import KaldiRecognizer, Model, SetLogLevel
 
 from multimodaltranslation.audio.install_models import install_model
 from multimodaltranslation.text.translate import translate_text
-
-import time
 
 SetLogLevel(-1)
 

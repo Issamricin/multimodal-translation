@@ -1,10 +1,10 @@
-import warnings
-
-from argostranslate import translate
+import concurrent.futures
 import logging
 import time
-import concurrent.futures
+import warnings
 from concurrent.futures import Future
+
+from argostranslate import translate
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
             # it will return a future which the worker thread will execute (future job to be executed in a seperate thread)
             future_result = executor.submit(_do_translate,text, lang, target) # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
             responses.append(future_result) # building the future list
-            
+
         results:list[dict[str,str]] = []
         #for d in data:
         #    print(d.running())
@@ -64,7 +64,7 @@ def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
 
 
 if __name__ == "__main__":
-    
+
     t1 = time.perf_counter()
     lang = "en"
     targets = ["it", "fr", "en", "ar"]
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     results = translate_text(text=text, lang=lang, targets=targets)
     for result in results:
         print(f"{result['text']}  {result['lang']}")
-    
+
     t2 = time.perf_counter()
     delta = str(t2-t1)
     print(f"The program took {delta} seconds.")
