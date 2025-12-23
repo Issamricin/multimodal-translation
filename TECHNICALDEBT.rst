@@ -40,7 +40,7 @@ Audio Search for a given language words(optional):
   https://www.luxa.org/audio
 
 
-| No Noise filter implemtation. No suppport for  ambient noise   . the file needs to be clean of noise. This can be implemented in the future as TODO or techincal debt as per scipy digital signal processing
+| No Noise filter implementation. No support for  ambient noise   . the file needs to be clean of noise. This can be implemented in the future as TODO or technical debt as per scipy digital signal processing
  see https://realpython.com/python-scipy-cluster-optimize/
  see chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://greenteapress.com/thinkdsp/thinkdsp.pdf
 

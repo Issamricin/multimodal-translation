@@ -2,6 +2,18 @@
 Changelog
 =========
 
+1.0.1 (2025-12-23)
+==================
+
+| This patch improves the performance and the speed of the application.
+| Now the time needed to translate to several languages is reduced significantly.
+
+Improved
+--------
+
+- Implemented multithreading to our translating engine. This way we can translate into all the targeted languages simultaneously.
+
+
 1.0.0 (2025-10-17)
 ==================
 

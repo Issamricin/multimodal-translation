@@ -29,12 +29,13 @@ Why is multimodality important?
 Types of multimodal translation:
 --------------------------------
 
-- **Text-to-text:** This is the simplest form where you can translate text from one language to another language.
-- **Audio-to-text:** Here the audio is transcribed and then translated also into several languages.
-- **Audio-to-audio:** May be implemented in the future. It's the same concept as audio to text but the output remains in audio format.
-- **Video-to-text:** May be implemented in the future. Also similar to the audio to text.
-- **Live-video-to-text:** May be implemented in the future.
-- **video-to-video:** May be implemented in the future.
+- **Text-to-texts:** This is the simplest form where you can translate text from one language to another language.
+- **Audio-to-texts:** Here the audio is transcribed and then translated also into several languages.
+- **Audio-to-audios:** May be implemented in the future. It's the same concept as audio to text but the output remains in audio format.
+- **Video-to-texts:** May be implemented in the future. Also similar to the audio to text.
+- **Live-video-to-texts:** May be implemented in the future.
+- **Video-to-videos:** May be implemented in the future.
+- **Live video-to-videos:** May be implemented in the future.
 
 All the above work from one language to many languages. For example you could translate one video (english) to several videos (italian, french, and dutch).
 

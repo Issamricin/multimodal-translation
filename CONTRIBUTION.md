@@ -17,7 +17,7 @@ You can contribute in many ways:
 
 Report bugs at [https://github.com/Issamricin/multimodal-translation/issues](https://github.com/Issamricin/multimodal-translation/issues).
 
-Stambling upon a Bug means encountering different behaviour than the expected/advertised one. When you are reporting a bug, please include the following infromation by filling in [the template](https://github.com/Issamricin/multimodal-translation/blob/main/.github/ISSUE_TEMPLATE/bug_report.md).
+Stumbling upon a bug means encountering different behavior than the expected/advertised one. When you are reporting a bug, please include the following information by filling in [the template](https://github.com/Issamricin/multimodal-translation/blob/main/.github/ISSUE_TEMPLATE/bug_report.md).
 
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
@@ -38,7 +38,7 @@ See [Contributor Setup](#setting-up-the-code-for-local-development) to get start
 
 ### Write Documentation
 
-Muldimodal Translator could always use more documentation, whether as part of the official docs, in docstrings, etc.
+Multimodal Translator could always use more documentation, whether as part of the official docs, in docstring, etc.
 
 If you want to review your changes on the documentation locally, you can do:
 
@@ -71,7 +71,7 @@ Here's how to set up `multimodal-translation` for local development.
 git clone git@github.com:Issamricin/multimodal-translation.git
 ```
 
-Install your local copy into a virtualenv. Assuming you have virtualenv installed, this is how you set up your fork for local development:
+Install your local copy into a virtual env. Assuming you have virtual env installed, this is how you set up your fork for local development:
 
 ```bash
 cd multimodal-translation
@@ -142,7 +142,7 @@ Tox uses pytest under the hood, hence it supports the same syntax for selecting 
 
 For further information please consult the [pytest usage docs](http://pytest.org/en/latest/example/index.html).
 
-To run all tests using various versions of python in virtualenvs defined in tox.ini, just run tox:
+To run all tests using various versions of python in virtual envs defined in tox.ini, just run tox:
 
 ```bash
 tox
