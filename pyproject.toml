@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "multimodal-translation" # package name same as project name 
-version = "1.0.0"
+version = "1.0.1"
 description = "AI based translation from one language to many "
 authors = [
    {name="Iso", email="iso.techdev@gmail.com"}, 
