@@ -28,7 +28,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
     t1 = time.perf_counter()
     responses:list[Future] = [] # This is a list of future job
     with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
-        # with statement allows us to use executor as a context manager also to shutdown 
+        # with statement allows us to use executor as a context manager also to shutdown
         # do cleaning after the last worker thread is done
         for target in targets:
             # in the submit, we send callable (the method) and its arguments to be executed in a separate thread
@@ -50,7 +50,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
 
         t2 = time.perf_counter()
         delta = str(t2-t1)
-        logger.info('Translation from %s to %s took %f seconds',lang, target, delta)
+        logger.info('Translation from %s to %s took %f seconds',lang, targets, delta)
         return results
 
 
@@ -61,8 +61,8 @@ def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
         translated_text = translate.translate(text, lang, target)
         return {"text": translated_text, "lang":target}
     except AttributeError:
-        logger.warning( "Either of the languages may not be available, {%s, %s}.\
-                       Install the argos text-to-text translating language.", lang, target)
+        logger.warning( "Either of the languages may not be available, {%s, %s}."\
+                       " Install the argos text-to-text translating language.", lang, target)
         return ({"text": "", "lang" : target})
 
 
