@@ -32,6 +32,11 @@ Types of multimodal translation:
 - **Text-to-text:** This is the simplest form where you can translate text from one language to another language.
 - **Audio-to-text:** Here the audio is transcribed and then translated also into several languages.
 - **Audio-to-audio:** May be implemented in the future. It's the same concept as audio to text but the output remains in audio format.
+- **Video-to-text:** May be implemented in the future. Also similar to the audio to text.
+- **Live-video-to-text:** May be implemented in the future.
+- **video-to-video:** May be implemented in the future.
+
+All the above work from one language to many languages. For example you could translate one video (english) to several videos (italian, french, and dutch).
 
 Technology used:
 ----------------
@@ -57,6 +62,13 @@ References:
 * `The Era of Multimodal Translation <https://www.kantanai.io/localization-now-the-era-of-multimodal-translation/>`_
 * `What is Multimodal Translation <https://www.educative.io/answers/what-is-multimodal-translation>`_
 
+Quickstart
+==========
+`Usage <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/usage.rst>`_
+
+Developer Guide
+===============
+`Development <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/developer_guide.rst>`_
 
 Technical Debt
 ==============
@@ -65,16 +77,6 @@ Technical Debt
 Change Log
 ==========
 `Change Log <https://github.com/Issamricin/multimodal-translation/blob/main/CHANGELOG.rst>`_.
-
-
-Developer Guide
-===============
-`Development <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/developer_guide.rst>`_
-
-Quickstart
-==========
-`Usage <https://github.com/Issamricin/multimodal-translation/blob/main/docs/source/contents/usage.rst>`_
-
 
 License
 =======

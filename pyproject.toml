@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "multimodal-translation" # package name same as project name 
-version = "1.0.0"
+version = "1.0.1"
 description = "AI based translation from one language to many "
 authors = [
    {name="Iso", email="iso.techdev@gmail.com"}, 
@@ -59,7 +59,7 @@ urls.Changelog = "https://github.com/Issamricin/multimodal-translation/blob/main
 ### Dependency Constraints, aka Requirements ###
 # see https://python-poetry.org/docs/dependency-specification/#multiple-constraints-project
 dependencies = [
- "argostranslate==1.9.6",
+ "argostranslate==1.10.0",
  "pocketsphinx==5.0.4",
  "vosk >= 0.3.45",
  "appdirs == 1.4.4",
