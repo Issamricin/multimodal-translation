@@ -1,6 +1,7 @@
-from multimodaltranslation.audio.translate import translate_audio
 import os
 from pathlib import Path
+from multimodaltranslation.audio.translate import translate_audio
+
 
 
 script_dir = Path(__file__).resolve()

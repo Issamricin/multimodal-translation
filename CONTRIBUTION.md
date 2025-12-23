@@ -181,7 +181,6 @@ Core committers, use this section to:
 * Modular Design
 * Aim for statelessness
 
-
 #### Fast and Focused
 
 Multimodal translation is designed to do one thing, and do that one thing very well.

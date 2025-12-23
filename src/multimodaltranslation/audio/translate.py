@@ -174,20 +174,20 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
 
 if __name__ == "__main__":
     t1 = time.perf_counter()
-    lang = "en"
+    LANGUAGE = "en"
     targets = ["it","fr", "ar", "en"]
     script_dir = Path(__file__).resolve()
     AUDIO_PATH = str(script_dir.parent.parent.parent.parent)
     AUDIO_PATH = os.path.join(AUDIO_PATH,"audio_files","sample1","english.wav")
 
-    with open(AUDIO_PATH, "rb") as f:
-        AUDIO_BYTES = f.read()
+    with open(AUDIO_PATH, "rb") as audio_f:
+        AUDIO_BYTES = audio_f.read()
 
-    results = translate_audio(  AUDIO_BYTES, lang=lang, targets=targets)
+    translations = translate_audio(  AUDIO_BYTES, lang=LANGUAGE, targets=targets)
 
-    for result in results:
-        print(result)
+    for res in translations:
+        print(res)
 
     t2 = time.perf_counter()
-    delta = str(t2-t1)
-    print(f"The program took {delta} seconds.")
+    DELTA = str(t2-t1)
+    print(f"The program took {DELTA} seconds.")
