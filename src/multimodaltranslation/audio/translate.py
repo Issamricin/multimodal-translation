@@ -175,7 +175,7 @@ def translate_audio(audio_bytes:bytes, lang:str, targets:list) -> list:
 if __name__ == "__main__":
     t1 = time.perf_counter()
     LANGUAGE = "en"
-    targets = ["it","fr", "ar", "en"]
+    trgts = ["it","fr", "ar", "en"]
     script_dir = Path(__file__).resolve()
     AUDIO_PATH = str(script_dir.parent.parent.parent.parent)
     AUDIO_PATH = os.path.join(AUDIO_PATH,"audio_files","sample1","english.wav")
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     with open(AUDIO_PATH, "rb") as audio_f:
         AUDIO_BYTES = audio_f.read()
 
-    translations = translate_audio(  AUDIO_BYTES, lang=LANGUAGE, targets=targets)
+    translations = translate_audio(  AUDIO_BYTES, lang=LANGUAGE, targets=trgts)
 
     for res in translations:
         print(res)

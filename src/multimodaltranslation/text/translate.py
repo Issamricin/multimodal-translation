@@ -27,14 +27,14 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
     """
     t1 = time.perf_counter()
     responses:list[Future] = [] # This is a list of future job
-    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor: 
+    with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
         # with statement allows us to use executor as a context manager also to shutdown 
         # do cleaning after the last worker thread is done
         for target in targets:
             # in the submit, we send callable (the method) and its arguments to be executed in a separate thread
-            # it will return a future which the worker thread will execute 
+            # it will return a future which the worker thread will execute
             # (future job to be executed in a separate thread)
-            future_result = executor.submit(_do_translate,text, lang, target) 
+            future_result = executor.submit(_do_translate,text, lang, target)
             # see https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor
             responses.append(future_result) # building the future list
 
@@ -50,7 +50,7 @@ def translate_text(text:str, lang:str, targets:list[str]) -> list[dict[str,str]]
 
         t2 = time.perf_counter()
         delta = str(t2-t1)
-        logger.info(f'Translation from {lang} to {targets} took {delta} seconds')
+        logger.info('Translation from %s to %s took %f seconds',lang, target, delta)
         return results
 
 
@@ -61,8 +61,8 @@ def _do_translate(text:str, lang:str, target:str)->dict[str,str]:
         translated_text = translate.translate(text, lang, target)
         return {"text": translated_text, "lang":target}
     except AttributeError:
-        logger.warning( f"Either of the languages may not be available, {lang, target}.\
-                       Install the argos text-to-text translating language.")
+        logger.warning( "Either of the languages may not be available, {%s, %s}.\
+                       Install the argos text-to-text translating language.", lang, target)
         return ({"text": "", "lang" : target})
 
 
@@ -71,6 +71,6 @@ if __name__ == "__main__":
     LANGUAGE = "en"
     trgts = ["it", "fr", "en", "ar"]
     TXT = "Hi there"
-    results = translate_text(text=TXT, lang=LANGUAGE, targets=trgts)
-    for result in results:
-        print(f"{result['text']}  {result['lang']}")
+    translation = translate_text(text=TXT, lang=LANGUAGE, targets=trgts)
+    for res in translation:
+        print(f"{res['text']}  {res['lang']}")
